@@ -9,7 +9,11 @@
   <title>Hello World | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="description" content="快速开始本地运行12$ hexo g = hexo generate  # 创建静态页面$ hexo s = hexo server  # 本地部署
+
+远程部署12$ hexo g = hexo generate $ hexo d = hexo deploy
+
+分类和标签 Categories &amp;a">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -124,19 +128,78 @@
 	<div class="mypage">		
 	  		
 
-	  <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+	  <h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="本地运行"><a href="#本地运行" class="headerlink" title="本地运行"></a>本地运行</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g = hexo generate  <span class="comment"># 创建静态页面</span></span><br><span class="line">$ hexo s = hexo server  <span class="comment"># 本地部署</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="远程部署"><a href="#远程部署" class="headerlink" title="远程部署"></a>远程部署</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g = hexo generate </span><br><span class="line">$ hexo d = hexo deploy</span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<h2 id="分类和标签-Categories-Tags"><a href="#分类和标签-Categories-Tags" class="headerlink" title="分类和标签 Categories &amp; Tags"></a>分类和标签 Categories &amp; Tags</h2><ul>
+<li>分类：结构化、层次感强，用来划分大的内容模块。分类不宜过多，也不要太乱，一般来说，10个左右的大分类比较合适，最好一眼就能看懂。每个大分类可以有几层子分类，这样也更有条理。</li>
+<li>标签：灵活，用来描述文章的细节和具体内容，通常用来补充分类无法覆盖到的多维度信息。标签没有数量限制，可以根据每篇文章的内容灵活添加。类似于关键词</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">一级分类</th>
+<th align="center">slug</th>
+<th align="center">内容描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">编程技术</td>
+<td align="center">programming</td>
+<td align="center">前端开发、后端开发、移动开发、数据库和编程语言的技术知识。</td>
+</tr>
+<tr>
+<td align="center">效率工具</td>
+<td align="center">productivity</td>
+<td align="center">办公工具、开发工具、自动化脚本、时间管理等，提高工作效率的实用工具和方法。</td>
+</tr>
+<tr>
+<td align="center">资源干货</td>
+<td align="center">resources</td>
+<td align="center">开源框架、开源库、开源项目和插件的使用及推荐。</td>
+</tr>
+<tr>
+<td align="center">产品经理</td>
+<td align="center">productmanager</td>
+<td align="center">产品规划、需求管理、项目管理、数据驱动，以及市场与运营相关的管理知识，帮助产品经理优化产品流程和策略。</td>
+</tr>
+<tr>
+<td align="center">人工智能</td>
+<td align="center">ai</td>
+<td align="center">涵盖机器学习、自然语言处理 (NLP)、知识图谱等技术，探讨人工智能领域的前沿技术和应用案例。</td>
+</tr>
+<tr>
+<td align="center">数据科学</td>
+<td align="center">datascience</td>
+<td align="center">数据挖掘、数据分析与建模等与数据处理相关的技术和方法。</td>
+</tr>
+<tr>
+<td align="center">实践作品</td>
+<td align="center">projects</td>
+<td align="center">个人项目日志、代码实践以及各种实战作品展示。</td>
+</tr>
+<tr>
+<td align="center">建站记录</td>
+<td align="center">webdevelopment</td>
+<td align="center">网站搭建、前端优化、SEO优化和服务器配置的完整记录。</td>
+</tr>
+<tr>
+<td align="center">日志随笔</td>
+<td align="center">journal</td>
+<td align="center">涵盖旅行与探索、阅读与思考、个人成长、兴趣爱好等生活感悟和随笔，分享个人生活与成长经验。</td>
+</tr>
+</tbody></table>
+<h2 id="文章头部"><a href="#文章头部" class="headerlink" title="文章头部"></a>文章头部</h2><ul>
+<li><p>title: Title</p>
+</li>
+<li><p>date: YYYY-MM-DD HH:MM:SS</p>
+</li>
+<li><p>categories: category</p>
+</li>
+<li><p>tags: [tag1, tag2, …]</p>
+</li>
+</ul>
 	  
 	</div>
 
@@ -186,6 +249,17 @@
 
 	<!-- categories -->
     
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/工具/">工具<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
 
 	<!-- tags -->
 		
