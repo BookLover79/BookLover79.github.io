@@ -1,87 +1,150 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
   
   <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://booklover79.github.io/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <meta name="author" content="John Doe">
   
   
-    <link rel="shortcut icon" href="/favicon.png">
-  
-  
-  
-<link rel="stylesheet" href="/css/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
 
   
   
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-        
-          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
-        
-        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://BookLover79.github.io"></form>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Hexo</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
       </div>
-    </div>
-  </div>
-</header>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
 
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-Leetcode-Hot-100-简单中等题" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/12/06/Leetcode-Hot-100-%E7%AE%80%E5%8D%95%E4%B8%AD%E7%AD%89%E9%A2%98/" class="article-date">
-  <time class="dt-published" datetime="2024-12-06T13:31:09.993Z" itemprop="datePublished">2024-12-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h1 id="Leetcode-Hot-100-简单中等题"><a href="#Leetcode-Hot-100-简单中等题" class="headerlink" title="Leetcode Hot 100 简单中等题"></a>Leetcode Hot 100 简单中等题</h1><h2 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h2><h3 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结:</span></span><br><span class="line"><span class="comment"># 1. 输出下标，需要i循环</span></span><br><span class="line"><span class="comment"># 2. 判断第二个元素是否存在：从i+1开始</span></span><br><span class="line"><span class="comment"># 3. 找第二个元素的dix：从i+1开始</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            f = target - nums[i]</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">in</span> nums[i + <span class="number">1</span>:]:  <span class="comment"># 注意i + 1</span></span><br><span class="line">                <span class="keyword">return</span> ([i, nums.index(f, i + <span class="number">1</span>)])  <span class="comment"># 这里也是i + 1</span></span><br></pre></td></tr></table></figure>
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header logo">
+  <h1>Hexo<span class="blink-fast">∎</span></h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+
+
+		<i class="fa fa-heart blink-slow"></i>
+
+		Keep and carry on.
+
+</div>    
+
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" ></a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2024-12-06  </div>
+		</div>
+	</div>
+	
+
+
+			<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="Leetcode-Hot-100-简单中等题"><a href="#Leetcode-Hot-100-简单中等题" class="headerlink" title="Leetcode Hot 100 简单中等题"></a>Leetcode Hot 100 简单中等题</h1><h2 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h2><h3 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结:</span></span><br><span class="line"><span class="comment"># 1. 输出下标，需要i循环</span></span><br><span class="line"><span class="comment"># 2. 判断第二个元素是否存在：从i+1开始</span></span><br><span class="line"><span class="comment"># 3. 找第二个元素的dix：从i+1开始</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            f = target - nums[i]</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">in</span> nums[i + <span class="number">1</span>:]:  <span class="comment"># 注意i + 1</span></span><br><span class="line">                <span class="keyword">return</span> ([i, nums.index(f, i + <span class="number">1</span>)])  <span class="comment"># 这里也是i + 1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-字母异位词分组"><a href="#2-字母异位词分组" class="headerlink" title="2. 字母异位词分组"></a>2. 字母异位词分组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结：</span></span><br><span class="line"><span class="comment"># 对字母排序，一样的就是异位词</span></span><br><span class="line"><span class="comment"># 用字典，key是排序后结果，value是之前的（优雅），合理的一对多</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">groupAnagrams</span>(<span class="params">self, strs: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]:</span><br><span class="line">        d = defaultdict(<span class="built_in">list</span>)  <span class="comment"># 是list</span></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> strs:</span><br><span class="line">            d[<span class="string">&#x27;&#x27;</span>.join(<span class="built_in">sorted</span>(s))].append(s)</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">list</span>(d.values()))  <span class="comment"># 是values</span></span><br></pre></td></tr></table></figure>
 
@@ -258,44 +321,33 @@
 <h3 id="88-下一个排列"><a href="#88-下一个排列" class="headerlink" title="88. 下一个排列"></a>88. 下一个排列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 记住就要，一个数学方法的模拟</span></span><br><span class="line"><span class="comment"># 1. 倒序遍历数组中的元素，找到第一个相邻的升序序列 (i,j)；</span></span><br><span class="line"><span class="comment"># 2. 再倒序遍历，找到第一个大于 nums[i] 的元素，并将其与 nums[i] 交换位置；</span></span><br><span class="line"><span class="comment"># 3. 再将nums[j]及其后面的元素重新按照升序排序。</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">nextPermutation</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        i = n - <span class="number">2</span></span><br><span class="line">        <span class="keyword">while</span> i &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &gt;= nums[i + <span class="number">1</span>]:  <span class="comment"># 找到第一个升序的i：&gt;=</span></span><br><span class="line">            i -= <span class="number">1</span>  <span class="comment"># 注意：是-=</span></span><br><span class="line">        <span class="keyword">if</span> i &gt;= <span class="number">0</span>:  <span class="comment"># 存在i</span></span><br><span class="line">            j = n - <span class="number">1</span>  <span class="comment"># 重新从最后搜寻第一个大于i的j</span></span><br><span class="line">            <span class="keyword">while</span> j &gt;= <span class="number">0</span> <span class="keyword">and</span> nums[i] &gt;= nums[j]:  <span class="comment"># 这个和上面的一样，左边都是nums[i]。</span></span><br><span class="line">                                                  <span class="comment"># 非&lt;的就-1，所以&gt;=</span></span><br><span class="line">                j -= <span class="number">1</span></span><br><span class="line">            nums[i], nums[j] = nums[j], nums[i]</span><br><span class="line"></span><br><span class="line">        left, right = i + <span class="number">1</span>, n - <span class="number">1</span>  <span class="comment"># 把i之后的换序</span></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            nums[left], nums[right] = nums[right], nums[left]</span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line">            right -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="89-寻找重复数"><a href="#89-寻找重复数" class="headerlink" title="89. 寻找重复数"></a>89. 寻找重复数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 完美的解法</span></span><br><span class="line"><span class="comment">#         0, 1, 2, 3, 4  # 环的值</span></span><br><span class="line"><span class="comment"># nums = [1, 3, 4, 2, 2] # 环的next</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">findDuplicate</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        slow, fast = <span class="number">0</span>, <span class="number">0</span>  <span class="comment"># 初始化，停在0</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:  <span class="comment"># True，break跑掉</span></span><br><span class="line">            slow = nums[slow]  <span class="comment"># next：slow在[]中</span></span><br><span class="line">            fast = nums[nums[fast]]</span><br><span class="line">            <span class="keyword">if</span> slow == fast:  <span class="comment"># 第一次相遇在环里</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        fast = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:  <span class="comment"># True，return跑掉</span></span><br><span class="line">            slow = nums[slow]</span><br><span class="line">            fast = nums[fast]</span><br><span class="line">            <span class="keyword">if</span> slow == fast:  <span class="comment"># 第二次相遇在交点</span></span><br><span class="line">                <span class="keyword">return</span> slow  <span class="comment"># 因为一定存在</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://booklover79.github.io/2024/12/06/Leetcode-Hot-100-%E7%AE%80%E5%8D%95%E4%B8%AD%E7%AD%89%E9%A2%98/" data-id="cm4cv5ymn0000r8o35ev43gry" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
+	
+	</div>
+  <a type="button" href="/2024/12/06/Leetcode-Hot-100-简单中等题/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/2024/12/06/hello-world/" >Hello World</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2024-12-06  </div>
+		</div>
+	</div>
+	
 
 
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2024/12/06/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2024-12-06T13:06:06.039Z" itemprop="datePublished">2024-12-06</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2024/12/06/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+			<div class="entry">
+  <div class="row">
+	
+	
+		<p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
@@ -309,105 +361,134 @@
 
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://booklover79.github.io/2024/12/06/hello-world/" data-id="cm4cv5ymt0001r8o37r9v9csx" data-title="Hello World" class="article-share-link"><span class="fa fa-share">Share</span></a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
+	
+	</div>
+  <a type="button" href="/2024/12/06/hello-world/#more" class="btn btn-default more">Read More</a>
+</div>
 
+		
 
+		</div>
 
-  
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
 
+   
+</div>
 
-</section>
-        
-          <aside id="sidebar">
-  
-    
+  		</center>
+		</div>
 
-  
-    
+		
+		
+	</div> <!-- col-md-9 -->
 
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/12/">December 2024</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2024/12/06/Leetcode-Hot-100-%E7%AE%80%E5%8D%95%E4%B8%AD%E7%AD%89%E9%A2%98/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2024/12/06/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
   </div>
 
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      
-      &copy; 2024 John Doe<br>
-      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
 
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
+		
+			
+		
+			
+
+		
+			
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
     
+      <li>
+        <a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" ><i class="fa fa-file-o"></i></a>
+      </li>
+    
+      <li>
+        <a href="/2024/12/06/hello-world/" ><i class="fa fa-file-o"></i>Hello World</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="https://github.com/wzpan/hexo-theme-freemind" title="Freemind's Github repository." target="_blank">Freemind</a></li>
+	
+		<li><i class="fa fa-github"></i><a href="https://github.com/kristopolous/BOOTSTRA.386" title="BOOTSTRA.386's Github repository." target="_blank">BOOTSTRA.386</a></li>
+	
+		<li><i class="fa fa-github"></i><a href="https://github.com/blackshow/hexo-theme-freemind.386" title="Freemind.386's Github repository." target="_blank">Freemind.386</a></li>
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/blackshow" title="My Github account." target="_blank">My Github</a></li>
+	
+	</ul>
+</div>
 
 
-<script src="/js/jquery-3.6.4.min.js"></script>
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
 
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2024 John Doe
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
 
 
   
-<script src="/fancybox/jquery.fancybox.min.js"></script>
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
 
 
 
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
-<script src="/js/script.js"></script>
-
-
-
-
-
-  </div>
 </body>
-</html>
+   </html>
