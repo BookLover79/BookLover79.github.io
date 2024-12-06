@@ -130,7 +130,7 @@
 <div class="row">
 	<div class="col-md-8">
 		<h3 class="title">
-			<a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" >Title</a>
+			<a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" >Leetcode Hot100(简单中等题)</a>
 		</h3>
 		</div>
 	<div class="col-md-4">
@@ -144,7 +144,7 @@
   <div class="row">
 	
 	
-		<h1 id="Leetcode-Hot-100-简单中等题"><a href="#Leetcode-Hot-100-简单中等题" class="headerlink" title="Leetcode Hot 100 简单中等题"></a>Leetcode Hot 100 简单中等题</h1><h2 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h2><h3 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结:</span></span><br><span class="line"><span class="comment"># 1. 输出下标，需要i循环</span></span><br><span class="line"><span class="comment"># 2. 判断第二个元素是否存在：从i+1开始</span></span><br><span class="line"><span class="comment"># 3. 找第二个元素的dix：从i+1开始</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            f = target - nums[i]</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">in</span> nums[i + <span class="number">1</span>:]:  <span class="comment"># 注意i + 1</span></span><br><span class="line">                <span class="keyword">return</span> ([i, nums.index(f, i + <span class="number">1</span>)])  <span class="comment"># 这里也是i + 1</span></span><br></pre></td></tr></table></figure>
+		<h1 id="Leetcode-Hot-100-简单中等题"><a href="#Leetcode-Hot-100-简单中等题" class="headerlink" title="Leetcode Hot 100(简单中等题)"></a>Leetcode Hot 100(简单中等题)</h1><h2 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h2><h3 id="1-两数之和"><a href="#1-两数之和" class="headerlink" title="1. 两数之和"></a>1. 两数之和</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结:</span></span><br><span class="line"><span class="comment"># 1. 输出下标，需要i循环</span></span><br><span class="line"><span class="comment"># 2. 判断第二个元素是否存在：从i+1开始</span></span><br><span class="line"><span class="comment"># 3. 找第二个元素的dix：从i+1开始</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">twoSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="built_in">int</span>]:</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(nums)):</span><br><span class="line">            f = target - nums[i]</span><br><span class="line">            <span class="keyword">if</span> f <span class="keyword">in</span> nums[i + <span class="number">1</span>:]:  <span class="comment"># 注意i + 1</span></span><br><span class="line">                <span class="keyword">return</span> ([i, nums.index(f, i + <span class="number">1</span>)])  <span class="comment"># 这里也是i + 1</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="2-字母异位词分组"><a href="#2-字母异位词分组" class="headerlink" title="2. 字母异位词分组"></a>2. 字母异位词分组</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 总结：</span></span><br><span class="line"><span class="comment"># 对字母排序，一样的就是异位词</span></span><br><span class="line"><span class="comment"># 用字典，key是排序后结果，value是之前的（优雅），合理的一对多</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">groupAnagrams</span>(<span class="params">self, strs: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">str</span>]]:</span><br><span class="line">        d = defaultdict(<span class="built_in">list</span>)  <span class="comment"># 是list</span></span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> strs:</span><br><span class="line">            d[<span class="string">&#x27;&#x27;</span>.join(<span class="built_in">sorted</span>(s))].append(s)</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">list</span>(d.values()))  <span class="comment"># 是values</span></span><br></pre></td></tr></table></figure>
 
@@ -419,6 +419,8 @@
 <li><p>tags: [tag1, tag2, …]</p>
 </li>
 </ul>
+<h2 id="后台管理"><a href="#后台管理" class="headerlink" title="后台管理"></a>后台管理</h2><p><a target="_blank" rel="noopener" href="https://github.com/jaredly/hexo-admin">https://github.com/jaredly/hexo-admin</a></p>
+<h2 id="博客风格（排名前10）"><a href="#博客风格（排名前10）" class="headerlink" title="博客风格（排名前10）"></a>博客风格（排名前10）</h2><p><a target="_blank" rel="noopener" href="https://github.com/Ailln/awesome-hexo-theme?tab=readme-ov-file">https://github.com/Ailln/awesome-hexo-theme?tab=readme-ov-file</a></p>
 
 	
 	</div>
@@ -476,9 +478,9 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">		
 		
-			<li><a href="/tags/leetcode/">leetcode<span>1</span></a></li>
-		
 			<li><a href="/tags/hot100/">hot100<span>1</span></a></li>
+		
+			<li><a href="/tags/leetcode/">leetcode<span>1</span></a></li>
 		
 		 
 		</ul>
@@ -492,7 +494,7 @@
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" ><i class="fa fa-file-o"></i>Title</a>
+        <a href="/2024/12/06/Leetcode-Hot-100-简单中等题/" ><i class="fa fa-file-o"></i>Leetcode Hot100(简单中等题)</a>
       </li>
     
       <li>
