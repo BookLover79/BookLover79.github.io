@@ -19,22 +19,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"booklover79.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta property="og:type" content="website">
-<meta property="og:title" content="BookLover&#39;s 🛖">
-<meta property="og:url" content="https://booklover79.github.io/tags/%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/index.html">
+    <meta name="description" content="官方文档：https:&#x2F;&#x2F;kevinmusgrave.github.io&#x2F;pytorch-metric-learning&#x2F;#pytorch-metric-learning">
+<meta property="og:type" content="article">
+<meta property="og:title" content="笔记_PyTorch_Metric_Learning">
+<meta property="og:url" content="https://booklover79.github.io/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/index.html">
 <meta property="og:site_name" content="BookLover&#39;s 🛖">
+<meta property="og:description" content="官方文档：https:&#x2F;&#x2F;kevinmusgrave.github.io&#x2F;pytorch-metric-learning&#x2F;#pytorch-metric-learning">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-21T06:23:19.849Z">
 <meta property="article:author" content="BookLover">
+<meta property="article:tag" content="PyTorch">
+<meta property="article:tag" content="官方文档&#39;">
+<meta property="article:tag" content="度量学习">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://booklover79.github.io/tags/%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/">
+<link rel="canonical" href="https://booklover79.github.io/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"en","comments":"","permalink":"","path":"tags/思路整理/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://booklover79.github.io/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/","path":"2024/12/07/笔记_PyTorch_Metric_Learning/","title":"笔记_PyTorch_Metric_Learning"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Tag: 思路整理 | BookLover's 🛖</title>
+<title>笔记_PyTorch_Metric_Learning | BookLover's 🛖</title>
   
 
 
@@ -136,50 +143,111 @@
 
     </div>
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">思路整理
-          <small>Tag</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="笔记_PyTorch_Metric_Learning | BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          笔记_PyTorch_Metric_Learning
         </h1>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-07 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-07T00:00:00+08:00">2024-12-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-21 14:23:19" itemprop="dateModified" datetime="2024-12-21T14:23:19+08:00">2024-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>官方文档：<a target="_blank" rel="noopener" href="https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning">https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning</a></p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated"
-              datetime="2024-12-12T18:15:00+08:00"
-              content="2024-12-12">
-          12-12
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/12/12/%E8%AE%BA%E6%96%87_%E5%9F%BA%E4%BA%8E%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%87%AA%E7%9B%91%E7%9D%A3%E9%99%8D%E6%B0%B4%E9%A2%84%E6%8A%A5%E6%A3%80%E9%AA%8C%E6%A1%86%E6%9E%B6_%E5%AE%9E%E9%AA%8C/" itemprop="url">
-            <span itemprop="name">基于对比学习的自监督降水预报检验框架_实验</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PyTorch/" rel="tag"># PyTorch</a>
+              <a href="/tags/%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3/" rel="tag"># 官方文档'</a>
+              <a href="/tags/%E5%BA%A6%E9%87%8F%E5%AD%A6%E4%B9%A0/" rel="tag"># 度量学习</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/12/06/%E5%B7%A5%E5%85%B7_hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2024/12/07/%E5%B7%A5%E5%85%B7_%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="next" title="学习路线">
+                  学习路线 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>
