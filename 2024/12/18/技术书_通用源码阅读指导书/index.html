@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"booklover79.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.21.1","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="一本指导源码阅读的书，万变不理其宗，学习源码的阅读方式。 大二跟着sakura写STL源码，当时不懂其深意，写的坑坑洼洼，但是什么时候开始都不算晚，只要永远在路上！！">
+    <meta name="description" content="前言看书意图 一本指导源码阅读的书，万变不理其宗，学习源码的阅读方式。 大二跟着sakura写STL源码，当时不懂其深意，写的坑坑洼洼，但是什么时候开始都不算晚，只要永远在路上！！  Java的优秀开源项目 apache&#x2F;dubbo：一个高性能的远程过程调用框架； netty&#x2F;netty：事件驱动的异步网络应用框架； spring-projects&#x2F;spring-bo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《通用源码阅读指导书》">
 <meta property="og:url" content="https://booklover79.github.io/2024/12/18/%E6%8A%80%E6%9C%AF%E4%B9%A6_%E9%80%9A%E7%94%A8%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB%E6%8C%87%E5%AF%BC%E4%B9%A6/index.html">
 <meta property="og:site_name" content="BookLover&#39;s 🛖">
-<meta property="og:description" content="一本指导源码阅读的书，万变不理其宗，学习源码的阅读方式。 大二跟着sakura写STL源码，当时不懂其深意，写的坑坑洼洼，但是什么时候开始都不算晚，只要永远在路上！！">
+<meta property="og:description" content="前言看书意图 一本指导源码阅读的书，万变不理其宗，学习源码的阅读方式。 大二跟着sakura写STL源码，当时不懂其深意，写的坑坑洼洼，但是什么时候开始都不算晚，只要永远在路上！！  Java的优秀开源项目 apache&#x2F;dubbo：一个高性能的远程过程调用框架； netty&#x2F;netty：事件驱动的异步网络应用框架； spring-projects&#x2F;spring-bo">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2024-12-17T16:00:00.000Z">
-<meta property="article:modified_time" content="2024-12-18T10:33:57.902Z">
+<meta property="article:modified_time" content="2024-12-21T08:23:36.427Z">
 <meta property="article:author" content="BookLover">
 <meta property="article:tag" content="源码阅读">
 <meta property="article:tag" content="读书笔记">
@@ -92,7 +92,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -105,6 +105,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9C%8B%E4%B9%A6%E6%84%8F%E5%9B%BE"><span class="nav-number">1.1.</span> <span class="nav-text">看书意图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E7%9A%84%E4%BC%98%E7%A7%80%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.2.</span> <span class="nav-text">Java的优秀开源项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B6%89%E5%8F%8A%E9%A1%B9%E7%9B%AE"><span class="nav-number">1.3.</span> <span class="nav-text">涉及项目</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis%E8%83%8C%E6%99%AF"><span class="nav-number">2.</span> <span class="nav-text">MyBatis背景</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -181,9 +182,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-12-18 00:00:00 / Modified: 18:33:57" itemprop="dateCreated datePublished" datetime="2024-12-18T00:00:00+08:00">2024-12-18</time>
+      <time title="Created: 2024-12-18 00:00:00" itemprop="dateCreated datePublished" datetime="2024-12-18T00:00:00+08:00">2024-12-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-21 16:23:36" itemprop="dateModified" datetime="2024-12-21T16:23:36+08:00">2024-12-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -204,10 +211,24 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><blockquote>
+    <div class="post-body" itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><h3 id="看书意图"><a href="#看书意图" class="headerlink" title="看书意图"></a>看书意图</h3><blockquote>
 <p>一本指导源码阅读的书，万变不理其宗，学习源码的阅读方式。</p>
 <p>大二跟着sakura写STL源码，当时不懂其深意，写的坑坑洼洼，但是什么时候开始都不算晚，只要永远在路上！！</p>
 </blockquote>
+<h3 id="Java的优秀开源项目"><a href="#Java的优秀开源项目" class="headerlink" title="Java的优秀开源项目"></a>Java的优秀开源项目</h3><ol>
+<li>apache&#x2F;dubbo：一个高性能的远程过程调用框架；</li>
+<li>netty&#x2F;netty：事件驱动的异步网络应用框架；</li>
+<li>spring-projects&#x2F;spring-boot：一套简单易用的 Spring框架；</li>
+<li>alibaba&#x2F;fastjson：一套快速的 JSON解析、生成组件；</li>
+<li>apache&#x2F;kafka：一套实时数据流处理平台；</li>
+<li>mybatis&#x2F;mybatis-3：一套强大的对象关系映射工具。</li>
+</ol>
+<h3 id="涉及项目"><a href="#涉及项目" class="headerlink" title="涉及项目"></a>涉及项目</h3><ol>
+<li>原项目地址：<a target="_blank" rel="noopener" href="https://github.com/mybatis/mybatis-3/releases/tag/mybatis-3.5.2">https://github.com/mybatis/mybatis-3/releases/tag/mybatis-3.5.2</a></li>
+<li>中文注释版：<a target="_blank" rel="noopener" href="https://github.com/yeecode/MybatisCN">https://github.com/yeecode/MybatisCN</a></li>
+<li>示例项目地址：<a target="_blank" rel="noopener" href="https://github.com/yeecode/MyBatisDemo">https://github.com/yeecode/MyBatisDemo</a></li>
+</ol>
+<h2 id="MyBatis背景"><a href="#MyBatis背景" class="headerlink" title="MyBatis背景"></a>MyBatis背景</h2><p>面向对象：基于软件工程（封装）<br>关系型数据库：基于数学理论<br>转化：对象关系映射（Object Relatioinal Mapping，ORM）<br>为了降低转化的成本，运用ORM框架，MyBatis就是其中的一款</p>
 
     </div>
 
