@@ -83,35 +83,6 @@
     
     
     <entry>
-      <title>笔记_PyTorch_Metric_Learning</title>
-      <link href="/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/"/>
-      <url>/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/</url>
-      
-        <content type="html"><![CDATA[<p>官方文档：<a href="https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning">https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning</a><br>知乎文档：<a href="https://zhuanlan.zhihu.com/p/680161376">https://zhuanlan.zhihu.com/p/680161376</a><br>度量学习和pytorch-metric-learning的使用：<a href="https://blog.csdn.net/Brikie/article/details/121587196">https://blog.csdn.net/Brikie/article/details/121587196</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> 笔记 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> PyTorch </tag>
-            
-            <tag> 官方文档&#39; </tag>
-            
-            <tag> 度量学习 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>学习路线</title>
       <link href="/2024/12/07/%E5%B7%A5%E5%85%B7_%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/"/>
       <url>/2024/12/07/%E5%B7%A5%E5%85%B7_%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/</url>
@@ -133,6 +104,35 @@
             <tag> 大模型&#39; </tag>
             
             <tag> vx读书 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>笔记_PyTorch_Metric_Learning</title>
+      <link href="/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/"/>
+      <url>/2024/12/07/%E7%AC%94%E8%AE%B0_PyTorch_Metric_Learning/</url>
+      
+        <content type="html"><![CDATA[<p>官方文档：<a href="https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning">https://kevinmusgrave.github.io/pytorch-metric-learning/#pytorch-metric-learning</a><br>知乎文档：<a href="https://zhuanlan.zhihu.com/p/680161376">https://zhuanlan.zhihu.com/p/680161376</a><br>度量学习和pytorch-metric-learning的使用：<a href="https://blog.csdn.net/Brikie/article/details/121587196">https://blog.csdn.net/Brikie/article/details/121587196</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> PyTorch </tag>
+            
+            <tag> 官方文档&#39; </tag>
+            
+            <tag> 度量学习 </tag>
             
         </tags>
       
