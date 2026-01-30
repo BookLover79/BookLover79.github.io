@@ -27,14 +27,15 @@
 <meta property="og:site_name" content="BookLover&#39;s 🛖">
 <meta property="og:description" content="从文档到知识图谱：扩展图谱实现[toc] 代码位置：https:&#x2F;&#x2F;github.com&#x2F;TencentCloudADP&#x2F;youtu-graphrag&#x2F;blob&#x2F;main&#x2F;models&#x2F;constructor&#x2F;kt_gen.py 该模块用于将非结构化文档自动构造成知识图谱（Knowledge Graph）。整体流程由 KTBuilder类实现，其中 KT（Knowledge Triples） 表示">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://booklover79.github.io/image-20260130144016374.png">
 <meta property="og:image" content="https://booklover79.github.io/image-20260121183510834.png">
 <meta property="og:image" content="https://booklover79.github.io/2026_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0.assets/image-20260121184201982.png">
 <meta property="article:published_time" content="2026-01-22T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-01-30T06:14:52.228Z">
+<meta property="article:modified_time" content="2026-01-30T06:40:19.430Z">
 <meta property="article:author" content="BookLover">
 <meta property="article:tag" content="扩展图谱">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://booklover79.github.io/image-20260121183510834.png">
+<meta name="twitter:image" content="https://booklover79.github.io/image-20260130144016374.png">
 
 <link rel="canonical" href="https://booklover79.github.io/2026/01/23/2026_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0/">
 
@@ -184,7 +185,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2026-01-30 14:14:52" itemprop="dateModified" datetime="2026-01-30T14:14:52+08:00">2026-01-30</time>
+                <time title="Modified: 2026-01-30 14:40:19" itemprop="dateModified" datetime="2026-01-30T14:40:19+08:00">2026-01-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -210,6 +211,7 @@
         <h1 id="从文档到知识图谱：扩展图谱实现"><a href="#从文档到知识图谱：扩展图谱实现" class="headerlink" title="从文档到知识图谱：扩展图谱实现"></a>从文档到知识图谱：扩展图谱实现</h1><p>[toc]</p>
 <p>代码位置：<a target="_blank" rel="noopener" href="https://github.com/TencentCloudADP/youtu-graphrag/blob/main/models/constructor/kt_gen.py">https://github.com/TencentCloudADP/youtu-graphrag/blob/main/models/constructor/kt_gen.py</a></p>
 <p>该模块用于将非结构化文档自动构造成知识图谱（Knowledge Graph）。整体流程由 <code>KTBuilder</code>类实现，其中 KT（Knowledge Triples） 表示知识图谱中的三元组（<code>实体–关系–实体</code>），多个三元组组合在一起即构成完整的知识图谱。</p>
+<p><img src="/image-20260130144016374.png" alt="image-20260130144016374"></p>
 <h2 id="1-技术实现解析"><a href="#1-技术实现解析" class="headerlink" title="1 技术实现解析"></a>1 技术实现解析</h2><h3 id="1-1-init-：构造器初始化"><a href="#1-1-init-：构造器初始化" class="headerlink" title="1.1 __init__：构造器初始化"></a>1.1 <code>__init__</code>：构造器初始化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dataset_name, schema_path=<span class="literal">None</span>, mode=<span class="literal">None</span>, config=<span class="literal">None</span>, graph=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> config <span class="keyword">is</span> <span class="literal">None</span>:			</span><br><span class="line">        config = get_config()</span><br><span class="line">    </span><br><span class="line">    <span class="variable language_">self</span>.config = config 				<span class="comment"># 配置信息</span></span><br><span class="line">    <span class="variable language_">self</span>.dataset_name = dataset_name	<span class="comment"># 数据集</span></span><br><span class="line">    <span class="variable language_">self</span>.schema = <span class="variable language_">self</span>.load_schema(schema_path <span class="keyword">or</span> config.get_dataset_config(dataset_name).schema_path) <span class="comment">#图模式 Schema</span></span><br><span class="line">    <span class="keyword">if</span> graph <span class="keyword">is</span> <span class="literal">None</span>:					<span class="comment"># 图结构初始化（支持扩展图）</span></span><br><span class="line">        <span class="variable language_">self</span>.graph = nx.MultiDiGraph()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="variable language_">self</span>.graph = graph				<span class="comment"># 传入已有 graph，则在原有图基础上继续构建，实现图谱扩展</span></span><br><span class="line">    <span class="variable language_">self</span>.node_counter = <span class="number">0</span>				<span class="comment"># 节点计数器，为新创建的节点生成唯一标识</span></span><br><span class="line">    <span class="variable language_">self</span>.datasets_no_chunk = config.construction.datasets_no_chunk	<span class="comment"># 哪些数据集不进行文本切分</span></span><br><span class="line">    <span class="variable language_">self</span>.token_len = <span class="number">0</span>					<span class="comment"># 构图过程中累计使用的 token 数</span></span><br><span class="line">    <span class="variable language_">self</span>.lock = threading.Lock()		<span class="comment"># 线程锁，确保共享图结构的安全性</span></span><br><span class="line">    <span class="variable language_">self</span>.llm_client = call_llm_api.LLMCompletionCall() <span class="comment"># LLM 调用封装类，用于从文本中抽取实体、关系和知识三元组</span></span><br><span class="line">    <span class="variable language_">self</span>.all_chunks = &#123;&#125;				<span class="comment"># 用于缓存所有 chunk</span></span><br><span class="line">    <span class="variable language_">self</span>.mode = mode <span class="keyword">or</span> config.construction.mode	<span class="comment"># 指定当前构图模式，agent和general</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="1-2-文本块（Chunks）"><a href="#1-2-文本块（Chunks）" class="headerlink" title="1.2 文本块（Chunks）"></a>1.2 文本块（Chunks）</h3><p>在知识图谱中，在检索到相关三元组后，系统会将对应的文本块一并返回，作为补充片段，便于理解上下文或提供原文依据。</p>
