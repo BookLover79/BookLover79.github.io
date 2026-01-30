@@ -102,3 +102,11 @@ Hint: If I wish to publish the paper in the BAMS journal, please polish the abov
 
 精简下文，使其保持原意的情况下，更加通顺、学术，符合论文规范（要求：没有错的语句和词语尽量保留原文）
 
+## hexo 显示图片问题
+
+在搭建好 Hexo（Butterfly）并部署到 GitHub Pages 后，遇到 Markdown 图片无法正常显示的问题。希望不改变本地 Markdown 图片路径，本地和上传后都能正常显示图片。
+
+很多文章推荐安装 `hexo-asset-image` 插件，但多次测试均无效果，该插件需要使用 `{% asset_img xxx %}` 语法，逐个修改文章成本太高，因此放弃。后续发现新插件 **`hexo-asset-img`**，参考链接：https://blog.csdn.net/z952957407/article/details/111642548?spm=1001.2014.3001.5506 。但在我的环境中测试后依然没有完全生效。
+
+最后采用 Hexo 官方的资源文件夹方案，按照官方文档使用文章同名目录管理图片，Markdown 中直接使用相对路径即可。本地预览和生成后的页面中图片路径均正确，问题解决。官方文档： https://hexo.io/zh-cn/docs/asset-folders。
+
