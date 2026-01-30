@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"booklover79.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="从文档到知识图谱：扩展图谱实现[toc] 代码位置：https:&#x2F;&#x2F;github.com&#x2F;TencentCloudADP&#x2F;youtu-graphrag&#x2F;blob&#x2F;main&#x2F;models&#x2F;constructor&#x2F;kt_gen.py 该模块用于将非结构化文档自动构造成知识图谱（Knowledge Graph）。整体流程由 KTBuilder类实现，其中 KT（Knowledge Triples） 表示">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从文档到知识图谱：扩展图谱实现">
+<meta property="og:url" content="https://booklover79.github.io/2026/01/23/2026_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:site_name" content="BookLover&#39;s 🛖">
+<meta property="og:description" content="从文档到知识图谱：扩展图谱实现[toc] 代码位置：https:&#x2F;&#x2F;github.com&#x2F;TencentCloudADP&#x2F;youtu-graphrag&#x2F;blob&#x2F;main&#x2F;models&#x2F;constructor&#x2F;kt_gen.py 该模块用于将非结构化文档自动构造成知识图谱（Knowledge Graph）。整体流程由 KTBuilder类实现，其中 KT（Knowledge Triples） 表示">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://booklover79.github.io/.io//image-20260121183510834.png">
+<meta property="og:image" content="https://booklover79.github.io/.io//image-20260121184201982.png">
+<meta property="article:published_time" content="2026-01-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-30T02:37:23.492Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="扩展图谱">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://booklover79.github.io/.io//image-20260121183510834.png">
+
+<link rel="canonical" href="https://booklover79.github.io/2026/01/23/2026_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>从文档到知识图谱：扩展图谱实现 | BookLover's 🛖</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BookLover's 🛖</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2026/01/23/2026_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          从文档到知识图谱：扩展图谱实现
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2026-01-23 00:00:00" itemprop="dateCreated datePublished" datetime="2026-01-23T00:00:00+08:00">2026-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-01-30 10:37:23" itemprop="dateModified" datetime="2026-01-30T10:37:23+08:00">2026-01-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/" itemprop="url" rel="index"><span itemprop="name">知识图谱</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="从文档到知识图谱：扩展图谱实现"><a href="#从文档到知识图谱：扩展图谱实现" class="headerlink" title="从文档到知识图谱：扩展图谱实现"></a>从文档到知识图谱：扩展图谱实现</h1><p>[toc]</p>
+<p>代码位置：<a target="_blank" rel="noopener" href="https://github.com/TencentCloudADP/youtu-graphrag/blob/main/models/constructor/kt_gen.py">https://github.com/TencentCloudADP/youtu-graphrag/blob/main/models/constructor/kt_gen.py</a></p>
+<p>该模块用于将非结构化文档自动构造成知识图谱（Knowledge Graph）。整体流程由 <code>KTBuilder</code>类实现，其中 KT（Knowledge Triples） 表示知识图谱中的三元组（<code>实体–关系–实体</code>），多个三元组组合在一起即构成完整的知识图谱。</p>
+<h2 id="1-技术实现解析"><a href="#1-技术实现解析" class="headerlink" title="1 技术实现解析"></a>1 技术实现解析</h2><h3 id="1-1-init-：构造器初始化"><a href="#1-1-init-：构造器初始化" class="headerlink" title="1.1 __init__：构造器初始化"></a>1.1 <code>__init__</code>：构造器初始化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dataset_name, schema_path=<span class="literal">None</span>, mode=<span class="literal">None</span>, config=<span class="literal">None</span>, graph=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">if</span> config <span class="keyword">is</span> <span class="literal">None</span>:			</span><br><span class="line">        config = get_config()</span><br><span class="line">    </span><br><span class="line">    <span class="variable language_">self</span>.config = config 				<span class="comment"># 配置信息</span></span><br><span class="line">    <span class="variable language_">self</span>.dataset_name = dataset_name	<span class="comment"># 数据集</span></span><br><span class="line">    <span class="variable language_">self</span>.schema = <span class="variable language_">self</span>.load_schema(schema_path <span class="keyword">or</span> config.get_dataset_config(dataset_name).schema_path) <span class="comment">#图模式 Schema</span></span><br><span class="line">    <span class="keyword">if</span> graph <span class="keyword">is</span> <span class="literal">None</span>:					<span class="comment"># 图结构初始化（支持扩展图）</span></span><br><span class="line">        <span class="variable language_">self</span>.graph = nx.MultiDiGraph()</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="variable language_">self</span>.graph = graph				<span class="comment"># 传入已有 graph，则在原有图基础上继续构建，实现图谱扩展</span></span><br><span class="line">    <span class="variable language_">self</span>.node_counter = <span class="number">0</span>				<span class="comment"># 节点计数器，为新创建的节点生成唯一标识</span></span><br><span class="line">    <span class="variable language_">self</span>.datasets_no_chunk = config.construction.datasets_no_chunk	<span class="comment"># 哪些数据集不进行文本切分</span></span><br><span class="line">    <span class="variable language_">self</span>.token_len = <span class="number">0</span>					<span class="comment"># 构图过程中累计使用的 token 数</span></span><br><span class="line">    <span class="variable language_">self</span>.lock = threading.Lock()		<span class="comment"># 线程锁，确保共享图结构的安全性</span></span><br><span class="line">    <span class="variable language_">self</span>.llm_client = call_llm_api.LLMCompletionCall() <span class="comment"># LLM 调用封装类，用于从文本中抽取实体、关系和知识三元组</span></span><br><span class="line">    <span class="variable language_">self</span>.all_chunks = &#123;&#125;				<span class="comment"># 用于缓存所有 chunk</span></span><br><span class="line">    <span class="variable language_">self</span>.mode = mode <span class="keyword">or</span> config.construction.mode	<span class="comment"># 指定当前构图模式，agent和general</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-文本块（Chunks）"><a href="#1-2-文本块（Chunks）" class="headerlink" title="1.2 文本块（Chunks）"></a>1.2 文本块（Chunks）</h3><p>在知识图谱中，在检索到相关三元组后，系统会将对应的文本块一并返回，作为补充片段，便于理解上下文或提供原文依据。</p>
+<h4 id="1-2-1-chunk-text：文本切块"><a href="#1-2-1-chunk-text：文本切块" class="headerlink" title="1.2.1 chunk_text：文本切块"></a>1.2.1 chunk_text：文本切块</h4><p>文本切块（Chunking）是知识图谱构建流程中的第一步。</p>
+<p>其主要目的是将原始文档整理并拆分为适合后续处理的文本单元。</p>
+<p>在该步骤中，系统会将文档内容拼接成完整字符串，然后根据切块策略生成多个文本 chunk（注：当前实现中文档实际未进行切分），并为每个 chunk 分配一个唯一标识符（chunk_id）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chunks, chunk2id = <span class="variable language_">self</span>.chunk_text(doc)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>chunks</code>：文本块列表</li>
+<li><code>chunk2id</code>：chunk 到唯一 ID 的映射关系</li>
+</ul>
+<p>通过 <code>chunk_id</code> 可以快速定位对应的文本内容，<code>chunk2id[chunk_id] = chunk</code></p>
+<h4 id="1-2-2-save-chunks-to-file：保存文本块"><a href="#1-2-2-save-chunks-to-file：保存文本块" class="headerlink" title="1.2.2 save_chunks_to_file：保存文本块"></a>1.2.2 save_chunks_to_file：保存文本块</h4><p>将生成的文本块保存到文件，路径：，<code>output/chunks/&#123;self.dataset_name&#125;.txt</code>，文件包含 chunk ID 和对应文本</p>
+<h3 id="1-3-大模型（LLM）"><a href="#1-3-大模型（LLM）" class="headerlink" title="1.3 大模型（LLM）"></a>1.3 大模型（LLM）</h3><p>在知识图谱构建过程中，大模型（LLM）主要用于<strong>从文本块中抽取实体、关系等结构化信息</strong>，同时配合 token 统计控制调用成本。</p>
+<h4 id="1-3-1-extract-with-llm：LLM抽取"><a href="#1-3-1-extract-with-llm：LLM抽取" class="headerlink" title="1.3.1 extract_with_llm：LLM抽取"></a>1.3.1 extract_with_llm：LLM抽取</h4><p>调用大模型，并返回结构化的 JSON 结果。</p>
+<h4 id="1-3-2-token-cal：Token-统计"><a href="#1-3-2-token-cal：Token-统计" class="headerlink" title="1.3.2 token_cal：Token 统计"></a>1.3.2 token_cal：Token 统计</h4><p>统计文本或提示词的token 数量</p>
+<h4 id="1-3-3-get-construction-prompt：获取提示词"><a href="#1-3-3-get-construction-prompt：获取提示词" class="headerlink" title="1.3.3 _get_construction_prompt：获取提示词"></a>1.3.3 _get_construction_prompt：获取提示词</h4><h4 id="1-3-4-validate-and-parse-llm-response"><a href="#1-3-4-validate-and-parse-llm-response" class="headerlink" title="1.3.4 _validate_and_parse_llm_response"></a>1.3.4 _validate_and_parse_llm_response</h4><p>判断 LLM 是否给出了有效回答，并计算使用的 token 长度，便于统计调用成本</p>
+<h3 id="1-4-三元组（Triples）"><a href="#1-4-三元组（Triples）" class="headerlink" title="1.4 三元组（Triples）"></a>1.4 三元组（Triples）</h3><p>知识图谱的核心是<strong>实体–关系–实体</strong>三元组。</p>
+<h4 id="1-4-1-find-or-create-entity：找到或创建实体节点"><a href="#1-4-1-find-or-create-entity：找到或创建实体节点" class="headerlink" title="1.4.1 _find_or_create_entity：找到或创建实体节点"></a>1.4.1 _find_or_create_entity：找到或创建实体节点</h4><p>在图中查找指定实体节点，若不存在则创建新节点。</p>
+<p><strong>关键逻辑</strong>：</p>
+<ol>
+<li><strong>加锁处理</strong>，保证多线程构图安全</li>
+<li>遍历图中所有节点，查找：<ul>
+<li>标签（<code>label</code>）为 <code>&quot;entity&quot;</code></li>
+<li>名称（<code>name</code>）与给定 <code>entity_name</code> 相同</li>
+</ul>
+</li>
+<li>若存在则返回其 <code>entity_node_id</code></li>
+<li>若不存在：<ul>
+<li>创建新节点，命名为 <code>f&quot;entity_&#123;self.node_counter&#125;&quot;</code></li>
+<li>属性包含：<ul>
+<li><code>name</code>：实体名</li>
+<li><code>chunk_id</code>：来源文本块</li>
+<li>可选 <code>schema_type</code></li>
+</ul>
+</li>
+<li>将新节点加入 <code>nodes_to_add</code></li>
+<li>更新 <code>self.node_counter</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">entity_node_id = <span class="variable language_">self</span>._find_or_create_entity(entity_name, chunk_id, nodes_to_add, entity_type)</span><br></pre></td></tr></table></figure>
+
+<p><strong>_find_or_create_entity_direct</strong>：将结果直接加入图中</p>
+<h4 id="1-4-2-validate-triple-format：验证三元组格式"><a href="#1-4-2-validate-triple-format：验证三元组格式" class="headerlink" title="1.4.2 _validate_triple_format：验证三元组格式"></a>1.4.2 _validate_triple_format：验证三元组格式</h4><p>保证三元组合法性，只处理三个元素 <code>(subject, predicate, object)</code>。</p>
+<ul>
+<li>三元组不足三个元素 → 忽略</li>
+<li>三元组超过三个元素 → 截取前三个</li>
+</ul>
+<h4 id="1-4-3-process-attributes：处理属性"><a href="#1-4-3-process-attributes：处理属性" class="headerlink" title="1.4.3 _process_attributes：处理属性"></a>1.4.3 _process_attributes：处理属性</h4><p>在知识图谱中，<strong>属性（attribute，Level 1）是依附于实体节点（Level 2）</strong>。</p>
+<p>流程：</p>
+<ol>
+<li><p>创建属性节点</p>
+<ul>
+<li>为每个抽取出的属性生成一个唯一节点 ID（如 <code>attr_&#123;self.node_counter&#125;</code>）</li>
+<li>将属性节点加入待添加节点列表 <code>nodes_to_add</code></li>
+</ul>
+</li>
+<li><p>找到对应实体节点</p>
+<ul>
+<li>调用 <code>_find_or_create_entity</code>，确保实体节点在图中存在</li>
+<li>支持增量构建：若实体节点不存在，则创建</li>
+</ul>
+</li>
+<li><p>创建实体–属性关系</p>
+<ul>
+<li>在实体节点和属性节点之间添加边</li>
+<li>边的类型为 <code>&quot;has_attribute&quot;</code></li>
+<li>将边加入待添加边列表 <code>edges_to_add</code></li>
+</ul>
+</li>
+</ol>
+<p><strong>返回值</strong>：新增的节点列表和边列表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodes_to_add, edges_to_add = _process_attributes(extracted_attr, chunk_id, entity_types)</span><br></pre></td></tr></table></figure>
+
+<p><strong>_process_attributes_agent</strong>：agent模式下直接生成的属性和边直接入库</p>
+<h4 id="1-4-4-process-triples：处理三元组"><a href="#1-4-4-process-triples：处理三元组" class="headerlink" title="1.4.4 _process_triples：处理三元组"></a>1.4.4 _process_triples：处理三元组</h4><p>将抽取的三元组映射为图中的实体节点和边。</p>
+<p>流程：</p>
+<ol>
+<li><strong>验证三元组有效性</strong><ul>
+<li>调用 <code>_validate_triple_format</code></li>
+<li>无效或长度不足的三元组会被忽略</li>
+</ul>
+</li>
+<li><strong>获取或创建实体节点</strong><ul>
+<li>调用 <code>_find_or_create_entity</code> 获取两个实体节点</li>
+<li>支持增量构建：节点不存在时自动创建</li>
+<li>可根据 <code>entity_types</code> 指定节点的 schema 类型</li>
+</ul>
+</li>
+<li><strong>创建关系边</strong><ul>
+<li>在主体节点和客体节点之间添加边</li>
+<li>将边加入 <code>edges_to_add</code> 列表</li>
+</ul>
+</li>
+<li><strong>返回新增节点和边</strong><ul>
+<li>返回 <code>(nodes_to_add, edges_to_add)</code></li>
+</ul>
+</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nodes_to_add, edges_to_add = _process_triples(extracted_triples, chunk_id, entity_t</span><br></pre></td></tr></table></figure>
+
+<p><strong>_process_triples_agent</strong>：agent模式下直接生成的三元组直接入库</p>
+<h4 id="1-4-5-process-level1-level2：Level-1-Level-2-构图"><a href="#1-4-5-process-level1-level2：Level-1-Level-2-构图" class="headerlink" title="1.4.5 process_level1_level2：Level 1 &amp; Level 2 构图"></a>1.4.5 process_level1_level2：Level 1 &amp; Level 2 构图</h4><p>对给定文本块（chunk）完成 <strong>Level 1 属性节点</strong> 和 <strong>Level 2 实体–三元组节点</strong> 的构建，并将新增节点与边增量加入知识图谱。</p>
+<p>流程</p>
+<ol>
+<li><strong>生成 LLM 提示词并调用大模型</strong><ul>
+<li>输入文本块，生成构图 prompt</li>
+<li>调用 LLM 抽取：<ul>
+<li>属性 (<code>attributes</code>)</li>
+<li>三元组 (<code>triples</code>)</li>
+<li>实体类型 (<code>entity_types</code>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>解析 LLM 输出</strong><ul>
+<li>验证输出有效性</li>
+<li>提取属性字典、三元组列表和实体类型信息</li>
+</ul>
+</li>
+<li><strong>处理属性和三元组</strong><ul>
+<li>调用 <code>_process_attributes</code> 生成属性节点和边</li>
+<li>调用 <code>_process_triples</code> 生成三元组节点和边</li>
+<li>合并生成的节点和边集合</li>
+</ul>
+</li>
+<li><strong>加锁更新图结构</strong><ul>
+<li>将所有新增节点加入图</li>
+<li>将所有新增边加入图</li>
+<li>保证多线程安全，支持增量构建</li>
+</ul>
+</li>
+</ol>
+<p>特点：</p>
+<ul>
+<li><strong>增量构建</strong>：可逐块处理文本，新增节点和边不断累积到图中</li>
+<li><strong>多线程安全</strong>：使用锁保护图操作，避免并发冲突</li>
+</ul>
+<p>process_level1_level2_agent：agent模式下提取到的新内容直接入库</p>
+<h4 id="triple-deduplicate：三元组去重"><a href="#triple-deduplicate：三元组去重" class="headerlink" title="triple_deduplicate：三元组去重"></a>triple_deduplicate：三元组去重</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">triple_deduplicate</span>(<span class="params">self</span>):</span><br><span class="line">      <span class="string">&quot;&quot;&quot;deduplicate triples in lv1 and lv2&quot;&quot;&quot;</span></span><br><span class="line">      new_graph = nx.MultiDiGraph()</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> node, node_data <span class="keyword">in</span> <span class="variable language_">self</span>.graph.nodes(data=<span class="literal">True</span>):</span><br><span class="line">          new_graph.add_node(node, **node_data)</span><br><span class="line"></span><br><span class="line">      seen_triples = <span class="built_in">set</span>()</span><br><span class="line">      <span class="keyword">for</span> u, v, key, data <span class="keyword">in</span> <span class="variable language_">self</span>.graph.edges(keys=<span class="literal">True</span>, data=<span class="literal">True</span>):</span><br><span class="line">          relation = data.get(<span class="string">&#x27;relation&#x27;</span>) </span><br><span class="line">          <span class="keyword">if</span> (u, v, relation) <span class="keyword">not</span> <span class="keyword">in</span> seen_triples:</span><br><span class="line">              seen_triples.add((u, v, relation))</span><br><span class="line">              new_graph.add_edge(u, v, **data)</span><br><span class="line">      <span class="variable language_">self</span>.graph = new_graph</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-5-Schema"><a href="#1-5-Schema" class="headerlink" title="1.5 Schema"></a>1.5 Schema</h3><p>Schema 用于约束知识图谱中的<strong>节点、关系和属性类型</strong>，同时支持在构图过程中进行<strong>增量更新</strong>。</p>
+<h4 id="1-5-1-update-schema-with-new-types：更新Schema"><a href="#1-5-1-update-schema-with-new-types：更新Schema" class="headerlink" title="1.5.1 _update_schema_with_new_types：更新Schema"></a>1.5.1 _update_schema_with_new_types：更新Schema</h4><p>用于将 LLM 抽取出的<strong>新类型</strong>写回到 Schema 文件中。</p>
+<p><strong>当前限制</strong>：<br> 仅对以下数据集启用 Schema 更新：</p>
+<ul>
+<li><code>hotpot</code>、<code>2wiki</code>、<code>musique</code>、<code>novel</code>、<code>graphrag-bench</code><br> （Schema 路径通过硬编码指定，后续可优化为自动从 <code>schemas/</code> 目录查找）</li>
+</ul>
+<p><strong>功能流程</strong>：</p>
+<ol>
+<li>根据 <code>dataset_name</code> 读取对应的 Schema 文件</li>
+<li>从 <code>new_schema_types</code> 中获取：<ul>
+<li>新节点类型（nodes）</li>
+<li>新关系类型（relations）</li>
+<li>新属性类型（attributes）</li>
+</ul>
+</li>
+<li>仅当类型不存在时才追加到 Schema</li>
+<li>若发生更新，则写回文件并同步更新 <code>self.schema</code></li>
+</ol>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>增量更新，不覆盖原有 Schema</li>
+<li>避免重复写入</li>
+</ul>
+<h3 id="1-6-关键词和社区"><a href="#1-6-关键词和社区" class="headerlink" title="1.6 关键词和社区"></a>1.6 关键词和社区</h3><p>Level 3：关键词（Keywords）</p>
+<p>对多个实体进行<strong>语义抽象与概括</strong>，用于总结实体集合的核心主题，并作为实体与社区之间的过渡层。</p>
+<p>Level 4：社区（Communities）</p>
+<p>图中的<strong>高层语义聚合节点</strong>，由结构与语义相近的实体组成，通过社区发现算法（如 Tree-Comm）自动生成，用于刻画整体主题或子图语义。</p>
+<h4 id="1-6-1-process-level4：-处理社区"><a href="#1-6-1-process-level4：-处理社区" class="headerlink" title="1.6.1 process_level4： 处理社区"></a>1.6.1 process_level4： 处理社区</h4><p>基于 <strong>Level 2 实体节点</strong>进行社区发现：</p>
+<ol>
+<li>获取所有 Level 2 的实体节点</li>
+<li>使用 <code>tree_comm.FastTreeComm</code> 算法进行社区划分（结合结构与语义嵌入）</li>
+<li>为每个社区创建 <strong>Level 4 超级节点</strong>，并自动生成社区关键词</li>
+<li>将社区节点加入图中，用于高层语义索引</li>
+</ol>
+<h4 id="1-6-2-connect-keywords-to-communities：：关键词–社区关联"><a href="#1-6-2-connect-keywords-to-communities：：关键词–社区关联" class="headerlink" title="1.6.2 _connect_keywords_to_communities：：关键词–社区关联"></a>1.6.2 _connect_keywords_to_communities：：关键词–社区关联</h4><p>将 <strong>Level 3 关键词节点</strong>与 <strong>Level 4 社区节点</strong>进行连接：</p>
+<ul>
+<li>遍历社区节点与关键词节点</li>
+<li>若关键词名称与社区名称存在包含关系</li>
+<li>在二者之间建立 <code>&quot;describes&quot;</code> 关系</li>
+</ul>
+<p>该步骤用于增强社区的<strong>可解释性</strong>，使社区语义可以通过关键词直观表达。</p>
+<h3 id="1-7-文档"><a href="#1-7-文档" class="headerlink" title="1.7 文档"></a>1.7 文档</h3><p>文档在知识图谱中指<strong>解析后的 JSON 文件</strong>，每条文档包含原始内容。</p>
+<p>流程是<strong>逐文档处理 → 切块 → Level 1 &amp; Level 2 构图 → Level 3&#x2F;4 高层抽象</strong>。</p>
+<h4 id="1-7-1-process-document：处理单文档"><a href="#1-7-1-process-document：处理单文档" class="headerlink" title="1.7.1 process_document：处理单文档"></a>1.7.1 process_document：处理单文档</h4><p>流程：</p>
+<ol>
+<li><strong>文本切块</strong><ul>
+<li>调用 <code>chunk_text(doc)</code> 生成 chunk 列表和 <code>chunk2id</code> （ chunk 唯一 ID）映射</li>
+</ul>
+</li>
+<li><strong>Level 1 &amp; Level 2 构图</strong><ul>
+<li>如果模式为 <code>&quot;agent&quot;</code> → 调用 <code>process_level1_level2_agent</code>（支持 Schema 演化）</li>
+<li>否则 → 调用 <code>process_level1_level2</code>（标准处理）</li>
+</ul>
+</li>
+</ol>
+<h4 id="1-7-2-process-all-documents：处理多文档"><a href="#1-7-2-process-all-documents：处理多文档" class="headerlink" title="1.7.2 process_all_documents：处理多文档"></a>1.7.2 process_all_documents：处理多文档</h4><p>支持<strong>多文档高并发处理</strong>，并在最后生成 Level 3（关键词）和 Level 4（社区）：</p>
+<ol>
+<li><strong>线程池并发</strong><ul>
+<li>使用 <code>ThreadPoolExecutor</code>，最大 worker 数由 CPU 核心数和配置控制</li>
+<li>每条文档提交 <code>process_document</code></li>
+</ul>
+</li>
+<li><strong>进度跟踪</strong><ul>
+<li>每 10 条文档或全部完成时打印日志：<ul>
+<li>已处理数、失败数、进度百分比</li>
+<li>估算剩余处理时间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>后处理</strong><ul>
+<li>去重三元组：<code>triple_deduplicate()</code></li>
+<li>生成社区和关键词：<code>process_level4()</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="1-7-3-format-output：图谱格式化输出"><a href="#1-7-3-format-output：图谱格式化输出" class="headerlink" title="1.7.3 format_output：图谱格式化输出"></a>1.7.3 format_output：图谱格式化输出</h4><p>将内部 <code>graph</code> 对象转换为 <strong>JSON 可序列化格式</strong>：</p>
+<ul>
+<li><p>遍历图中所有边 <code>(u, v, data)</code></p>
+</li>
+<li><p>获取起点、终点节点属性</p>
+</li>
+<li><p>构造成字典：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;start_node&quot;</span>: &#123; <span class="string">&quot;label&quot;</span>: <span class="string">&quot;...&quot;</span>, <span class="string">&quot;properties&quot;</span>: &#123;...&#125; &#125;,</span><br><span class="line">    <span class="string">&quot;relation&quot;</span>: <span class="string">&quot;...&quot;</span>,</span><br><span class="line">    <span class="string">&quot;end_node&quot;</span>: &#123; <span class="string">&quot;label&quot;</span>: <span class="string">&quot;...&quot;</span>, <span class="string">&quot;properties&quot;</span>: &#123;...&#125; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>返回列表，表示所有实体关系的三元组</p>
+</li>
+</ul>
+<h4 id="1-7-4-build-knowledge-graph：构建知识图谱总入口"><a href="#1-7-4-build-knowledge-graph：构建知识图谱总入口" class="headerlink" title="1.7.4 build_knowledge_graph：构建知识图谱总入口"></a>1.7.4 build_knowledge_graph：构建知识图谱总入口</h4><p>流程概览：</p>
+<ol>
+<li><strong>读取文档</strong><ul>
+<li>从 <code>corpus</code>（JSON 文件）加载解析后的文档列表</li>
+</ul>
+</li>
+<li><strong>处理文档</strong><ul>
+<li>调用 <code>process_all_documents(documents)</code></li>
+<li>自动完成 Level 1（属性）、Level 2（三元组）、Level 3（关键词）、Level 4（社区）构建</li>
+<li>支持并发处理和异常统计</li>
+</ul>
+</li>
+<li><strong>保存 chunk</strong><ul>
+<li>调用 <code>save_chunks_to_file()</code>，保存文本块及其 ID</li>
+</ul>
+</li>
+<li><strong>格式化输出</strong><ul>
+<li>调用 <code>format_output()</code>，生成 JSON 可序列化三元组列表</li>
+</ul>
+</li>
+<li><strong>保存图谱文件</strong><ul>
+<li>路径为 <code>output/graphs/&#123;dataset_name&#125;_new.json</code></li>
+<li>如果文件夹不存在则自动创建</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="2-图谱扩展的实现"><a href="#2-图谱扩展的实现" class="headerlink" title="2 图谱扩展的实现"></a>2 图谱扩展的实现</h2><p>由于数据通常是<strong>持续更新和迭代的</strong>，知识图谱在初次构建完成后，<strong>支持在原有基础上的扩展</strong>就显得尤为重要。</p>
+<p>在该项目中，实现图谱扩展主要依赖两个关键点：<code>KTBuilder</code> 的初始化过程以及 <code>build_knowledge_graph</code> 函数。</p>
+<h3 id="2-1-KTBuilder：初始化与图复用"><a href="#2-1-KTBuilder：初始化与图复用" class="headerlink" title="2.1 KTBuilder：初始化与图复用"></a>2.1 KTBuilder：初始化与图复用</h3><p>在 <code>KTBuilder</code> 的初始化逻辑中，原本默认通过 <code>nx.MultiDiGraph()</code> 创建一张<strong>全新的图</strong>。<br> 因此，只需在初始化时<strong>将已有的知识图谱作为参数传入</strong>，即可实现基于原图的增量构建。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">KTBuilder</span>: <span class="comment"># KT：Knowledge Triples</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, dataset_name, schema_path=<span class="literal">None</span>, mode=<span class="literal">None</span>, config=<span class="literal">None</span>, graph=<span class="literal">None</span></span>):</span><br><span class="line">		···</span><br><span class="line">        <span class="keyword">if</span> graph <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            <span class="variable language_">self</span>.graph = nx.MultiDiGraph()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="variable language_">self</span>.graph = graph</span><br><span class="line">        ···</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>graph=None</code>：创建新图，从零开始构建知识图谱</p>
+</li>
+<li><p><code>graph=existing_graph</code>：在已有图谱基础上继续添加节点与关系，实现图谱扩展</p>
+</li>
+</ul>
+<hr>
+<h3 id="2-2-build-knowledge-graph：扩展构图入口"><a href="#2-2-build-knowledge-graph：扩展构图入口" class="headerlink" title="2.2 build_knowledge_graph：扩展构图入口"></a>2.2 build_knowledge_graph：扩展构图入口</h3><p><code>build_knowledge_graph</code> 是知识图谱构造的<strong>统一入口函数</strong>。<br>只需传入<strong>解析后的 JSON 文件</strong>，即可自动完成实体与关系的抽取，并将结果写入当前图结构中。</p>
+<p>构建完成后，图谱会被保存至：<code>output/graphs/&#123;self.dataset_name&#125;_new.json</code></p>
+<p>当 <code>KTBuilder</code> 初始化时传入的是已有图对象时，该函数实际上执行的是<strong>增量式构图</strong>。</p>
+<p><img src="/.io//image-20260121183510834.png" alt="image-20260121183510834"></p>
+<p><img src="/.io//image-20260121184201982.png" alt="image-20260121184201982"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1/" rel="tag"># 扩展图谱</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/25/2025_Neo4j%20+%20GraphRAG%20%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" rel="prev" title="Neo4j + GraphRAG 实践笔记">
+      <i class="fa fa-chevron-left"></i> Neo4j + GraphRAG 实践笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.</span> <span class="nav-text">从文档到知识图谱：扩展图谱实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%8A%80%E6%9C%AF%E5%AE%9E%E7%8E%B0%E8%A7%A3%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">1 技术实现解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-init-%EF%BC%9A%E6%9E%84%E9%80%A0%E5%99%A8%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 __init__：构造器初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%87%E6%9C%AC%E5%9D%97%EF%BC%88Chunks%EF%BC%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 文本块（Chunks）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-chunk-text%EF%BC%9A%E6%96%87%E6%9C%AC%E5%88%87%E5%9D%97"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">1.2.1 chunk_text：文本切块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-save-chunks-to-file%EF%BC%9A%E4%BF%9D%E5%AD%98%E6%96%87%E6%9C%AC%E5%9D%97"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">1.2.2 save_chunks_to_file：保存文本块</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%A4%A7%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 大模型（LLM）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-extract-with-llm%EF%BC%9ALLM%E6%8A%BD%E5%8F%96"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 extract_with_llm：LLM抽取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-token-cal%EF%BC%9AToken-%E7%BB%9F%E8%AE%A1"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 token_cal：Token 统计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-get-construction-prompt%EF%BC%9A%E8%8E%B7%E5%8F%96%E6%8F%90%E7%A4%BA%E8%AF%8D"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">1.3.3 _get_construction_prompt：获取提示词</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-4-validate-and-parse-llm-response"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">1.3.4 _validate_and_parse_llm_response</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E4%B8%89%E5%85%83%E7%BB%84%EF%BC%88Triples%EF%BC%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 三元组（Triples）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-find-or-create-entity%EF%BC%9A%E6%89%BE%E5%88%B0%E6%88%96%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BD%93%E8%8A%82%E7%82%B9"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">1.4.1 _find_or_create_entity：找到或创建实体节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-2-validate-triple-format%EF%BC%9A%E9%AA%8C%E8%AF%81%E4%B8%89%E5%85%83%E7%BB%84%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">1.4.2 _validate_triple_format：验证三元组格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-3-process-attributes%EF%BC%9A%E5%A4%84%E7%90%86%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">1.4.3 _process_attributes：处理属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-4-process-triples%EF%BC%9A%E5%A4%84%E7%90%86%E4%B8%89%E5%85%83%E7%BB%84"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">1.4.4 _process_triples：处理三元组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-5-process-level1-level2%EF%BC%9ALevel-1-Level-2-%E6%9E%84%E5%9B%BE"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">1.4.5 process_level1_level2：Level 1 &amp; Level 2 构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#triple-deduplicate%EF%BC%9A%E4%B8%89%E5%85%83%E7%BB%84%E5%8E%BB%E9%87%8D"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">triple_deduplicate：三元组去重</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-Schema"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.5 Schema</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-1-update-schema-with-new-types%EF%BC%9A%E6%9B%B4%E6%96%B0Schema"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">1.5.1 _update_schema_with_new_types：更新Schema</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E5%85%B3%E9%94%AE%E8%AF%8D%E5%92%8C%E7%A4%BE%E5%8C%BA"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.6 关键词和社区</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-1-process-level4%EF%BC%9A-%E5%A4%84%E7%90%86%E7%A4%BE%E5%8C%BA"><span class="nav-number">1.1.6.1.</span> <span class="nav-text">1.6.1 process_level4： 处理社区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-2-connect-keywords-to-communities%EF%BC%9A%EF%BC%9A%E5%85%B3%E9%94%AE%E8%AF%8D%E2%80%93%E7%A4%BE%E5%8C%BA%E5%85%B3%E8%81%94"><span class="nav-number">1.1.6.2.</span> <span class="nav-text">1.6.2 _connect_keywords_to_communities：：关键词–社区关联</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E6%96%87%E6%A1%A3"><span class="nav-number">1.1.7.</span> <span class="nav-text">1.7 文档</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-1-process-document%EF%BC%9A%E5%A4%84%E7%90%86%E5%8D%95%E6%96%87%E6%A1%A3"><span class="nav-number">1.1.7.1.</span> <span class="nav-text">1.7.1 process_document：处理单文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-2-process-all-documents%EF%BC%9A%E5%A4%84%E7%90%86%E5%A4%9A%E6%96%87%E6%A1%A3"><span class="nav-number">1.1.7.2.</span> <span class="nav-text">1.7.2 process_all_documents：处理多文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-3-format-output%EF%BC%9A%E5%9B%BE%E8%B0%B1%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="nav-number">1.1.7.3.</span> <span class="nav-text">1.7.3 format_output：图谱格式化输出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-7-4-build-knowledge-graph%EF%BC%9A%E6%9E%84%E5%BB%BA%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%80%BB%E5%85%A5%E5%8F%A3"><span class="nav-number">1.1.7.4.</span> <span class="nav-text">1.7.4 build_knowledge_graph：构建知识图谱总入口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9B%BE%E8%B0%B1%E6%89%A9%E5%B1%95%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.2.</span> <span class="nav-text">2 图谱扩展的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-KTBuilder%EF%BC%9A%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%8E%E5%9B%BE%E5%A4%8D%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 KTBuilder：初始化与图复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-build-knowledge-graph%EF%BC%9A%E6%89%A9%E5%B1%95%E6%9E%84%E5%9B%BE%E5%85%A5%E5%8F%A3"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 build_knowledge_graph：扩展构图入口</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BookLover</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
