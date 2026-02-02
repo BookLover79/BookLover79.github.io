@@ -57,7 +57,7 @@ http://10.0.0.228:7474/browser/
 
 即可进入 Neo4j 控制台。
 
-![image-20260113143947906](2025_Neo4j + GraphRAG 实践笔记/image-20260113143947906.png)
+![image-20260113143947906](20251225_Neo4j + GraphRAG 实践笔记/image-20260113143947906.png)
 
 ### 1.3 Neo4j 的多数据库方案
 
@@ -95,7 +95,7 @@ docker run -d \
 
 浏览器访问时需对应修改端口：
 
-![image-20260113101250843](2025_Neo4j + GraphRAG 实践笔记/image-20260113101250843.png)
+![image-20260113101250843](20251225_Neo4j + GraphRAG 实践笔记/image-20260113101250843.png)
 
 这种方式**最接近实际使用习惯**。
 
@@ -125,7 +125,7 @@ dbms.default_database=hsw
 
 3. **重启 Neo4j**，打开浏览器即可看到数据库名称变成了hsw
 
-![image-20260113103315883](2025_Neo4j + GraphRAG 实践笔记/image-20260113103315883.png)
+![image-20260113103315883](20251225_Neo4j + GraphRAG 实践笔记/image-20260113103315883.png)
 
 切换数据库就是修改`dbms.default_database`的值，如修改回neo4j，那么hsw数据库变成`hsw[unknow]`，不可以使用，但是还在。
 
@@ -135,7 +135,7 @@ dbms.default_database=hsw
 - 切换数据库必须重启
 - 未启用的数据库仍保留在 `data/` 目录中，但状态为 `unknown`
 
-![image-20260113103424102](2025_Neo4j + GraphRAG 实践笔记/image-20260113103424102.png)
+![image-20260113103424102](20251225_Neo4j + GraphRAG 实践笔记/image-20260113103424102.png)
 
 该方案更适合临时实验，不适合生产或多项目并行场景。
 
@@ -147,9 +147,9 @@ Neo4j 官方提供了多个可直接访问的 Demo 数据集：https://demo.neo4
 
 通过浏览器访问，填写协议以及数据库账号密码即可进入：
 
-![image-20260113090840873](2025_Neo4j + GraphRAG 实践笔记/image-20260113090840873.png)
+![image-20260113090840873](20251225_Neo4j + GraphRAG 实践笔记/image-20260113090840873.png)
 
-![image-20260113091034614](2025_Neo4j + GraphRAG 实践笔记/image-20260113091034614.png)
+![image-20260113091034614](20251225_Neo4j + GraphRAG 实践笔记/image-20260113091034614.png)
 
 ```python
 # Python 连接方式
@@ -412,7 +412,7 @@ CALL apoc.periodic.iterate(
 - 在**超大数据量**下，APOC也需要一定时间
 - `parallel=true` 容易引发锁竞争与 OOM，建议关闭
 
-![image-20260113091700167](2025_Neo4j + GraphRAG 实践笔记/image-20260113091700167.png)
+![image-20260113091700167](20251225_Neo4j + GraphRAG 实践笔记/image-20260113091700167.png)
 
 ```
 CALL apoc.periodic.iterate(
