@@ -1,204 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 7.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Cypher 查询语句实践 | BookLover&#39;s 🛖</title>
+  <meta name="author" content="BookLover">
+  
+  <meta name="description" content="Cypher 查询语句实践[toc]
+1 简介1.1 什么是 CypherCypher 是 Neo4j 图数据库官方提供的声明式查询语言，用来描述图模式（Pattern）并从图中查询、创建、更新或删除数据。如果你熟悉 SQL，可以把 Cypher 理解为：
 
-<link rel="stylesheet" href="/css/main.css">
+面向“关系模式”的 SQL，在图数据库世">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="Cypher 查询语句实践"/>
+  <meta property="og:site_name" content="BookLover&#39;s 🛖"/>
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
+    <meta property="og:image" content=""/>
+  
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"booklover79.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
-  </script>
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
-  <meta name="description" content="Cypher 查询语句实践[toc] 1 简介1.1 什么是 CypherCypher 是 Neo4j 图数据库官方提供的声明式查询语言，用来描述图模式（Pattern）并从图中查询、创建、更新或删除数据。如果你熟悉 SQL，可以把 Cypher 理解为：  面向“关系模式”的 SQL，在图数据库世界里的对应物。  但不同于 SQL 操作的是“表 + 行”，Cypher 操作的核心对象是：  节点">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Cypher 查询语句实践">
-<meta property="og:url" content="https://booklover79.github.io/2026/02/02/20260202_Cypher%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/index.html">
-<meta property="og:site_name" content="BookLover&#39;s 🛖">
-<meta property="og:description" content="Cypher 查询语句实践[toc] 1 简介1.1 什么是 CypherCypher 是 Neo4j 图数据库官方提供的声明式查询语言，用来描述图模式（Pattern）并从图中查询、创建、更新或删除数据。如果你熟悉 SQL，可以把 Cypher 理解为：  面向“关系模式”的 SQL，在图数据库世界里的对应物。  但不同于 SQL 操作的是“表 + 行”，Cypher 操作的核心对象是：  节点">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-02-01T16:00:00.000Z">
-<meta property="article:modified_time" content="2026-02-02T03:29:43.122Z">
-<meta property="article:author" content="BookLover">
-<meta property="article:tag" content="Cypher">
-<meta name="twitter:card" content="summary">
+  <script src="/js/jquery-2.0.3.min.js"></script>
 
-<link rel="canonical" href="https://booklover79.github.io/2026/02/02/20260202_Cypher%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
+  <!-- analytics -->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70812759-1', 'auto');
+  ga('send', 'pageview');
 </script>
 
-  <title>Cypher 查询语句实践 | BookLover's 🛖</title>
-  
 
 
+<meta name="generator" content="Hexo 7.3.0"></head>
 
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">BookLover's 🛖</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-  </ul>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">BookLover&#39;s 🛖</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
 </nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> Cypher 查询语句实践</h1>
+		</div>
+	
 
 
 
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-</div>
-    </header>
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2026/02/02/20260202_Cypher%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BookLover">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BookLover's 🛖">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Cypher 查询语句实践
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2026-02-02 00:00:00 / Modified: 11:29:43" itemprop="dateCreated datePublished" datetime="2026-02-02T00:00:00+08:00">2026-02-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Cypher/" itemprop="url" rel="index"><span itemprop="name">Cypher</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h1 id="Cypher-查询语句实践"><a href="#Cypher-查询语句实践" class="headerlink" title="Cypher 查询语句实践"></a>Cypher 查询语句实践</h1><p>[toc]</p>
+	  <h1 id="Cypher-查询语句实践"><a href="#Cypher-查询语句实践" class="headerlink" title="Cypher 查询语句实践"></a>Cypher 查询语句实践</h1><p>[toc]</p>
 <h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h2><h3 id="1-1-什么是-Cypher"><a href="#1-1-什么是-Cypher" class="headerlink" title="1.1 什么是 Cypher"></a>1.1 什么是 Cypher</h3><p>Cypher 是 <strong>Neo4j 图数据库</strong>官方提供的声明式查询语言，用来描述<strong>图模式（Pattern）</strong>并从图中查询、创建、更新或删除数据。如果你熟悉 SQL，可以把 Cypher 理解为：</p>
 <blockquote>
 <p><strong>面向“关系模式”的 SQL，在图数据库世界里的对应物</strong>。</p>
@@ -368,195 +297,138 @@
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">USER INPUT: &#x27;美国的双发涡轮螺旋桨短程支线客机共有多少种型号？具体包括哪些&#x27;</span><br><span class="line">    WITH [&quot;美国&quot;, &quot;双发涡轮螺旋桨短程客机&quot;, &quot;支线&quot;] AS keywords</span><br><span class="line"></span><br><span class="line">    MATCH (e)-[]-&gt;(a)</span><br><span class="line">    WHERE </span><br><span class="line">    ALL(keyword IN keywords WHERE EXISTS &#123;</span><br><span class="line">        MATCH (e)-[:HAS_ATTRIBUTE]-&gt;(attr)</span><br><span class="line">        WHERE NOT attr.name CONTAINS &quot;简介&quot;</span><br><span class="line">            AND (attr.name CONTAINS keyword OR attr.value CONTAINS keyword)</span><br><span class="line">    &#125;)</span><br><span class="line">    AND ANY(keyword IN keywords WHERE a.name CONTAINS keyword OR a.value CONTAINS keyword)</span><br><span class="line"></span><br><span class="line">    RETURN DISTINCT</span><br><span class="line">        e.name AS head, </span><br><span class="line">        &#x27;HAS_ATTRIBUTE&#x27; AS relation,</span><br><span class="line">        a.name + &quot;:&quot; + a.value AS tail,</span><br><span class="line">        COALESCE(e.schema_type, &quot;Unknown Node&quot;) AS head_props,</span><br><span class="line">        COALESCE(a.schema_type, &quot;Unknown Node&quot;) AS tail_props</span><br></pre></td></tr></table></figure>
 
+	  
+	</div>
 
-    </div>
+	<div>
+  	<center>
+	<div class="pagination">
 
     
     
+    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
     
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Cypher/" rel="tag"># Cypher</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2026/01/23/20260123_%E4%BB%8E%E6%96%87%E6%A1%A3%E5%88%B0%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%9A%E6%89%A9%E5%B1%95%E5%9B%BE%E8%B0%B1%E5%AE%9E%E7%8E%B0/" rel="prev" title="从文档到知识图谱：扩展图谱实现">
-      <i class="fa fa-chevron-left"></i> 从文档到知识图谱：扩展图谱实现
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
     
-  </article>
-  
-  
-  
+    <a href="/2026/01/23/20260123_从文档到知识图谱：扩展图谱实现/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
 
 
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
 
-          </div>
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2026-02-02 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
           
+  <li>
+    <li><a href="/categories/Cypher/">Cypher<span>1</span></a></li>
+  </li>
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Cypher/">Cypher<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2026 BookLover
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
+     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Cypher-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.</span> <span class="nav-text">Cypher 查询语句实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-Cypher"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 什么是 Cypher</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Cypher-%E7%9A%84%E6%A0%B8%E5%BF%83%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Cypher 的核心特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">1 基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%9F%BA%E6%9C%AC%E5%85%83%E7%B4%A0"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1 基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E8%8A%82%E7%82%B9%EF%BC%88Node%EF%BC%89"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">1.1.1 节点（Node）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E5%85%B3%E7%B3%BB%EF%BC%88Relationship%EF%BC%89"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">1.1.2 关系（Relationship）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%B8%B8%E7%94%A8%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2 常用关键字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.3 最简单的查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%9E%E8%B7%B5%E4%B8%AD%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="nav-number">1.3.</span> <span class="nav-text">2 实践中常见场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%9F%A5%E8%AF%A2%E3%80%8C%E5%AE%9E%E4%BD%93-%E2%86%92-%E5%B1%9E%E6%80%A7%E3%80%8D"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 查询「实体 → 属性」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-%E6%9F%A5%E8%AF%A2%E6%9F%90%E4%B8%80%E7%B1%BB%E8%8A%82%E7%82%B9%E7%9A%84%E6%8C%87%E5%AE%9A%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">2.1.1 查询某一类节点的指定属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-%E6%A0%B9%E6%8D%AE%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">2.1.2 根据条件查询属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-%E6%9F%A5%E8%AF%A2%E8%8A%82%E7%82%B9%E7%9A%84%E5%85%A8%E9%83%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">2.1.3 查询节点的全部属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-4-%E6%9F%A5%E8%AF%A2%E5%85%B3%E7%B3%BB%E4%B8%8A%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">2.1.4 查询关系上的属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%9F%A5%E8%AF%A2%E3%80%8C%E5%B1%9E%E6%80%A7-%E2%86%92-%E5%AE%9E%E4%BD%93%E3%80%8D"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 查询「属性 → 实体」</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E6%A0%B9%E6%8D%AE%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%BD%8D%E8%8A%82%E7%82%B9"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">2.2.1 根据属性定位节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E4%BD%BF%E7%94%A8-WHERE-%E8%BF%9B%E8%A1%8C%E6%A8%A1%E7%B3%8A-%E7%BB%84%E5%90%88%E6%9F%A5%E8%AF%A2"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2.2.2 使用 WHERE 进行模糊 &#x2F; 组合查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E6%A0%B9%E6%8D%AE%E5%85%B3%E7%B3%BB%E5%B1%9E%E6%80%A7%E5%8F%8D%E6%9F%A5%E5%AE%9E%E4%BD%93"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">2.2.3 根据关系属性反查实体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E5%B1%9E%E6%80%A7-%E2%86%92-%E5%A4%9A%E8%B7%B3%E5%AE%9E%E4%BD%93"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">2.2.4 属性 → 多跳实体</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9C%A8%E6%99%AF%E5%9B%BE%E5%B9%B3%E5%8F%B0%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">3 在景图平台中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%9E%E4%BE%8B%E2%86%92%E5%B1%9E%E6%80%A7"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 实例→属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E5%88%9D%E5%A7%8B%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 初始查询方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E5%90%8C%E6%97%B6%E8%BF%94%E5%9B%9E%E5%AE%9E%E4%BE%8B%E4%B8%8E%E5%B1%9E%E6%80%A7%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%EF%BC%89"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 同时返回实例与属性（字符串拼接）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-%E6%98%BE%E5%BC%8F%E8%BF%94%E5%9B%9E%E4%B8%89%E5%85%83%E7%BB%84%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 显式返回三元组结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-%E5%B1%9E%E6%80%A7%E8%8A%82%E7%82%B9%E6%8B%86%E5%88%86%E5%90%8E%E7%9A%84%E9%80%82%E9%85%8D"><span class="nav-number">1.4.1.4.</span> <span class="nav-text">3.1.4 属性节点拆分后的适配</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-5-%E5%9B%BA%E5%AE%9A%E5%85%B3%E7%B3%BB%E7%B1%BB%E5%9E%8B%EF%BC%8C%E9%81%BF%E5%85%8D-text2cypher-%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.1.5.</span> <span class="nav-text">3.1.5 固定关系类型，避免 text2cypher 错误</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%B1%9E%E6%80%A7%E2%86%92%E5%AE%9E%E4%BE%8B"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 属性→实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E5%88%9D%E5%A7%8B%E6%9F%A5%E8%AF%A2%E6%96%B9%E5%BC%8F"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">3.2.1 初始查询方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E5%90%8C%E6%97%B6%E8%BF%94%E5%9B%9E%E5%AE%9E%E4%BE%8B%E4%B8%8E%E5%B1%9E%E6%80%A7%EF%BC%88%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%8B%BC%E6%8E%A5%EF%BC%89"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">3.2.2 同时返回实例与属性（字符串拼接）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E4%BD%BF%E7%94%A8-EXISTS-%E7%BA%A6%E6%9D%9F%E5%B1%9E%E6%80%A7%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3.2.3 使用 EXISTS 约束属性条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-%E5%9B%BA%E5%AE%9A%E5%85%B3%E7%B3%BB%E7%B1%BB%E5%9E%8B%EF%BC%8C%E7%BB%9F%E4%B8%80%E8%BE%93%E5%87%BA%E7%BB%93%E6%9E%84"><span class="nav-number">1.4.2.4.</span> <span class="nav-text">3.2.4 固定关系类型，统一输出结构</span></a></li></ol></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">BookLover</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">15</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-      </div>
-      <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">27</span>
-        <span class="site-state-item-name">tags</span>
-      </div>
-  </nav>
-</div>
 
 
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2026</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">BookLover</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 </body>
-</html>
+   </html>
