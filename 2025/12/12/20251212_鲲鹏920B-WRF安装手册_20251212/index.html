@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"booklover79.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="鲲鹏920B-WRF安装手册[toc] 1 安装WRF-4.21.1 下载所有软件包   项目 版本 下载地址    ZLIB 1.2.11 https:&#x2F;&#x2F;zlib.net&#x2F;fossils&#x2F;zlib-1.2.11.tar.gz   HDF5 1.10.1 https:&#x2F;&#x2F;support.hdfgroup.org&#x2F;ftp&#x2F;HDF5&#x2F;releases&#x2F;hdf5-1.10&#x2F;hdf5-1.10.1&#x2F;sr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鲲鹏920B-WRF安装手册">
+<meta property="og:url" content="https://booklover79.github.io/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/index.html">
+<meta property="og:site_name" content="BookLover&#39;s 🛖">
+<meta property="og:description" content="鲲鹏920B-WRF安装手册[toc] 1 安装WRF-4.21.1 下载所有软件包   项目 版本 下载地址    ZLIB 1.2.11 https:&#x2F;&#x2F;zlib.net&#x2F;fossils&#x2F;zlib-1.2.11.tar.gz   HDF5 1.10.1 https:&#x2F;&#x2F;support.hdfgroup.org&#x2F;ftp&#x2F;HDF5&#x2F;releases&#x2F;hdf5-1.10&#x2F;hdf5-1.10.1&#x2F;sr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/image-20251217100827133.png">
+<meta property="article:published_time" content="2025-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-02T07:48:02.342Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="鲲鹏920B">
+<meta property="article:tag" content="WRF安装">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://booklover79.github.io/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/image-20251217100827133.png">
+
+<link rel="canonical" href="https://booklover79.github.io/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>鲲鹏920B-WRF安装手册 | BookLover's 🛖</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BookLover's 🛖</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          鲲鹏920B-WRF安装手册
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-12 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-12T00:00:00+08:00">2025-12-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-02 15:48:02" itemprop="dateModified" datetime="2026-02-02T15:48:02+08:00">2026-02-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/WRF%E5%AE%89%E8%A3%85/" itemprop="url" rel="index"><span itemprop="name">WRF安装</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="鲲鹏920B-WRF安装手册"><a href="#鲲鹏920B-WRF安装手册" class="headerlink" title="鲲鹏920B-WRF安装手册"></a>鲲鹏920B-WRF安装手册</h1><p>[toc]</p>
+<h2 id="1-安装WRF-4-2"><a href="#1-安装WRF-4-2" class="headerlink" title="1 安装WRF-4.2"></a>1 安装WRF-4.2</h2><h3 id="1-1-下载所有软件包"><a href="#1-1-下载所有软件包" class="headerlink" title="1.1 下载所有软件包"></a>1.1 下载所有软件包</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>版本</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ZLIB</td>
+<td>1.2.11</td>
+<td><a target="_blank" rel="noopener" href="https://zlib.net/fossils/zlib-1.2.11.tar.gz">https://zlib.net/fossils/zlib-1.2.11.tar.gz</a></td>
+</tr>
+<tr>
+<td>HDF5</td>
+<td>1.10.1</td>
+<td><a target="_blank" rel="noopener" href="https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/hdf5-1.10.1.tar.gz">https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.1/src/hdf5-1.10.1.tar.gz</a></td>
+</tr>
+<tr>
+<td>PNETCDF</td>
+<td>1.9.0</td>
+<td><a target="_blank" rel="noopener" href="http://cucis.ece.northwestern.edu/projects/PnetCDF">http://cucis.ece.northwestern.edu/projects/PnetCDF</a></td>
+</tr>
+<tr>
+<td>NETCDF-C</td>
+<td>4.4.1.1</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Unidata/netcdf-c/releases/tag/v4.4.1.1">https://github.com/Unidata/netcdf-c/releases/tag/v4.4.1.1</a></td>
+</tr>
+<tr>
+<td>NETCDF-Fortran</td>
+<td>4.4.1</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/Unidata/netcdf-fortran/releases/tag/v4.4.1">https://github.com/Unidata/netcdf-fortran/releases/tag/v4.4.1</a></td>
+</tr>
+<tr>
+<td>WRF</td>
+<td>4.2</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/wrf-model/WRF/archive/refs/tags/v4.2.tar.gz">https://github.com/wrf-model/WRF/archive/refs/tags/v4.2.tar.gz</a></td>
+</tr>
+<tr>
+<td>毕昇编译器和Hyper MPI</td>
+<td>24.0.RC1</td>
+<td><a target="_blank" rel="noopener" href="https://www.hikunpeng.com/developer/hpc/hpckit-download">https://www.hikunpeng.com/developer/hpc/hpckit-download</a></td>
+</tr>
+<tr>
+<td>测试用例</td>
+<td>conus12km</td>
+<td><a target="_blank" rel="noopener" href="https://www2.mmm.ucar.edu/wrf/src/conus12km.tar.gz">https://www2.mmm.ucar.edu/wrf/src/conus12km.tar.gz</a></td>
+</tr>
+</tbody></table>
+<p>选择的安装目录：&#x2F;usr&#x2F;local，文件目录都在&#x2F;data&#x2F;xxx</p>
+<p>表1 移植规划数据</p>
+<table>
+<thead>
+<tr>
+<th>序号</th>
+<th>软件安装规划路径</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>&#x2F;usr&#x2F;local&#x2F;hypermpi</td>
+<td>Hyper MPI的安装规划路径。</td>
+</tr>
+<tr>
+<td>2</td>
+<td>&#x2F;usr&#x2F;local&#x2F;PNETCDF</td>
+<td>PNETCDF的安装规划路径。</td>
+</tr>
+<tr>
+<td>3</td>
+<td>&#x2F;usr&#x2F;local&#x2F;HDF5</td>
+<td>HDF5的安装规划路径。</td>
+</tr>
+<tr>
+<td>4</td>
+<td>&#x2F;usr&#x2F;local&#x2F;NETCDF</td>
+<td>NETCDF的安装规划路径。</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>NETCDF-Fortran的安装规划路径。</td>
+</tr>
+<tr>
+<td>5</td>
+<td>&#x2F;usr&#x2F;local&#x2F;ZLIB</td>
+<td>ZLIB的安装规划路径。</td>
+</tr>
+<tr>
+<td>6</td>
+<td>&#x2F;data&#x2F;xxx&#x2F;WRF</td>
+<td>WRF的安装规划路径。</td>
+</tr>
+<tr>
+<td>7</td>
+<td>&#x2F;usr&#x2F;local&#x2F;conus12km</td>
+<td>WRF的测试规划路径。</td>
+</tr>
+</tbody></table>
+<h3 id="1-2-安装毕昇编译器"><a href="#1-2-安装毕昇编译器" class="headerlink" title="1.2 安装毕昇编译器"></a>1.2 安装毕昇编译器</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_009.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_009.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cd HPCKit软件包所在目录</span><br><span class="line">tar xvf HPCKit_25.1.0.SPC001_Linux-aarch64.tar.gz</span><br><span class="line"></span><br><span class="line">cd /data/xxx/HPCKit_25.1.0.SPC001_Linux-aarch64/</span><br><span class="line">sh install.sh</span><br><span class="line">安装目录：/usr/local，然后一直回车即可</span><br></pre></td></tr></table></figure>
+
+<p>注意：首次安装还需安装HIO桥接目标库。请按步骤完成一次性安装；后续只需重新设置环境变量即可，无需再次安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Start Installing HIO</span><br><span class="line">libhdf5.so &gt;= 1.12.0 required, Please update the library to the required version.</span><br><span class="line">Continue Installation? [y/n]</span><br><span class="line">y</span><br><span class="line">Confirm Installation.</span><br><span class="line">libnetcdf.so &gt;= 4.7.4 required, Please update the library to the required version.</span><br><span class="line">Continue Installation? [y/n]</span><br><span class="line">y</span><br><span class="line">Confirm Installation.</span><br><span class="line">libpnetcdf.so &gt;= 1.12.1 required, Please update the library to the required version.</span><br><span class="line">Continue Installation? [y/n]</span><br><span class="line">y</span><br><span class="line">Confirm Installation.</span><br><span class="line">HIO Installation Finished</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-安装HIO桥接目标库"><a href="#1-3-安装HIO桥接目标库" class="headerlink" title="1.3 安装HIO桥接目标库"></a>1.3 安装HIO桥接目标库</h3><p>参考链接：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_018.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_018.html</a></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>版本</th>
+<th>下载地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>hdf5</td>
+<td>1.12.3</td>
+<td><a target="_blank" rel="noopener" href="https://hdf-wordpress-1.s3.amazonaws.com/wp-content/uploads/manual/HDF5/HDF5_1_12_3/src/hdf5-1.12.3.tar.gz">https://hdf-wordpress-1.s3.amazonaws.com/wp-content/uploads/manual/HDF5/HDF5_1_12_3/src/hdf5-1.12.3.tar.gz</a></td>
+</tr>
+<tr>
+<td>netcdf-c</td>
+<td>4.9.2</td>
+<td><a target="_blank" rel="noopener" href="https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz">https://downloads.unidata.ucar.edu/netcdf-c/4.9.2/netcdf-c-4.9.2.tar.gz</a></td>
+</tr>
+<tr>
+<td>pnetcdf</td>
+<td>1.12.1</td>
+<td><a target="_blank" rel="noopener" href="https://parallel-netcdf.github.io/Release/pnetcdf-1.12.1.tar.gz">https://parallel-netcdf.github.io/Release/pnetcdf-1.12.1.tar.gz</a></td>
+</tr>
+</tbody></table>
+<h4 id="1-3-1-安装libhdf5-so"><a href="#1-3-1-安装libhdf5-so" class="headerlink" title="1.3.1 安装libhdf5.so"></a>1.3.1 安装libhdf5.so</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tar zxf hdf5-1.12.3.tar.gz</span><br><span class="line">cd hdf5-1.12.3</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">../configure --prefix=/usr/local/hdf5-install</span><br><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>ls &#x2F;usr&#x2F;local&#x2F;hdf5-install&#x2F;lib</p>
+<p>回显如下说明安装目录下已经存在hdf5动态库，表示安装成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libhdf5.a  libhdf5_hl.a  libhdf5_hl.la  libhdf5_hl.so  libhdf5_hl.so.200  libhdf5_hl.so.200.1.1  libhdf5.la  libhdf5.settings  libhdf5.so  libhdf5.so.200  libhdf5.so.200.3.0</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-2-安装libnetcdf-so"><a href="#1-3-2-安装libnetcdf-so" class="headerlink" title="1.3.2 安装libnetcdf.so"></a>1.3.2 安装libnetcdf.so</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">tar zxf netcdf-c-4.9.2.tar.gz</span><br><span class="line">cd netcdf-c-4.9.2</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">../configure --prefix=/usr/local/netcdf-install</span><br><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>ls &#x2F;usr&#x2F;local&#x2F;netcdf-install&#x2F;lib</p>
+<p>回显如下说明安装目录下已经存在NetCDF相关动态库，表示安装成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libnetcdf.a  libnetcdf.la  libnetcdf.settings  libnetcdf.so  libnetcdf.so.19  libnetcdf.so.19.2.2  pkgconfig</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-3-安装libpnetcdf-so"><a href="#1-3-3-安装libpnetcdf-so" class="headerlink" title="1.3.3 安装libpnetcdf.so"></a>1.3.3 安装libpnetcdf.so</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">tar zxf pnetcdf-1.12.1.tar.gz</span><br><span class="line">cd pnetcdf-1.12.1</span><br><span class="line">mkdir build</span><br><span class="line">cd build</span><br><span class="line">export MPICC=/usr/local/HPCKit/25.1.0.SPC001/hmpi/gcc/release/hmpi/bin/mpicc</span><br><span class="line">../configure --prefix=/usr/local/pnetcdf-install --enable-shared</span><br><span class="line">make -j</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+<p>ls &#x2F;path&#x2F;to&#x2F;pnetcdf-install&#x2F;lib<br>回显如下说明安装目录下已经存在PnetCDF相关动态库，表示安装成功。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">libpnetcdf.a  libpnetcdf.la  libpnetcdf.so  libpnetcdf.so.4  libpnetcdf.so.4.0.1  pkgconfig</span><br></pre></td></tr></table></figure>
+
+<p>配置HIO桥目标接库的环境变量，下面的选一个就行</p>
+<ul>
+<li>仅对当前会话生效：<br>export LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;hdf5-install&#x2F;lib:$LD_LIBRARY_PATH<br>export LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;netcdf-install&#x2F;lib:$LD_LIBRARY_PATH<br>export LD_LIBRARY_PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;pnetcdf-install&#x2F;lib:$LD_LIBRARY_PATH</li>
+<li>对当前用户生效：<br>vim <del>&#x2F;.bashrc<br>按“i”进入编辑模式，在文件</del>&#x2F;.bashrc末尾增加如下命令行。<br>export LD_LIBRARY_PATH&#x3D;&#x2F;path&#x2F;to&#x2F;pnetcdf-install&#x2F;lib:$LD_LIBRARY_PATH<br>按“ESC”退出编辑模式，然后输入”:wq!”保存并退出。<br>执行以下命令，使配置立即生效。<br>source ~&#x2F;.bashrc</li>
+</ul>
+<p>安装完成后，需要设置环境变量，参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_012.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_012.html</a></p>
+<h4 id="1-3-4-环境变量"><a href="#1-3-4-环境变量" class="headerlink" title="1.3.4  环境变量"></a>1.3.4  环境变量</h4><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_012.html%EF%BC%8C%E9%80%89%E5%85%B6%E4%B8%80%E5%B0%B1%E8%A1%8C">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpckit/instg/KunpengHPCKit_install_012.html，选其一就行</a></p>
+<h5 id="1-3-4-1-modules方式"><a href="#1-3-4-1-modules方式" class="headerlink" title="1.3.4.1  modules方式"></a>1.3.4.1  modules方式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">yum list | grep kernel # 配置yum源。</span><br><span class="line">yum list installed | grep tcl.aarch64 # 检查是否已安装tcl工具，有回显即有</span><br><span class="line">yum install -y tcl* #安装tcl工具</span><br><span class="line">yum list installed | grep environment-modules.aarch64 # 检查是否已安装module工具</span><br><span class="line">yum install -y environment-modules # 安装module工具</span><br><span class="line">source /etc/profile.d/modules.sh # 加载环境变量</span><br><span class="line"></span><br><span class="line">cd /usr/local/HPCKit/latest</span><br><span class="line">module use modulefiles # 添加modulefiles</span><br><span class="line">module avail  # 查询可用环境变量模块</span><br></pre></td></tr></table></figure>
+
+
+<blockquote>
+<p>回显如下类似信息：———————————- &#x2F;opt&#x2F;HPCKit&#x2F;25.1.0.SPC001&#x2F;modulefiles ——————————————-<br>bisheng&#x2F;compiler4.2.0.2&#x2F;bishengmodule            bisheng&#x2F;kml25.1.0.SPC001&#x2F;kvml&#x2F;omp     gcc&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;serial-locking    hio25.0.0&#x2F;hio<br>bisheng&#x2F;hmpi25.1.0.SPC001&#x2F;debug                  bisheng&#x2F;kml25.1.0.SPC001&#x2F;kvml&#x2F;serial  gcc&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;serial-nolocking<br>bisheng&#x2F;hmpi25.1.0.SPC001&#x2F;release                bisheng&#x2F;kupl25.1.0.SPC001&#x2F;prof        gcc&#x2F;kml25.1.0.SPC001&#x2F;kml<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;multi             bisheng&#x2F;kupl25.1.0.SPC001&#x2F;release     gcc&#x2F;kml25.1.0.SPC001&#x2F;kspblas&#x2F;omp<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;serial-locking    bisheng&#x2F;kutacc25.1.0.SPC001&#x2F;kutacc    gcc&#x2F;kml25.1.0.SPC001&#x2F;kspblas&#x2F;serial<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;serial-nolocking  gcc&#x2F;compiler12.3.1&#x2F;gccmodule          gcc&#x2F;kml25.1.0.SPC001&#x2F;kvml&#x2F;omp<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kml                     gcc&#x2F;hmpi25.1.0.SPC001&#x2F;debug           gcc&#x2F;kml25.1.0.SPC001&#x2F;kvml&#x2F;serial<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kspblas&#x2F;omp             gcc&#x2F;hmpi25.1.0.SPC001&#x2F;release         gcc&#x2F;kupl25.1.0.SPC001&#x2F;prof<br>bisheng&#x2F;kml25.1.0.SPC001&#x2F;kspblas&#x2F;serial          gcc&#x2F;kml25.1.0.SPC001&#x2F;kblas&#x2F;multi      gcc&#x2F;kupl25.1.0.SPC001&#x2F;release<br>bisheng&#x2F;kulitho25.1.0.SPC001&#x2F;kulitho             gcc&#x2F;kulitho25.1.0.SPC001&#x2F;kulitho</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module load bisheng/hmpi25.1.0.SPC001/release # module load modulefile 将组件的相关信息添加至环境变量中</span><br><span class="line">module load bisheng/compiler4.2.0.2/bishengmodule</span><br><span class="line">module load hio25.0.0/hio</span><br><span class="line"></span><br><span class="line">module list # 查看已加载环境变量模块</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3-4-2-setvars-sh方式"><a href="#1-3-4-2-setvars-sh方式" class="headerlink" title="1.3.4.2 setvars.sh方式"></a>1.3.4.2 setvars.sh方式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/HPCKit/latest</span><br><span class="line">source setvars.sh --use-bisheng --force</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="1-2-编译环境"><a href="#1-2-编译环境" class="headerlink" title="1.2 编译环境"></a>1.2 编译环境</h3><h4 id="1-2-1-安装ZLIB"><a href="#1-2-1-安装ZLIB" class="headerlink" title="1.2.1 安装ZLIB"></a>1.2.1 安装ZLIB</h4><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0006.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0006.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">export CC=clang</span><br><span class="line">export CXX=clang++</span><br><span class="line">export FC=flang</span><br><span class="line">export MPICC=mpicc</span><br><span class="line">export MPICXX=mpicxx</span><br><span class="line">export MPIFC=mpifort</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -vxf zlib-1.2.11.tar.gz</span><br><span class="line">cd /data/xxx/zlib-1.2.11</span><br><span class="line">./configure -prefix=/usr/local/ZLIB</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=/usr/local/ZLIB/lib:$LD_LIBRARY_PATH</span><br><span class="line">export ZLIB=/usr/local/ZLIB</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-2-安装PNETCDF"><a href="#1-2-2-安装PNETCDF" class="headerlink" title="1.2.2 安装PNETCDF"></a>1.2.2 安装PNETCDF</h4><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0007.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0007.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf parallel-netcdf-1.9.0.tar.gz</span><br><span class="line">cd /data/xxx/parallel-netcdf-1.9.0/</span><br><span class="line">./configure --prefix=/usr/local/PNETCDF --build=aarch64-unknown-linux-gnu CFLAGS=&quot;-fPIC -DPIC&quot; CXXFLAGS=&quot;-fPIC -DPIC&quot; FCFLAGS=&quot;-fPIC&quot; FFLAGS=&quot;-fPIC&quot; CC=$MPICC CXX=$MPICXX FC=$MPIFC F77=$MPIFC</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/PNETCDF/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/PNETCDF/lib:$LD_LIBRARY_PATH</span><br><span class="line">export PNETCDF=/usr/local/PNETCDF</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-3-安装HDF5"><a href="#1-2-3-安装HDF5" class="headerlink" title="1.2.3 安装HDF5"></a>1.2.3 安装HDF5</h4><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0008.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0008.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf hdf5-1.10.1.tar.gz</span><br><span class="line">cd /data/xxx/hdf5-1.10.1</span><br><span class="line">./configure --prefix=/usr/local/HDF5 --build=aarch64-unknown-linux-gnu  --enable-fortran --enable-static=yes --enable-parallel --enable-shared CFLAGS=&quot;-O3 -fPIC -Wno-incompatible-pointer-types-discards-qualifiers -Wno-non-literal-null-conversion -fGNU-warning-compatibility -fGNU-error-compatibility&quot; FCFLAGS=&quot;-O3 -fPIC&quot; LDFLAGS=&quot;-Wl,--build-id&quot; --enable-fortran --enable-parallel CC=mpicc FC=mpif90 CXX=mpicxx</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi libtool # 打开“libtool”文件</span><br><span class="line">wl=&#x27;-Wl,&#x27;  # 修改“libtool”文件中第11835行的内容，注意，打开一定是空的，否则肯定是配置有问题，需要重新./configure...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/HDF5/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/HDF5/lib:$LD_LIBRARY_PATH</span><br><span class="line">export HDF5=/usr/local/HDF5</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-4-安装NETCDF-C"><a href="#1-2-4-安装NETCDF-C" class="headerlink" title="1.2.4 安装NETCDF-C"></a>1.2.4 安装NETCDF-C</h4><p>参考1：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0009.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0009.html</a></p>
+<p>参考2：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0008.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0008.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf netcdf-c-4.4.1.1.tar.gz</span><br><span class="line">cd /data/xxx/netcdf-c-4.4.1.1/</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/NETCDF LDFLAGS=&quot;-L$HDF5/lib&quot; CPPFLAGS=&quot;-I$HDF5/include&quot; CC=mpicc --disable-dap FC=mpif90 CXX=mpicxx # 仅安装WRF</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/NETCDF --build=aarch64-unknown-linux-gnu --enable-shared --enable-netcdf-4 --enable-dap --with-pic --disable-doxygen --enable-static --enable-pnetcdf --enable-largefile CC=mpicc CXX=mpicxx FC=mpifort F77=mpifort CPPFLAGS=&quot;-I/usr/local/HDF5/include -I/usr/local/PNETCDF/include&quot; LDFLAGS=&quot;-L/usr/local/HDF5/lib -L/usr/local/PNETCDF/lib -Wl,-rpath=/usr/local/HDF5/lib -Wl,-rpath=/usr/local/PNETCDF/lib&quot; CFLAGS=&quot;-L/usr/local/HDF5/lib -L/usr/local/PNETCDF/lib -I/usr/local/HDF5/include -I/usr/local/PNETCDF/include&quot; # 还想安装WPS</span><br><span class="line"></span><br><span class="line">make clean</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/NETCDF/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/NETCDF/lib:$LD_LIBRARY_PATH</span><br><span class="line">export NETCDF=/usr/local/NETCDF</span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-5-安装NETCDF-Fortran"><a href="#1-2-5-安装NETCDF-Fortran" class="headerlink" title="1.2.5 安装NETCDF-Fortran"></a>1.2.5 安装NETCDF-Fortran</h4><p>参考1：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0009.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0009.html</a></p>
+<p>参考2：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0009.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0009.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf netcdf-fortran-4.4.1.tar.gz</span><br><span class="line">cd /data/xxx/netcdf-fortran-4.4.1</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/NETCDF CPPFLAGS=&quot;-I$HDF5/include -I$NETCDF/include&quot; LDFLAGS=&quot;-L$HDF5/lib -L$NETCDF/lib&quot; --build=aarch64-unknown-linux-gnu --enable-static=yes --enable-shared CFLAGS=&quot;-O3 -fPIC -Wno-incompatible-pointer-types-discards-qualifiers -Wno-non-literal-conversion -Wno-implicit-function-declaration&quot; FCFLAGS=&quot;-O3 -fPIC&quot; LDFLAGS=&quot;-Wl,--build-id&quot; CC=mpicc FC=mpif90 CXX=mpicxx # 仅安装WRF</span><br><span class="line"></span><br><span class="line">./configure --prefix=/usr/local/install/NETCDF --build=aarch64-unknown-linux-gnu --enable-shared --with-pic --disable-doxygen --enable-largefile --enable-static CC=mpicc CXX=mpicxx FC=mpifort F77=mpifort CPPFLAGS=&quot; -fPIC  -I/path/to/install/HDF5/include -I/path/to/install/NETCDF/include&quot; LDFLAGS=&quot;-L/path/to/install/HDF5/lib -L/path/to/install/NETCDF/lib -Wl,-rpath=/path/to/install/HDF5/lib -Wl,-rpath=/path/to/install/NETCDF/lib&quot; CFLAGS=&quot; -fPIC -L/path/to/install/HDF5/lib -L/path/to/install/NETCDF/lib -I/path/to/install/HDF5/include -I/path/to/install/NETCDF/include&quot; CXXFLAGS=&quot; -fPIC -L/path/to/install/HDF5/lib -L/path/to/install/NETCDF/lib -I/path/to/install/HDF5/include -I/path/to/install/NETCDF/include&quot; FCFLAGS=&quot; -fPIC -L/path/to/install/HDF5/lib -L/path/to/install/NETCDF/lib -I/path/to/install/HDF5/include -I/path/to/install/NETCDF/include&quot;  # 还想安装WPS</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vi libtool # 打开“libtool”文件</span><br><span class="line">wl=&#x27;-Wl,&#x27;  # 修改“libtool”文件中第10118和10270行的内容，注意，打开一定是空的，否则肯定是配置有问题，需要重新./configure...</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export PATH=/usr/local/NETCDF/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=/usr/local/NETCDF/lib:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="1-3-WRF4-2-安装"><a href="#1-3-WRF4-2-安装" class="headerlink" title="1.3 WRF4.2 安装"></a>1.3 WRF4.2 安装</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0012.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0012.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -vxf WRF-4.2.tar.gz</span><br><span class="line">cd /data/xxx/WRF-4.2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi arch/configure.defaults</span><br></pre></td></tr></table></figure>
+
+<p>在文件中第1978行末尾插入如下全部内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">################################################## #########</span><br><span class="line">#ARCH   Linux   aarch64,clang HYPERMPI#serial smpar dmpar dm+sm</span><br><span class="line">DESCRIPTION     =       CLANG ($SFC/$SCC)</span><br><span class="line">DMPARALLEL      =        1</span><br><span class="line">OMPCPP          =        -D_OPENMP</span><br><span class="line">OMP             =        -fopenmp</span><br><span class="line">OMPCC           =        -fopenmp</span><br><span class="line">SFC             =       flang</span><br><span class="line">SCC             =       clang -Wno-implicit-function-declaration -Wno-implicit-int</span><br><span class="line">CCOMP           =       clang</span><br><span class="line">DM_FC           =       mpif90 -f90=$(SFC)</span><br><span class="line">DM_CC           =       mpicc -cc=$(SCC) -DMPI2_SUPPORT -Wno-implicit-function-declaration -Wno-implicit-int</span><br><span class="line">FC              =       CONFIGURE_FC</span><br><span class="line">CC              =       CONFIGURE_CC</span><br><span class="line">LD              =       $(FC)</span><br><span class="line">RWORDSIZE       =       CONFIGURE_RWORDSIZE</span><br><span class="line">PROMOTION       =       #-fdefault-real-8</span><br><span class="line">ARCH_LOCAL      =       -DNONSTANDARD_SYSTEM_SUBR  -DWRF_USE_CLM</span><br><span class="line">CFLAGS_LOCAL    =      -mcpu=native -w -O3 -c -march=armv8.2-a</span><br><span class="line">LDFLAGS_LOCAL   =</span><br><span class="line">CPLUSPLUSLIB    =</span><br><span class="line">ESMF_LDFLAG     =      $(CPLUSPLUSLIB)</span><br><span class="line">FCOPTIM         =       -O3 -funroll-loops -march=armv8.2-a</span><br><span class="line">FCREDUCEDOPT    =       $(FCOPTIM)</span><br><span class="line">FCNOOPT         =       -O0</span><br><span class="line">FCDEBUG         =      -g # -fbacktrace -ggdb-fcheck=bounds,do,mem,pointer -ffpe-trap=invalid,zero,overflow</span><br><span class="line">FORMAT_FIXED    =       -ffixed-form</span><br><span class="line">FORMAT_FREE     =       -ffree-form -ffree-line-length-0</span><br><span class="line">FCSUFFIX        =</span><br><span class="line">BYTESWAPIO      =       -fconvert=big-endian</span><br><span class="line">FCBASEOPTS_NO_G =       -w $(FORMAT_FREE) $(BYTESWAPIO)</span><br><span class="line">FCBASEOPTS      =       -mcpu=native $(OMP) $(FCBASEOPTS_NO_G)</span><br><span class="line">MODULE_SRCH_FLAG =</span><br><span class="line">TRADFLAG        =      -traditional</span><br><span class="line">CPP             =      /lib/cpp -P</span><br><span class="line">AR              =      ar</span><br><span class="line">ARFLAGS         =      ru</span><br><span class="line">M4              =      m4 -G</span><br><span class="line">RANLIB          =      ranlib</span><br><span class="line">RLFLAGS         =</span><br><span class="line">CC_TOOLS        =      $(SCC)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi phys/module_mp_SBM_polar_radar.F</span><br></pre></td></tr></table></figure>
+
+<p>在文件中第452行添加如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">external :: derf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export WRFIO_NCD_LARGE_FILE_SUPPORT=1</span><br><span class="line">export CPPFLAGS=&quot;-I$HDF5/include -I$PNETCDF/include -I$NETCDF/include&quot;</span><br><span class="line">export LDFLAGS=&quot;-L$HDF5/lib -L$PNETCDF/lib -L$NETCDF/lib -L$ZLIB/lib -lnetcdf -lnetcdff -lpnetcdf -lhdf5_hl -lhdf5 -lz&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install time # 安装time，可用于计算跑了多长时间</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 4 | ./configure</span><br><span class="line">sed -i &quot;s%-lz% -L/usr/local/ZLIB/lib -lz%g&quot; configure.wrf</span><br><span class="line">./compile -j 16 em_real 2&gt;&amp;1 | tee -a compile.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-4-WRF4-2-运行和测试"><a href="#1-4-WRF4-2-运行和测试" class="headerlink" title="1.4 WRF4.2 运行和测试"></a>1.4 WRF4.2 运行和测试</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0013.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openmind_kunpengwrf_02_0013.html</a></p>
+<p>必须安装和WRF相同的版本，否则会报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tar -vxf conus12km.tar.gz</span><br><span class="line">cp -r /data/xxx/WRF/WRF-4.2/run/* /data/xxx/conus12km</span><br><span class="line">cd /data/xxx/conus12km</span><br><span class="line">ln -sf /data/xxx/WRF/WRF-4.2/main/*.exe ./</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time mpirun --allow-run-as-root -np 8 ./wrf.exe  # 运行WRF程序。</span><br><span class="line">less rsl.out.0000 # 验证程序是否正常结束</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-安装WPS4-2"><a href="#2-安装WPS4-2" class="headerlink" title="2 安装WPS4.2"></a>2 安装WPS4.2</h2><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0013.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/centos_kunpeng_wps_39_02_0013.html</a></p>
+<p>下载：<a target="_blank" rel="noopener" href="https://github.com/wrf-model/WPS/archive/refs/tags/v4.2.tar.gz">https://github.com/wrf-model/WPS/archive/refs/tags/v4.2.tar.gz</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export WRFIO_NCD_LARGE_FILE_SUPPORT=1</span><br><span class="line">export NETCDF=/usr/local/NETCDF</span><br><span class="line">export HDF5=/usr/local/HDF5</span><br><span class="line">export PNETCDF=/usr/local/PNETCDF</span><br><span class="line">export CPPFLAGS=&quot;-I$HDF5/include -I$PNETCDF/include -I$NETCDF/include&quot;</span><br><span class="line">export LDFLAGS=&quot;-L$HDF5/lib -L$PNETCDF/lib -L$NETCDF/lib -lnetcdf -lnetcdff -lpnetcdf -lhdf5_hl -lhdf5 -lz&quot;</span><br><span class="line">unset MPI MPI_DIR MPI_INC</span><br><span class="line">export WRF_DIR=/data/xxx/WRF-4.2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf WPS-4.2.tar.gz</span><br><span class="line">cd /data/xxx/WPS-4.2</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">vi arch/configure.defaults   # 修改171开始的那一段</span><br><span class="line"></span><br><span class="line">########################################################################################################################</span><br><span class="line">#ARCH    Linux aarch64, flang   # serial serial_NO_GRIB2 dmpar dmpar_NO_GRIB2</span><br><span class="line">#</span><br><span class="line">COMPRESSION_LIBS    = CONFIGURE_COMP_L</span><br><span class="line">COMPRESSION_INC     = CONFIGURE_COMP_I</span><br><span class="line">FDEFS               = CONFIGURE_FDEFS</span><br><span class="line">SFC                 = flang</span><br><span class="line">SCC                 = clang -Wno-implicit-function-declaration -Wno-implicit-int</span><br><span class="line">DM_FC               = mpif90</span><br><span class="line">DM_CC               = mpicc -DMPI2_SUPPORT -Wno-implicit-function-declaration -Wno-implicit-int</span><br><span class="line">FC                  = CONFIGURE_FC</span><br><span class="line">CC                  = CONFIGURE_CC</span><br><span class="line">LD                  = $(FC)</span><br><span class="line">FFLAGS              = -ffree-form -O -fconvert=big-endian</span><br><span class="line">F77FLAGS            = -ffixed-form -O -fconvert=big-endian</span><br><span class="line">FCSUFFIX            =</span><br><span class="line">FNGFLAGS            = $(FFLAGS)</span><br><span class="line">LDFLAGS             =</span><br><span class="line">CFLAGS              = -O2 -std=gnu89</span><br><span class="line">CPP                 = /usr/bin/cpp -P -traditional</span><br><span class="line">CPPFLAGS            = -D_UNDERSCORE -DBYTESWAP -DLINUX -DIO_NETCDF -DBIT32 -DNO_SIGNAL CONFIGURE_MPI</span><br><span class="line">RANLIB              = ranlib</span><br><span class="line">LIBS                = -L./ -lpgu -lgfortran</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/image-20251217100827133.png" alt="image-20251217100827133"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">echo 3 | ./configure</span><br><span class="line">vi configure.wps</span><br><span class="line">48行最后面加 -lomp（必须，否则会少一个exe）</span><br><span class="line">./compile</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-其他"><a href="#3-其他" class="headerlink" title="3 其他"></a>3 其他</h2><h3 id="3-1-安装JASPER"><a href="#3-1-安装JASPER" class="headerlink" title="3.1 安装JASPER"></a>3.1 安装JASPER</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openeuler_kunpeng_WRFDA_391_02_0006.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openeuler_kunpeng_WRFDA_391_02_0006.html</a></p>
+<p>clang失败，cpp编译成功。。。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">export BISHENG=/usr/local/HPCKit/25.1.0.SPC001/compiler/bisheng</span><br><span class="line">export BISHENG_DIR=$BISHENG</span><br><span class="line">export BISHENG_PATH=$BISHENG/bin</span><br><span class="line">export BISHENG_LIB=$BISHENG/lib</span><br><span class="line">export BISHENG_INC=$BISHENG/include</span><br><span class="line"></span><br><span class="line">export LD_LIBRARY_PATH=$BISHENG_LIB:$LD_LIBRARY_PATH</span><br><span class="line">export INCLUDE=$BISHENG_INC:$INCLUDE</span><br><span class="line"></span><br><span class="line">export CC=clang</span><br><span class="line">export CXX=clang++</span><br><span class="line">export FC=flang</span><br><span class="line">export F77=flang</span><br><span class="line">export F90=flang</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">export CPPFLAGS=&quot;-I/usr/local/HPCKit/25.1.0.SPC001/compiler/bisheng/include&quot;</span><br><span class="line">export LDFLAGS=&quot;-L/usr/local/HPCKit/25.1.0.SPC001/compiler/bisheng/lib&quot;</span><br><span class="line">export CFLAGS=&quot;-O2 -std=gnu89 -Wno-implicit-function-declaration&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cd /data/xxx/jasper-1.900.2/</span><br><span class="line">make clean</span><br><span class="line">./configure --prefix=/usr/local/JASPER</span><br><span class="line">make -j8</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-安装RTTOV"><a href="#3-2-安装RTTOV" class="headerlink" title="3.2 安装RTTOV"></a>3.2 安装RTTOV</h3><p>参考：<a target="_blank" rel="noopener" href="https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openeuler_kunpeng_WRFDA_391_02_0007.html">https://www.hikunpeng.com/document/detail/zh/kunpenghpcs/hpcindapp/prtg-osc/openeuler_kunpeng_WRFDA_391_02_0007.html</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export BISHENG=/usr/local/HPCKit/25.1.0.SPC001/compiler/bisheng</span><br><span class="line">export PATH=$BISHENG/bin:/usr/local/HPCKit/25.1.0.SPC001/hmpi/bisheng/release/hmpi/bin:/usr/local/HDF5/bin:/usr/local/PNETCDF/bin:/usr/local/NETCDF/bin:$PATH</span><br><span class="line">export LD_LIBRARY_PATH=$BISHENG/lib:/usr/local/HPCKit/25.1.0.SPC001/hmpi/bisheng/release/hmpi/lib:/usr/local/HDF5/lib:/usr/local/PNETCDF/lib:/usr/local/NETCDF/lib:$LD_LIBRARY_PATH</span><br><span class="line">export CC=clang CXX=clang++ FC=flang F77=flang F90=flang</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cd /data/xxx/RTTOV</span><br><span class="line">mkdir RTTOV-11.3</span><br><span class="line">tar –zxvf RTTOV-11.3.tar.gz –C RTTOV-11.3</span><br><span class="line">pip3 install numpy -i http://pypi.tuna.tsinghua.edu.cn/simple/ --trusted-host pypi.tuna.tsinghua.edu.cn</span><br><span class="line">cd RTTOV-11.3</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vim build/Makefile.local # 29、57行修改</span><br><span class="line">HDF5_PREFIX=/usr/local/HDF5</span><br><span class="line">NETCDF_PREFIX=/usr/local/NETCDF</span><br></pre></td></tr></table></figure>
+
+<p>自定义 arch 文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd build/arch</span><br><span class="line">cp gfortran myflang</span><br></pre></td></tr></table></figure>
+<p>然后编辑 myflang 文件，把里面的编译器变量改成 flang：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi myflang</span><br><span class="line">FC = flang</span><br><span class="line">FCFLAGS = -O2 -fPIC</span><br><span class="line">LINK = flang</span><br><span class="line">LDFLAGS = </span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd src</span><br><span class="line">../build/rttov_compile.sh</span><br></pre></td></tr></table></figure>
+
+<p>根据安装交互依次选择：myflang，一直回车</p>
+<h3 id="3-3-安装WRFDA"><a href="#3-3-安装WRFDA" class="headerlink" title="3.3 安装WRFDA"></a>3.3 安装WRFDA</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">export WRFIO_NCD_LARGE_FILE_SUPPORT=1</span><br><span class="line">export NETCDF=/usr/local/NETCDF</span><br><span class="line">export HDF5=/usr/local/HDF5</span><br><span class="line">export PNETCDF=/usr/local/PNETCDF</span><br><span class="line">export CPPFLAGS=&quot;-I$HDF5/include -I$PNETCDF/include -I$NETCDF/include&quot;</span><br><span class="line">export LDFLAGS=&quot;-L$HDF5/lib -L$PNETCDF/lib -L$NETCDF/lib -lnetcdf -lnetcdff -lpnetcdf -lhdf5_hl -lhdf5 -lz&quot;</span><br><span class="line">export JASPERLIB=/usr/local/JASPER/lib</span><br><span class="line">export JASPREINC=/usr/local/JASPER/inlucde</span><br><span class="line">export WRF_DIR=/data/xxx/WRF-4.2-bak</span><br><span class="line">export RTTOV=/data/xxx/RTTOV-11.3</span><br><span class="line">export MPI_LIB=&quot;-L$MPI_LIB -lmpi -lomp&quot;</span><br><span class="line">export CC=mpicc CXX=mpicxx FC=mpif90 F77=mpif90 F90=mpif90</span><br></pre></td></tr></table></figure>
+
+<p>还没成功。。。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%B2%B2%E9%B9%8F920B/" rel="tag"># 鲲鹏920B</a>
+              <a href="/tags/WRF%E5%AE%89%E8%A3%85/" rel="tag"># WRF安装</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/" rel="prev" title="使用 VSCode Compare Folders 对比两个项目的差异">
+      <i class="fa fa-chevron-left"></i> 使用 VSCode Compare Folders 对比两个项目的差异
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/" rel="next" title="RAG 测试用例生成">
+      RAG 测试用例生成 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C"><span class="nav-number">1.</span> <span class="nav-text">鲲鹏920B-WRF安装手册</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85WRF-4-2"><span class="nav-number">1.1.</span> <span class="nav-text">1 安装WRF-4.2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%B8%8B%E8%BD%BD%E6%89%80%E6%9C%89%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 下载所有软件包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%AE%89%E8%A3%85%E6%AF%95%E6%98%87%E7%BC%96%E8%AF%91%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 安装毕昇编译器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%AE%89%E8%A3%85HIO%E6%A1%A5%E6%8E%A5%E7%9B%AE%E6%A0%87%E5%BA%93"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 安装HIO桥接目标库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-%E5%AE%89%E8%A3%85libhdf5-so"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">1.3.1 安装libhdf5.so</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-%E5%AE%89%E8%A3%85libnetcdf-so"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">1.3.2 安装libnetcdf.so</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-%E5%AE%89%E8%A3%85libpnetcdf-so"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">1.3.3 安装libpnetcdf.so</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">1.3.4  环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-4-1-modules%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.3.4.1.</span> <span class="nav-text">1.3.4.1  modules方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3-4-2-setvars-sh%E6%96%B9%E5%BC%8F"><span class="nav-number">1.1.3.4.2.</span> <span class="nav-text">1.3.4.2 setvars.sh方式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.2 编译环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E5%AE%89%E8%A3%85ZLIB"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">1.2.1 安装ZLIB</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-%E5%AE%89%E8%A3%85PNETCDF"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">1.2.2 安装PNETCDF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-3-%E5%AE%89%E8%A3%85HDF5"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">1.2.3 安装HDF5</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-4-%E5%AE%89%E8%A3%85NETCDF-C"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">1.2.4 安装NETCDF-C</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-5-%E5%AE%89%E8%A3%85NETCDF-Fortran"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">1.2.5 安装NETCDF-Fortran</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-WRF4-2-%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.5.</span> <span class="nav-text">1.3 WRF4.2 安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-WRF4-2-%E8%BF%90%E8%A1%8C%E5%92%8C%E6%B5%8B%E8%AF%95"><span class="nav-number">1.1.6.</span> <span class="nav-text">1.4 WRF4.2 运行和测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85WPS4-2"><span class="nav-number">1.2.</span> <span class="nav-text">2 安装WPS4.2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%85%B6%E4%BB%96"><span class="nav-number">1.3.</span> <span class="nav-text">3 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%AE%89%E8%A3%85JASPER"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 安装JASPER</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E5%AE%89%E8%A3%85RTTOV"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 安装RTTOV</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%AE%89%E8%A3%85WRFDA"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 安装WRFDA</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BookLover</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

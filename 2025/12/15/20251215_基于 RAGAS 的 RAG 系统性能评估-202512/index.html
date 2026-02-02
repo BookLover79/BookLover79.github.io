@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"booklover79.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="基于 RAGAS 的 RAG 系统性能评估0 前沿为了不断优化RAG系统，需要对其生成答案的准确性进行评估。常用的方法有两种：人工评估和大模型（LLM）评估。 人工评估的问题在于，人类标记者之间的一致性通常不超过 80%，这意味着评估结果可能带有主观偏差。相比之下，LLM 在约 80% 的情况下能与人类评估保持一致。因此，虽然让一名 LLM 评估另一名 LLM 听起来有些不寻常，但这实际上是一种可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于 RAGAS 的 RAG 系统性能评估">
+<meta property="og:url" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/index.html">
+<meta property="og:site_name" content="BookLover&#39;s 🛖">
+<meta property="og:description" content="基于 RAGAS 的 RAG 系统性能评估0 前沿为了不断优化RAG系统，需要对其生成答案的准确性进行评估。常用的方法有两种：人工评估和大模型（LLM）评估。 人工评估的问题在于，人类标记者之间的一致性通常不超过 80%，这意味着评估结果可能带有主观偏差。相比之下，LLM 在约 80% 的情况下能与人类评估保持一致。因此，虽然让一名 LLM 评估另一名 LLM 听起来有些不寻常，但这实际上是一种可">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/v2-26ec3a33d9bd65c8767af0079812469e_1440w.jpg">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225160335084.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225152529557.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225172924685.png">
+<meta property="article:published_time" content="2025-12-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-02T07:49:36.519Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="RAGAS">
+<meta property="article:tag" content="性能评估&#39;">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/v2-26ec3a33d9bd65c8767af0079812469e_1440w.jpg">
+
+<link rel="canonical" href="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>基于 RAGAS 的 RAG 系统性能评估 | BookLover's 🛖</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">BookLover's 🛖</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于 RAGAS 的 RAG 系统性能评估
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-12-15 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-15T00:00:00+08:00">2025-12-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2026-02-02 15:49:36" itemprop="dateModified" datetime="2026-02-02T15:49:36+08:00">2026-02-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RAG/" itemprop="url" rel="index"><span itemprop="name">RAG</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="基于-RAGAS-的-RAG-系统性能评估"><a href="#基于-RAGAS-的-RAG-系统性能评估" class="headerlink" title="基于 RAGAS 的 RAG 系统性能评估"></a>基于 RAGAS 的 RAG 系统性能评估</h1><h2 id="0-前沿"><a href="#0-前沿" class="headerlink" title="0 前沿"></a>0 前沿</h2><p>为了不断优化RAG系统，需要对其生成答案的准确性进行评估。常用的方法有两种：人工评估和大模型（LLM）评估。</p>
+<p>人工评估的问题在于，人类标记者之间的一致性通常不超过 80%，这意味着评估结果可能带有主观偏差。相比之下，LLM 在约 80% 的情况下能与人类评估保持一致。因此，虽然让一名 LLM 评估另一名 LLM 听起来有些不寻常，但这实际上是一种可行且高效的方法。使用 LLM 自动化评估不仅能够加快评估速度，还能提高可扩展性，同时节省大量人工标注的成本和时间。</p>
+<p>在众多方法中，RAGAs 是目前较为常用的 RAG 系统评估方法。其核心理念是：LLM 可以通过固定的评分规则或模板来评估自然语言输出。这些规则帮助模型避免“自由评分”——即随意判断对错或好坏，容易出现不稳定或不一致的结果。通过固定规则，RAGAs 不仅减少了评估偏差，还能提供可解释且直观的连续分数，方便量化和比较不同答案的质量。</p>
+<h2 id="1-RAGAs-核心思想"><a href="#1-RAGAs-核心思想" class="headerlink" title="1 RAGAs 核心思想"></a>1 RAGAs 核心思想</h2><p>拉加斯是最早提出 RAGAs 方法的人或团队。他们在研究中提出，使用统计稳定性和少量人工标注就能评估 RAG 系统的表现。其核心思想是：事实答案在语义上应该比幻觉答案更一致。也就是说，真实答案的样本在统计抽样中表现出更高的稳定性。</p>
+<p>基于这一原理，RAGAs 可以使用 LLM、嵌入向量和少量手工策划的问答对（约 10 个）来自动化评估过程，而不需要数百个手工 QA 对。</p>
+<h2 id="2-评估所需数据"><a href="#2-评估所需数据" class="headerlink" title="2 评估所需数据"></a>2 评估所需数据</h2><p>根据 RAGAs 文档，RAG 系统的评估需要以下四类关键数据：</p>
+<ol>
+<li><strong>问题（Question）</strong>：RAG 系统需要回答的查询或输入问题。</li>
+<li><strong>上下文（Context）</strong>：RAG 系统实际检索到的文本块，用作生成答案的依据</li>
+<li><strong>答案（Answer）</strong>：RAG 系统针对问题生成的回答。</li>
+<li><strong>真实答案（Ground Truth）</strong>：问题的标准答案或期望答案。</li>
+</ol>
+<p><img src="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/v2-26ec3a33d9bd65c8767af0079812469e_1440w.jpg" alt="img"></p>
+<h2 id="3-核心评估指标"><a href="#3-核心评估指标" class="headerlink" title="3 核心评估指标"></a>3 核心评估指标</h2><p>RAGAs 提供了一系列可量化指标，包括：</p>
+<ol>
+<li><strong>上下文精度（Context Precision）</strong><ul>
+<li>检索到的上下文中，有多少比例是真正对回答问题有用的信息<ul>
+<li>高精度：噪声少，大部分内容有用；</li>
+<li>低精度：干扰信息多，噪声占比高。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>上下文召回（Context Recall）</strong><ul>
+<li>检索到的上下文覆盖了答案所需信息的比例<ul>
+<li><strong>高召回</strong>：关键信息基本都被检索到；</li>
+<li><strong>低召回</strong>：有重要信息未被检索到。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>忠实度（Faithfulness）</strong><ul>
+<li>衡量答案中的陈述是否可以从检索到的上下文中推断出来。<ul>
+<li><strong>高忠实度</strong>：答案内容可靠，没有编造；</li>
+<li><strong>低忠实度</strong>：答案包含上下文中没有的信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>答案相关性（Answer Relevance）</strong><ul>
+<li>评估生成答案是否回答了问题，不考虑事实正确性，但会惩罚不完整或冗余答案。<ul>
+<li><strong>高相关性</strong>：答案紧扣问题，完整清晰；</li>
+<li><strong>低相关性</strong>：答案偏题、不完整或包含冗余信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>答案正确性（Answer Accuracy）</strong><ul>
+<li>通过与真实答案对比，计算 TP&#x2F;FP&#x2F;FN 并用 F1 衡量答案事实的正确性。（关注<strong>事实对错</strong>，衡量答案信息是否真实。）<ul>
+<li><strong>高正确性</strong>：答案事实准确，无缺失；</li>
+<li><strong>低正确性</strong>：答案有错误或缺失事实信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>答案相似度（Answer Similarity）</strong><ul>
+<li>使用嵌入向量计算生成答案与真实答案的语义相似度。（关注<strong>语义接近度</strong>，衡量答案意思是否与真实答案一致，即使表述方式不同也可能高。）<ul>
+<li><strong>高相似度</strong>：生成答案语义接近真实答案；</li>
+<li><strong>低相似度</strong>：生成答案偏离预期语义。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="4-模块设计"><a href="#4-模块设计" class="headerlink" title="4 模块设计"></a>4 模块设计</h2><h3 id="4-1-总体架构"><a href="#4-1-总体架构" class="headerlink" title="4.1 总体架构"></a>4.1 总体架构</h3><ul>
+<li><p>目标：对 QA 数据（问题 + GraphRAG 回答 + 标准答案 + 上下文）自动计算 RAGAS 指标，并写回 Excel。</p>
+</li>
+<li><p>核心流程：<strong>读取数据 → 向量化 → 指标计算 → 写回 Excel</strong></p>
+</li>
+</ul>
+<h3 id="4-2-模块划分"><a href="#4-2-模块划分" class="headerlink" title="4.2  模块划分"></a>4.2  模块划分</h3><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>设计原则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据读取与预处理</td>
+<td>读取 Excel，标准化上下文</td>
+<td>职责单一，可扩展</td>
+</tr>
+<tr>
+<td>Embedding（CustomEmbeddings）</td>
+<td>文本向量化，支持同步&#x2F;异步</td>
+<td>接口统一、可替换、解耦 RAGAS</td>
+</tr>
+<tr>
+<td>评估器（RagasEvaluator）</td>
+<td>封装 RAGAS evaluate，计算单行指标</td>
+<td>封装核心逻辑，支持单行评估，可扩展指标</td>
+</tr>
+<tr>
+<td>主流程</td>
+<td>遍历数据，调用评估器，逐行写回 Excel</td>
+<td>容错、解耦、可复用</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-模块设计原则"><a href="#4-3-模块设计原则" class="headerlink" title="4.3 模块设计原则"></a>4.3 模块设计原则</h3><ol>
+<li><strong>职责单一</strong>：向量化、指标计算、文件处理分离</li>
+<li><strong>可扩展</strong>：可替换 embedding 模型和评估指标</li>
+<li><strong>解耦</strong>：主流程与具体评估逻辑分离</li>
+<li><strong>容错稳健</strong>：逐行写 Excel，安全解析上下文</li>
+<li><strong>效率优化</strong>：批量 embedding + 异步接口</li>
+</ol>
+<h2 id="5-实现代码"><a href="#5-实现代码" class="headerlink" title="5 实现代码"></a>5 实现代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> datasets <span class="keyword">import</span> Dataset</span><br><span class="line"><span class="keyword">from</span> langchain_openai <span class="keyword">import</span> ChatOpenAI</span><br><span class="line"><span class="keyword">from</span> ragas <span class="keyword">import</span> evaluate</span><br><span class="line"><span class="keyword">from</span> ragas.metrics <span class="keyword">import</span> (</span><br><span class="line">    faithfulness,</span><br><span class="line">    answer_relevancy,</span><br><span class="line">    context_recall,</span><br><span class="line">    context_precision,</span><br><span class="line">    answer_correctness,</span><br><span class="line">    answer_similarity</span><br><span class="line">)</span><br><span class="line"><span class="keyword">from</span> ragas.run_config <span class="keyword">import</span> RunConfig</span><br><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> SentenceTransformer</span><br><span class="line"><span class="keyword">import</span> typing <span class="keyword">as</span> t</span><br><span class="line"><span class="keyword">import</span> asyncio</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 自定义 Embedding ==================</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">CustomEmbeddings</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    自定义向量嵌入类，供 RAGAS 在评估过程中使用</span></span><br><span class="line"><span class="string">    使用 sentence-transformers 模型进行文本向量化</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params"></span></span><br><span class="line"><span class="params">        self,</span></span><br><span class="line"><span class="params">        model_path: <span class="built_in">str</span> = <span class="string">&quot;/data/hf_hub/hub/models--sentence-transformers--all-MiniLM-L6-v2/snapshots&quot;</span>,</span></span><br><span class="line"><span class="params">        batch_size: <span class="built_in">int</span> = <span class="number">32</span></span></span><br><span class="line"><span class="params">    </span>):</span><br><span class="line">        <span class="variable language_">self</span>.batch_size = batch_size</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 选择本地 HuggingFace 模型目录下最新的 snapshot</span></span><br><span class="line">        snapshots = <span class="built_in">sorted</span>(os.listdir(model_path))</span><br><span class="line">        latest_snapshot = os.path.join(model_path, snapshots[-<span class="number">1</span>])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 加载 SentenceTransformer 模型</span></span><br><span class="line">        <span class="variable language_">self</span>.model = SentenceTransformer(latest_snapshot)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">embed_documents</span>(<span class="params">self, texts: t.<span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; t.<span class="type">List</span>[t.<span class="type">List</span>[<span class="built_in">float</span>]]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        对文档列表进行向量化（同步）</span></span><br><span class="line"><span class="string">        :param texts: 文本列表</span></span><br><span class="line"><span class="string">        :return: 向量列表</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        embeddings = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(texts), <span class="variable language_">self</span>.batch_size):</span><br><span class="line">            batch = texts[i:i + <span class="variable language_">self</span>.batch_size]</span><br><span class="line">            batch_emb = <span class="variable language_">self</span>.model.encode(</span><br><span class="line">                batch, </span><br><span class="line">                show_progress_bar=<span class="literal">False</span>, </span><br><span class="line">                normalize_embeddings=<span class="literal">True</span> <span class="comment"># 归一化向量，便于相似度计算</span></span><br><span class="line">            )</span><br><span class="line">            embeddings.extend(batch_emb.tolist())</span><br><span class="line">        <span class="keyword">return</span> embeddings</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">embed_query</span>(<span class="params">self, text: <span class="built_in">str</span></span>) -&gt; t.<span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        对单条查询文本进行向量化</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.model.encode(</span><br><span class="line">            [text], </span><br><span class="line">            show_progress_bar=<span class="literal">False</span>, </span><br><span class="line">            normalize_embeddings=<span class="literal">True</span></span><br><span class="line">        )[<span class="number">0</span>].tolist()</span><br><span class="line"></span><br><span class="line">    <span class="comment"># ----------------- 异步接口，RAGAS 调用 -----------------</span></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">embed_text</span>(<span class="params">self, text: <span class="built_in">str</span>, is_async=<span class="literal">True</span></span>) -&gt; t.<span class="type">List</span>[<span class="built_in">float</span>]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        RAGAS 所需的异步接口（单条）</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="keyword">await</span> <span class="variable language_">self</span>.embed_texts([text], is_async=is_async))[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">async</span> <span class="keyword">def</span> <span class="title function_">embed_texts</span>(<span class="params">self, texts: t.<span class="type">List</span>[<span class="built_in">str</span>], is_async=<span class="literal">True</span></span>) -&gt; t.<span class="type">List</span>[t.<span class="type">List</span>[<span class="built_in">float</span>]]:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        RAGAS 所需的异步接口（多条）</span></span><br><span class="line"><span class="string">        使用线程池避免阻塞主事件循环</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> is_async:</span><br><span class="line">            loop = asyncio.get_event_loop()</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">await</span> loop.run_in_executor(</span><br><span class="line">                <span class="literal">None</span>, </span><br><span class="line">                <span class="variable language_">self</span>.embed_documents, </span><br><span class="line">                texts</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="variable language_">self</span>.embed_documents(texts)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== RAGAS 评估器 ==================</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RagasEvaluator</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, llm_base_url: <span class="built_in">str</span>, model_name: <span class="built_in">str</span></span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        RAGAS 封装评估类</span></span><br><span class="line"><span class="string">        支持对单条 QA + Context 进行指标计算</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="variable language_">self</span>.llm = ChatOpenAI(</span><br><span class="line">            openai_api_base=llm_base_url,</span><br><span class="line">            model_name=model_name,</span><br><span class="line">            openai_api_key=<span class="string">&quot;none&quot;</span>,</span><br><span class="line">            max_tokens=<span class="number">8192</span>,</span><br><span class="line">            temperature=<span class="number">0</span>, <span class="comment"># 评估时保持确定性</span></span><br><span class="line">        )</span><br><span class="line">        <span class="variable language_">self</span>.embedding = CustomEmbeddings() <span class="comment"># 自定义 Embedding</span></span><br><span class="line">        <span class="variable language_">self</span>.metrics = [  <span class="comment"># 使用的 RAGAS 评估指标</span></span><br><span class="line">            faithfulness,</span><br><span class="line">            answer_relevancy,</span><br><span class="line">            context_recall,</span><br><span class="line">            context_precision,</span><br><span class="line">            answer_correctness,</span><br><span class="line">            answer_similarity</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">evaluate_row</span>(<span class="params">self, row_data: t.<span class="type">Dict</span></span>) -&gt; t.<span class="type">Dict</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        对单行数据计算 RAGAS 指标</span></span><br><span class="line"><span class="string">        :param row_data: 包含 question / answer / ground_truth / contexts</span></span><br><span class="line"><span class="string">        :return: 各指标得分字典</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 构造 HuggingFace Dataset（RAGAS 要求）</span></span><br><span class="line">        dataset = Dataset.from_dict(&#123; </span><br><span class="line">            <span class="string">&quot;question&quot;</span>: [row_data[<span class="string">&quot;question&quot;</span>]],</span><br><span class="line">            <span class="string">&quot;answer&quot;</span>: [row_data[<span class="string">&quot;answer&quot;</span>]],</span><br><span class="line">            <span class="string">&quot;ground_truth&quot;</span>: [row_data[<span class="string">&quot;ground_truth&quot;</span>]],</span><br><span class="line">            <span class="string">&quot;contexts&quot;</span>: [row_data[<span class="string">&quot;contexts&quot;</span>]]</span><br><span class="line">        &#125;)</span><br><span class="line">        result = evaluate( </span><br><span class="line">            dataset=dataset,</span><br><span class="line">            metrics=<span class="variable language_">self</span>.metrics,</span><br><span class="line">            llm=<span class="variable language_">self</span>.llm,</span><br><span class="line">            embeddings=<span class="variable language_">self</span>.embedding,</span><br><span class="line">            run_config=RunConfig(timeout=<span class="number">800</span>) <span class="comment"># 防止长时间阻塞</span></span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            <span class="string">&quot;faithfulness&quot;</span>: result[<span class="string">&quot;faithfulness&quot;</span>],</span><br><span class="line">            <span class="string">&quot;answer_relevancy&quot;</span>: result[<span class="string">&quot;answer_relevancy&quot;</span>],</span><br><span class="line">            <span class="string">&quot;context_recall&quot;</span>: result[<span class="string">&quot;context_recall&quot;</span>],</span><br><span class="line">            <span class="string">&quot;context_precision&quot;</span>: result[<span class="string">&quot;context_precision&quot;</span>],</span><br><span class="line">            <span class="string">&quot;answer_correctness&quot;</span>: result[<span class="string">&quot;answer_correctness&quot;</span>],</span><br><span class="line">            <span class="string">&quot;answer_similarity&quot;</span>: result[<span class="string">&quot;answer_similarity&quot;</span>]</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 工具函数 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parse_retrieved</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(x, <span class="built_in">list</span>):</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">eval</span>(x)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> [x]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输入 / 输出文件路径</span></span><br><span class="line"><span class="keyword">from</span> gen_qa_new_v4_ragas <span class="keyword">import</span> SAMPLE_FILE, QA_RAGAS_FILE</span><br><span class="line">METRIC_RAGAS_FILE = SAMPLE_FILE + <span class="string">&quot;_rags_metric.xlsx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 主流程 ==================</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="comment"># 读取待评估 Excel 文件</span></span><br><span class="line">    excel_path = QA_RAGAS_FILE</span><br><span class="line">    df = pd.read_excel(excel_path)</span><br><span class="line"></span><br><span class="line">    metric_excel_path = METRIC_RAGAS_FILE</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果指标文件不存在，先创建并补充指标列</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(metric_excel_path):</span><br><span class="line">        df_head = df.copy()</span><br><span class="line">        metric_cols = [</span><br><span class="line">            <span class="string">&quot;faithfulness&quot;</span>, </span><br><span class="line">            <span class="string">&quot;answer_relevancy&quot;</span>, </span><br><span class="line">            <span class="string">&quot;context_recall&quot;</span>,</span><br><span class="line">            <span class="string">&quot;context_precision&quot;</span>, </span><br><span class="line">            <span class="string">&quot;answer_correctness&quot;</span>, </span><br><span class="line">            <span class="string">&quot;answer_similarity&quot;</span></span><br><span class="line">        ]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> col <span class="keyword">in</span> metric_cols:</span><br><span class="line">            df_head[col] = <span class="literal">None</span></span><br><span class="line">        df_head.to_excel(metric_excel_path, index=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 初始化评估器</span></span><br><span class="line">    evaluator = RagasEvaluator(</span><br><span class="line">        llm_base_url=<span class="string">&quot;http://10.0.0.228:9925/v1&quot;</span>,</span><br><span class="line">        model_name=<span class="string">&quot;qwen3-32b&quot;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 遍历每行，逐行计算指标并追加写入</span></span><br><span class="line">    <span class="keyword">for</span> idx, row <span class="keyword">in</span> df.iterrows():</span><br><span class="line">        row_data = &#123;</span><br><span class="line">            <span class="string">&quot;question&quot;</span>: <span class="built_in">str</span>(row[<span class="string">&quot;问题&quot;</span>]),</span><br><span class="line">            <span class="string">&quot;answer&quot;</span>: <span class="built_in">str</span>(row[<span class="string">&quot;回答&quot;</span>]),</span><br><span class="line">            <span class="string">&quot;ground_truth&quot;</span>: <span class="built_in">str</span>(row[<span class="string">&quot;答案&quot;</span>]),</span><br><span class="line">            <span class="string">&quot;contexts&quot;</span>: parse_retrieved(row[<span class="string">&quot;上下文&quot;</span>])</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        metrics_result = evaluator.evaluate_row(row_data)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;已计算第 <span class="subst">&#123;idx+<span class="number">1</span>&#125;</span> 行指标：<span class="subst">&#123;metrics_result&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 读取当前文件，更新该行</span></span><br><span class="line">        df_current = pd.read_excel(metric_excel_path)</span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> metrics_result.items():</span><br><span class="line">            df_current.loc[idx, k] = v</span><br><span class="line">            </span><br><span class="line">        <span class="comment"># 写回 Excel（逐行写，避免中断丢失）</span></span><br><span class="line">        df_current.to_excel(metric_excel_path, index=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;所有行指标已写入：<span class="subst">&#123;metric_excel_path&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="5-1-为什么-Embedding-设计为异步接口"><a href="#5-1-为什么-Embedding-设计为异步接口" class="headerlink" title="5.1 为什么 Embedding 设计为异步接口"></a>5.1 为什么 Embedding 设计为异步接口</h3><blockquote>
+<p>Embedding 本身是同步阻塞计算，而 RAGAS 的评估流程是异步并发的，为了不阻塞事件循环，需要将 embedding 放入异步接口中执行。</p>
+</blockquote>
+<p><strong>RAGAS 的评估流程是异步并发</strong>：在 RAGAS 的整体评估架构中，指标计算是通过异步方式统一调度的。RAGAS 在评估过程中会同时触发对 LLM 和 embedding 的调用，因此默认假设 embedding 接口是可 <code>await</code> 的。如果 embedding 只能以同步方式执行，就无法很好地融入这一异步评估流程。</p>
+<p><strong>Embedding 本身是同步阻塞计算</strong>：SentenceTransformer 的 <code>encode</code> 方法本质上是一个同步、阻塞的数值计算过程，通常会占用 CPU 或 GPU 资源。在计算完成之前，当前线程无法执行其他任务。如果在异步函数中直接调用该方法，会阻塞 asyncio 的事件循环，导致其他异步任务（例如 LLM 请求或其他指标计算）无法被调度。</p>
+<p>为了避免同步计算阻塞事件循环，需要在 embedding 层引入异步适配。通过 <code>run_in_executor</code> 将实际的 embedding 计算任务提交到线程池中执行，可以让主事件循环在等待 embedding 结果的同时继续调度其他任务，从而保持评估流程的并发性。</p>
+<p>这种异步设计的目的并不是让 embedding 计算本身变得更快，而是为了保证评估系统在并发执行多个指标时的稳定性。如果 embedding 阶段阻塞了事件循环，整个 RAGAS 评估流程都会被拖慢甚至卡死，而异步适配可以有效避免这一问题。</p>
+<p>因此，在使用本地 SentenceTransformer 作为自定义 embedding 时，实现异步接口是一种必要的工程适配手段，用来桥接“同步计算模型”和“异步评估调度框架”之间的差异。</p>
+<h3 id="5-2-为什么评估过程既用到-LLM，又用到-Embedding"><a href="#5-2-为什么评估过程既用到-LLM，又用到-Embedding" class="headerlink" title="5.2 为什么评估过程既用到 LLM，又用到 Embedding"></a>5.2 为什么评估过程既用到 LLM，又用到 Embedding</h3><blockquote>
+<p>因为 RAGAS 的评估既需要主观语义理解，又需要客观向量匹配，所以同时使用 LLM 和 Embedding，才能给出全面、可靠的答案质量评估。</p>
+</blockquote>
+<ol>
+<li><strong>大模型（LLM）的作用</strong></li>
+</ol>
+<p>LLM 负责理解问题和答案的语义，进行“主观判断”。它的作用体现在以下指标上：</p>
+<ul>
+<li><strong>Faithfulness（忠实度）</strong>：判断答案是否忠实于提供的上下文。</li>
+<li><strong>Answer Correctness（正确性）</strong>：判断答案是否正确、符合事实或标准答案。</li>
+<li><strong>Answer Relevancy（相关性）</strong>：判断答案是否回答了用户的问题，没有偏离主题。</li>
+</ul>
+<p>换句话说，LLM 是评估答案语义合理性和准确性的核心“裁判”。</p>
+<ol start="2">
+<li><strong>Embedding 的作用</strong></li>
+</ol>
+<p>Embedding 模型将文本映射为向量，用于计算语义相似度，衡量答案与上下文或标准答案的匹配程度。它的作用体现在以下指标上：</p>
+<ul>
+<li><strong>Answer Similarity（答案相似度）</strong>：衡量答案与标准答案在语义向量空间的相似度。</li>
+<li><strong>Context Recall（上下文召回）</strong>：衡量答案是否包含了上下文中关键的信息。</li>
+<li><strong>Context Precision（上下文精确度）</strong>：衡量答案中包含的上下文信息是否都是必要且相关的。</li>
+</ul>
+<p>可以理解为，Embedding 是评估答案与上下文匹配程度的“量化工具”。</p>
+<h2 id="6-其他"><a href="#6-其他" class="headerlink" title="6 其他"></a>6 其他</h2><h3 id="6-1-answer-relevancy的错误"><a href="#6-1-answer-relevancy的错误" class="headerlink" title="6.1 answer_relevancy的错误"></a>6.1 answer_relevancy的错误</h3><p>在 RAGAS 0.1.20 版本中，<code>answer_relevancy</code> metric 的源码默认要求 LLM 返回 <strong>三个生成（n&#x3D;3）</strong>。如果大模型实际只能返回 <strong>一条生成</strong>，则会导致计算分数时报 <code>NaN</code> 错误。因此，在使用此版本时，需要修改 <code>answer_relevancy</code> 的源码。</p>
+<p>该情况在0.4版本中，会变成一个警告<code>LLM returned 1 generations instead of requested 3. Proceeding with 1 generations.</code></p>
+<p><img src="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225160335084.png" alt="image-20251225160335084"></p>
+<p><img src="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225152529557.png" alt="image-20251225152529557"></p>
+<h3 id="6-2-ragas-v4-0"><a href="#6-2-ragas-v4-0" class="headerlink" title="6.2 ragas v4.0"></a>6.2 ragas v4.0</h3><p>优化有点多，和版本相关性太大了</p>
+<p><a target="_blank" rel="noopener" href="https://docs.ragas.io/en/stable/howtos/migrations/migrate_from_v03_to_v04/#what-changed">https://docs.ragas.io/en/stable/howtos/migrations/migrate_from_v03_to_v04/#what-changed</a></p>
+<p><img src="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/image-20251225172924685.png" alt="image-20251225172924685"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RAGAS/" rel="tag"># RAGAS</a>
+              <a href="/tags/%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0/" rel="tag"># 性能评估'</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/" rel="prev" title="RAG 测试用例生成">
+      <i class="fa fa-chevron-left"></i> RAG 测试用例生成
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/12/20/20251220_%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX%20%E4%B8%8E%20Neo4j/" rel="next" title="图数据处理方式：NetworkX 与 Neo4j">
+      图数据处理方式：NetworkX 与 Neo4j <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-RAGAS-%E7%9A%84-RAG-%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="nav-number">1.</span> <span class="nav-text">基于 RAGAS 的 RAG 系统性能评估</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%89%8D%E6%B2%BF"><span class="nav-number">1.1.</span> <span class="nav-text">0 前沿</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-RAGAs-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">1.2.</span> <span class="nav-text">1 RAGAs 核心思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%AF%84%E4%BC%B0%E6%89%80%E9%9C%80%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.</span> <span class="nav-text">2 评估所需数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%A0%B8%E5%BF%83%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="nav-number">1.4.</span> <span class="nav-text">3 核心评估指标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.5.</span> <span class="nav-text">4 模块设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.5.1.</span> <span class="nav-text">4.1 总体架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86"><span class="nav-number">1.5.2.</span> <span class="nav-text">4.2  模块划分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.5.3.</span> <span class="nav-text">4.3 模块设计原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="nav-number">1.6.</span> <span class="nav-text">5 实现代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E4%B8%BA%E4%BB%80%E4%B9%88-Embedding-%E8%AE%BE%E8%AE%A1%E4%B8%BA%E5%BC%82%E6%AD%A5%E6%8E%A5%E5%8F%A3"><span class="nav-number">1.6.1.</span> <span class="nav-text">5.1 为什么 Embedding 设计为异步接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%84%E4%BC%B0%E8%BF%87%E7%A8%8B%E6%97%A2%E7%94%A8%E5%88%B0-LLM%EF%BC%8C%E5%8F%88%E7%94%A8%E5%88%B0-Embedding"><span class="nav-number">1.6.2.</span> <span class="nav-text">5.2 为什么评估过程既用到 LLM，又用到 Embedding</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%85%B6%E4%BB%96"><span class="nav-number">1.7.</span> <span class="nav-text">6 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-answer-relevancy%E7%9A%84%E9%94%99%E8%AF%AF"><span class="nav-number">1.7.1.</span> <span class="nav-text">6.1 answer_relevancy的错误</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-ragas-v4-0"><span class="nav-number">1.7.2.</span> <span class="nav-text">6.2 ragas v4.0</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BookLover</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
