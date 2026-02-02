@@ -164,6 +164,191 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Qwen2.5-VL部署与MindIE环境配置</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-08-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-21T00:00:00+08:00">2025-08-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-02 15:33:41" itemprop="dateModified" datetime="2026-02-02T15:33:41+08:00">2026-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Qwen2-5-VL/" itemprop="url" rel="index"><span itemprop="name">Qwen2.5-VL</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Qwen2-5-VL部署与MindIE环境配置"><a href="#Qwen2-5-VL部署与MindIE环境配置" class="headerlink" title="Qwen2.5-VL部署与MindIE环境配置"></a>Qwen2.5-VL部署与MindIE环境配置</h1><p>参考：大模型部署mindie</p>
+<h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1 环境配置"></a>1 环境配置</h2><h3 id="1-1-服务器配置"><a href="#1-1-服务器配置" class="headerlink" title="1.1 服务器配置"></a>1.1 服务器配置</h3><ul>
+<li>服务器型号：华为800T A2</li>
+<li>CPU：鲲鹏920 5250</li>
+<li>NPU：华为昇腾910B4</li>
+<li>操作系统：openEuler 22.03 (LTS-SP4)</li>
+</ul>
+<h3 id="1-2-部署策略"><a href="#1-2-部署策略" class="headerlink" title="1.2 部署策略"></a>1.2 部署策略</h3><p>采用Docker容器部署Qwen2.5-VL模型服务，结合MindIE推理引擎进行加速，确保高效和稳定的推理性能。</p>
+<h2 id="2-Qwen2-5-VL模型下载"><a href="#2-Qwen2-5-VL模型下载" class="headerlink" title="2 Qwen2.5-VL模型下载"></a>2 Qwen2.5-VL模型下载</h2><p>下载链接：<a target="_blank" rel="noopener" href="https://www.modelscope.cn/">ModelScope社区</a></p>
+<p>模型路径：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/data/modelscope_hub/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br><span class="line">/data/modelscope_hub/QwQ-32B</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814103034468.png" alt="image-20250814103034468"></p>
+<p>下载完成后，需要设置模型文件的权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 640 /data/modelscope_hub/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-启动服务"><a href="#3-启动服务" class="headerlink" title="3 启动服务"></a>3 启动服务</h2><h3 id="3-1-主机环境"><a href="#3-1-主机环境" class="headerlink" title="3.1 主机环境"></a>3.1 主机环境</h3><p>激活环境</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate hsw_modelscope</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-查看主机架构"><a href="#3-2-查看主机架构" class="headerlink" title="3.2 查看主机架构"></a>3.2 查看主机架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(hsw_modelscope) [root@localhost Ascend]# uname -m</span><br><span class="line">aarch64</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>x86_64</code> → <code>amd64</code></li>
+<li><code>aarch64</code> → <code>arm64</code></li>
+<li><code>armv7l</code> → <code>arm</code></li>
+</ul>
+<h3 id="3-3-查看镜像"><a href="#3-3-查看镜像" class="headerlink" title="3.3 查看镜像"></a>3.3 查看镜像</h3><p>有权限的同事帮忙下好的，获取已下载的Qwen2.5-VL镜像ID：b9508450a680</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) [root@localhost Qwen2___5-VL-32B-Instruct]# docker images | grep 2.1.RC1</span><br><span class="line">swr.cn-south-1.myhuaweicloud.com/ascendhub/mindie                                        2.1.RC1-800I-A2-py311-openeuler24.03-lts                                               b9508450a680   10 days ago     16GB</span><br><span class="line"></span><br><span class="line">(base) [root@localhost modelscope_hub]# docker images | grep 1.0.RC3</span><br><span class="line">mindie_portable                                                                          1.0.RC3-800I-A2-arm64                                                                  b7a656294b13   6 months ago    13.3GB</span><br><span class="line">swr.cn-central-232.csai.hunan.com.cn/changsha-aicc/mindie                                1.0.RC3-800I-A2-arm64                                                                  760b27e753c2   10 months ago   12.9GB</span><br></pre></td></tr></table></figure>
+
+<p>启动Docker容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_Qwen2.5-VL \  # 镜像命名</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \ # 使用的GPU：与其他docker独占</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/hsw/hsw_Qwen2.5:/path-to-weights:ro \ # 模型权重</span><br><span class="line">    -v /data/hsw/MLMM:/data/hsw/hsw_Qwen2.5_data:ro \ # 数据交互的通道</span><br><span class="line">b9508450a680       bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_Qwen2.5-VL \</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/modelscope_hub:/path-to-weights:ro \</span><br><span class="line">    -v /data/hsw/MLMM:/data/hsw/hsw_Qwen2.5_data:ro \</span><br><span class="line">b9508450a680       bash</span><br><span class="line"></span><br><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_QwQ3 \</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/modelscope_hub/QwQ-32B:/path-to-weights:ro \</span><br><span class="line">    -v /data/hsw/QwQ3:/data \</span><br><span class="line">760b27e753c2       bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-安装依赖与配置"><a href="#4-安装依赖与配置" class="headerlink" title="4 安装依赖与配置"></a>4 安装依赖与配置</h2><h3 id="4-1-进入Docker容器"><a href="#4-1-进入Docker容器" class="headerlink" title="4.1 进入Docker容器"></a>4.1 进入Docker容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it hsw_Qwen2.5-VL /bin/bash</span><br><span class="line">docker exec -it hsw_QwQ3 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-安装依赖"><a href="#4-2-安装依赖" class="headerlink" title="4.2 安装依赖"></a>4.2 安装依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/Ascend/atb-models</span><br><span class="line">pip install -r requirements/models/requirements_qwen2_vl.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-修改MindIE推理引擎配置参数"><a href="#4-3-修改MindIE推理引擎配置参数" class="headerlink" title="4.3 修改MindIE推理引擎配置参数"></a>4.3 修改MindIE推理引擎配置参数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/Ascend/mindie/latest/mindie-service/conf/config.json</span><br></pre></td></tr></table></figure>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 关键配置项</span><br><span class="line">Ipaddress 自己的ip</span><br><span class="line">port 自己的端口</span><br><span class="line">httpsEnabled  true改为false</span><br><span class="line">npuDeviceIds  [[0,1,2,3]]  根据npu-smi info与实际需求设置</span><br><span class="line">worldsize   4  改成与npuDeviceIds个数一致</span><br><span class="line">modelWeightPath  /path-to-weights   （模型的路径）</span><br><span class="line">Modelname 模型名称</span><br><span class="line"></span><br><span class="line">path：/path-to-weights/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br><span class="line"></span><br><span class="line">maxSeqLen 最大序列长度。用户根据自己的推理场景选择maxSeqLen。</span><br><span class="line">maxInputTokenLen 输入token id的最大长度。要小于maxSeqLen</span><br><span class="line">maxPrefillTokens [1, 4194304]，且必须大于或等于maxSeqLen的取值。一般保持和maxSeqLen相等。</span><br><span class="line">maxIterTimes 模型全局最大输出长度。（目前主流的大模型一般最大输出为8192）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-启动服务"><a href="#4-4-启动服务" class="headerlink" title="4.4 启动服务"></a>4.4 启动服务</h3><ol>
+<li>执行，直接启动服务（简单直观）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/Ascend/mindie/latest/mindie-service</span><br><span class="line">./bin/mindieservice_daemon</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>使用后台进程方式启动服务（后续还可以使用该窗口的命令行）</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/mindieservice_daemon &gt; output.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+<p>然后输入tail -f output.log查看进程输出，回显Daemon start success! 说明服务开启成功</p>
+<hr>
+<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/wps1.jpg" alt="img"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find /dev/shm -name &#x27;*llm_backend_*&#x27; -type f -delete</span><br><span class="line">find /dev/shm -name &#x27;llm_tokenizer_shared_memory_*&#x27; -type f -delete</span><br></pre></td></tr></table></figure>
+
+<p>如果出现2025-08-12 21:47:01.194 Port 8501 is already in use，清理共享内存中的旧文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install net-tools</span><br><span class="line">netstat -tulnp | grep 8501</span><br><span class="line">Kill -9 </span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="5-Qwen2-5-VL-交互操作"><a href="#5-Qwen2-5-VL-交互操作" class="headerlink" title="5 Qwen2.5-VL 交互操作"></a>5 Qwen2.5-VL 交互操作</h2><h3 id="5-1-chatbox-界面"><a href="#5-1-chatbox-界面" class="headerlink" title="5.1 chatbox 界面"></a>5.1 chatbox 界面</h3><p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814101201392.png" alt="image-20250814101201392"></p>
+<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814101228955.png" alt="image-20250814101228955"></p>
+<h3 id="5-2-命令行交互"><a href="#5-2-命令行交互" class="headerlink" title="5.2 命令行交互"></a>5.2 命令行交互</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Accept: application/json&quot; -H &quot;Content-type: application/json&quot; -X POST -d &#x27;&#123;</span><br><span class="line">    &quot;inputs&quot;: [</span><br><span class="line">        &#123;&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;100字概述这张图片&quot;&#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;image_url&quot;,</span><br><span class="line">            &quot;image_url&quot;: &quot;/path-to-weights/test_image/image-20250808105111842.png&quot; #图片路径放在共享文件夹下</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stream&quot;: false,</span><br><span class="line">    &quot;parameters&quot;: &#123;</span><br><span class="line">        &quot;temperature&quot;: 0.5,</span><br><span class="line">        &quot;top_k&quot;: 10,</span><br><span class="line">        &quot;top_p&quot;: 0.95,</span><br><span class="line">        &quot;max_new_tokens&quot;: 2000,</span><br><span class="line">        &quot;do_sample&quot;: true,</span><br><span class="line">        &quot;seed&quot;: null,</span><br><span class="line">        &quot;repetition_penalty&quot;: 1.03,</span><br><span class="line">        &quot;details&quot;: true,</span><br><span class="line">        &quot;typical_p&quot;: 0.5,</span><br><span class="line">        &quot;watermark&quot;: false,</span><br><span class="line">        &quot;priority&quot;: 5,</span><br><span class="line">        &quot;timeout&quot;: 10</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&#x27; http://10.0.0.228:9025/generate</span><br></pre></td></tr></table></figure>
+
+<p>stream：流式和文本</p>
+<ul>
+<li><p>流式推理主要处理实时数据流，强调快速响应和逐步输出结果，适用于实时监控和决策场景；</p>
+</li>
+<li><p>文本推理则处理离散的完整文本，注重理解和生成连贯文本，常用于自然语言处理任务。</p>
+</li>
+</ul>
+<h2 id="6-其他"><a href="#6-其他" class="headerlink" title="6 其他"></a>6 其他</h2><h3 id="6-1-AI社区"><a href="#6-1-AI社区" class="headerlink" title="6.1 AI社区"></a>6.1 AI社区</h3><ol>
+<li><p><a target="_blank" rel="noopener" href="https://modelers.cn/">魔乐社区</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.hiascend.com/developer/blog/details/0205183807801766010">昇腾MindSpeed MM微调多模态Qwen2.5-VL</a></p>
+<p><strong>推理</strong> 是使用模型对新数据进行预测的过程，目的是生成有用的输出。</p>
+<p><strong>评测</strong> 是评估模型性能的过程，目的是衡量模型在特定任务上的表现，通常通过计算性能指标来完成。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.huaweicloud.com/guide/productsdesc-bms_e3f6bc110060f8259631c4b1be454b5fsupport0">AI开发平台MODELARTS-昇腾能力应用地图:多模态模型</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/WASEFADG/article/details/147993631">使用LoRA微调Qwen2.5-VL-7B-Instruct完成电气主接线图识别</a></p>
+</li>
+</ol>
+<p>有人干一样的事情ye，但是要自己构造数据集</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># 图像分辨率统一为256×256（平衡细节与显存）</span></span><br><span class="line">    <span class="comment"># 文本标注需包含设备类型（如出线柜）、参数（如630A）和位置关系（如下层母线连接）</span></span><br><span class="line">    &#123;</span><br><span class="line">  <span class="string">&quot;conversations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;from&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">      <span class="string">&quot;value&quot;</span>: <span class="string">&quot;Picture 1: ./substation_01.png\n提取图中干式变压器的参数&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;from&quot;</span>: <span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">      <span class="string">&quot;value&quot;</span>: <span class="string">&quot;型号：SCB10-1600/10\n额定容量：1600kVA\n电压比：10kV/0.4kV&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-安装chatchat报错"><a href="#6-2-安装chatchat报错" class="headerlink" title="6.2 安装chatchat报错"></a>6.2 安装chatchat报错</h3><p>搞完：pip install “langchain-chatchat[xinference]” -U，pip就挂了</p>
+<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250812161625662.png" alt="image-20250812161625662"></p>
+<p>如果确认 <code>/usr/local/lib/python3.11/site-packages/pathlib.py</code> 是错误的第三方模块，你可以尝试删除它：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f /usr/local/lib/python3.11/site-packages/pathlib.py</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pathlib</span><br><span class="line"><span class="built_in">print</span>(pathlib.__file__)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-gg"><a href="#6-3-gg" class="headerlink" title="6.3 gg"></a>6.3 gg</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c &quot;$(curl -L https://region-hk-download.ne.world/new/linux/gg/go.sh)&quot;</span><br><span class="line">gg config -w node=</span><br></pre></td></tr></table></figure>
+
+<p>下载的时候，命令前面加上gg</p>
+<h3 id="6-4-zip"><a href="#6-4-zip" class="headerlink" title="6.4 zip"></a>6.4 zip</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y unzip zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-5-Langchain-Chatchat和Xinference"><a href="#6-5-Langchain-Chatchat和Xinference" class="headerlink" title="6.5 Langchain-Chatchat和Xinference"></a>6.5 Langchain-Chatchat和Xinference</h3><p>Langchain-Chatchat 是一个开源的、可离线部署的基于大语言模型的 RAG（检索增强生成）和 Agent  应用项目。它支持多种主流开源大语言模型和 embedding 模型，如 GLM-4-Chat、Qwen2-Instruct、Llama3  等，还支持调用 OpenAI 等在线 API。其核心功能包括 LLM 对话、知识库问答、搜索引擎对话、文件对话、数据库对话、多模态图片对话等，适用于企业级私有知识图谱构建场景。</p>
+<p>Xinference 是一个性能强大且功能全面的分布式推理框架，专注于简化大语言模型（LLM）、多模态模型及语音模型的部署与推理流程。它支持多种模型，包括文本生成、Embedding 向量化、语音识别、图像处理等，提供一键部署、异构硬件推理、分布式架构、灵活的 API 调用等功能。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/08/21/20250821_%E5%9F%BA%E4%BA%8EDocker%E9%83%A8%E7%BD%B2%E7%88%AC%E8%99%AB%E6%9C%8D%E5%8A%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -339,191 +524,6 @@
 <p>容器里面没有dnf、yum，但是有apt</p>
 <p><img src="/2025/08/21/20250821_%E5%9F%BA%E4%BA%8EDocker%E9%83%A8%E7%BD%B2%E7%88%AC%E8%99%AB%E6%9C%8D%E5%8A%A1/image-20250822160518453.png" alt="image-20250822160518453"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用apt安装，中间会失败，根据报错信息，单独安装</span></span><br><span class="line">apt-get update</span><br><span class="line">apt-get install -y gconf-service libasound2t64 libatk1.0-0t64 libc6 libcairo2 libcups2t64 libdbus-1-3 libexpat1 libfontconfig1 libgcc-s1 libgconf-2-4 libgdk-libgdk-pixbuf-xlib-2.0-0 pixbuf2.0-0 libglib2.0-0t64 libgtk-3-0t64 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget</span><br><span class="line">apt-get install -y libgbm1</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BookLover">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BookLover's 🛖">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | BookLover's 🛖">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" class="post-title-link" itemprop="url">Qwen2.5-VL部署与MindIE环境配置</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2025-08-21 00:00:00" itemprop="dateCreated datePublished" datetime="2025-08-21T00:00:00+08:00">2025-08-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2026-02-02 15:33:41" itemprop="dateModified" datetime="2026-02-02T15:33:41+08:00">2026-02-02</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Qwen2-5-VL/" itemprop="url" rel="index"><span itemprop="name">Qwen2.5-VL</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Qwen2-5-VL部署与MindIE环境配置"><a href="#Qwen2-5-VL部署与MindIE环境配置" class="headerlink" title="Qwen2.5-VL部署与MindIE环境配置"></a>Qwen2.5-VL部署与MindIE环境配置</h1><p>参考：大模型部署mindie</p>
-<h2 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1 环境配置"></a>1 环境配置</h2><h3 id="1-1-服务器配置"><a href="#1-1-服务器配置" class="headerlink" title="1.1 服务器配置"></a>1.1 服务器配置</h3><ul>
-<li>服务器型号：华为800T A2</li>
-<li>CPU：鲲鹏920 5250</li>
-<li>NPU：华为昇腾910B4</li>
-<li>操作系统：openEuler 22.03 (LTS-SP4)</li>
-</ul>
-<h3 id="1-2-部署策略"><a href="#1-2-部署策略" class="headerlink" title="1.2 部署策略"></a>1.2 部署策略</h3><p>采用Docker容器部署Qwen2.5-VL模型服务，结合MindIE推理引擎进行加速，确保高效和稳定的推理性能。</p>
-<h2 id="2-Qwen2-5-VL模型下载"><a href="#2-Qwen2-5-VL模型下载" class="headerlink" title="2 Qwen2.5-VL模型下载"></a>2 Qwen2.5-VL模型下载</h2><p>下载链接：<a target="_blank" rel="noopener" href="https://www.modelscope.cn/">ModelScope社区</a></p>
-<p>模型路径：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/data/modelscope_hub/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br><span class="line">/data/modelscope_hub/QwQ-32B</span><br></pre></td></tr></table></figure>
-
-<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814103034468.png" alt="image-20250814103034468"></p>
-<p>下载完成后，需要设置模型文件的权限</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod -R 640 /data/modelscope_hub/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-启动服务"><a href="#3-启动服务" class="headerlink" title="3 启动服务"></a>3 启动服务</h2><h3 id="3-1-主机环境"><a href="#3-1-主机环境" class="headerlink" title="3.1 主机环境"></a>3.1 主机环境</h3><p>激活环境</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate hsw_modelscope</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-2-查看主机架构"><a href="#3-2-查看主机架构" class="headerlink" title="3.2 查看主机架构"></a>3.2 查看主机架构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(hsw_modelscope) [root@localhost Ascend]# uname -m</span><br><span class="line">aarch64</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>x86_64</code> → <code>amd64</code></li>
-<li><code>aarch64</code> → <code>arm64</code></li>
-<li><code>armv7l</code> → <code>arm</code></li>
-</ul>
-<h3 id="3-3-查看镜像"><a href="#3-3-查看镜像" class="headerlink" title="3.3 查看镜像"></a>3.3 查看镜像</h3><p>有权限的同事帮忙下好的，获取已下载的Qwen2.5-VL镜像ID：b9508450a680</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(base) [root@localhost Qwen2___5-VL-32B-Instruct]# docker images | grep 2.1.RC1</span><br><span class="line">swr.cn-south-1.myhuaweicloud.com/ascendhub/mindie                                        2.1.RC1-800I-A2-py311-openeuler24.03-lts                                               b9508450a680   10 days ago     16GB</span><br><span class="line"></span><br><span class="line">(base) [root@localhost modelscope_hub]# docker images | grep 1.0.RC3</span><br><span class="line">mindie_portable                                                                          1.0.RC3-800I-A2-arm64                                                                  b7a656294b13   6 months ago    13.3GB</span><br><span class="line">swr.cn-central-232.csai.hunan.com.cn/changsha-aicc/mindie                                1.0.RC3-800I-A2-arm64                                                                  760b27e753c2   10 months ago   12.9GB</span><br></pre></td></tr></table></figure>
-
-<p>启动Docker容器：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_Qwen2.5-VL \  # 镜像命名</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \ # 使用的GPU：与其他docker独占</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/hsw/hsw_Qwen2.5:/path-to-weights:ro \ # 模型权重</span><br><span class="line">    -v /data/hsw/MLMM:/data/hsw/hsw_Qwen2.5_data:ro \ # 数据交互的通道</span><br><span class="line">b9508450a680       bash</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_Qwen2.5-VL \</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/modelscope_hub:/path-to-weights:ro \</span><br><span class="line">    -v /data/hsw/MLMM:/data/hsw/hsw_Qwen2.5_data:ro \</span><br><span class="line">b9508450a680       bash</span><br><span class="line"></span><br><span class="line">docker run -it -d --net=host --shm-size=1g \</span><br><span class="line">    --name hsw_QwQ3 \</span><br><span class="line">    --device=/dev/davinci_manager \</span><br><span class="line">    --device=/dev/hisi_hdc \</span><br><span class="line">    --device=/dev/devmm_svm \</span><br><span class="line">    --device=/dev/davinci4 \</span><br><span class="line">    --device=/dev/davinci5 \</span><br><span class="line">    -v /usr/local/Ascend/driver:/usr/local/Ascend/driver:ro \</span><br><span class="line">    -v /usr/local/sbin:/usr/local/sbin:ro \</span><br><span class="line">    -v /data/modelscope_hub/QwQ-32B:/path-to-weights:ro \</span><br><span class="line">    -v /data/hsw/QwQ3:/data \</span><br><span class="line">760b27e753c2       bash</span><br></pre></td></tr></table></figure>
-
-<h2 id="4-安装依赖与配置"><a href="#4-安装依赖与配置" class="headerlink" title="4 安装依赖与配置"></a>4 安装依赖与配置</h2><h3 id="4-1-进入Docker容器"><a href="#4-1-进入Docker容器" class="headerlink" title="4.1 进入Docker容器"></a>4.1 进入Docker容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it hsw_Qwen2.5-VL /bin/bash</span><br><span class="line">docker exec -it hsw_QwQ3 /bin/bash</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-安装依赖"><a href="#4-2-安装依赖" class="headerlink" title="4.2 安装依赖"></a>4.2 安装依赖</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/Ascend/atb-models</span><br><span class="line">pip install -r requirements/models/requirements_qwen2_vl.txt</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-3-修改MindIE推理引擎配置参数"><a href="#4-3-修改MindIE推理引擎配置参数" class="headerlink" title="4.3 修改MindIE推理引擎配置参数"></a>4.3 修改MindIE推理引擎配置参数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/local/Ascend/mindie/latest/mindie-service/conf/config.json</span><br></pre></td></tr></table></figure>
-
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># 关键配置项</span><br><span class="line">Ipaddress 自己的ip</span><br><span class="line">port 自己的端口</span><br><span class="line">httpsEnabled  true改为false</span><br><span class="line">npuDeviceIds  [[0,1,2,3]]  根据npu-smi info与实际需求设置</span><br><span class="line">worldsize   4  改成与npuDeviceIds个数一致</span><br><span class="line">modelWeightPath  /path-to-weights   （模型的路径）</span><br><span class="line">Modelname 模型名称</span><br><span class="line"></span><br><span class="line">path：/path-to-weights/hub/Qwen/Qwen2___5-VL-32B-Instruct</span><br><span class="line"></span><br><span class="line">maxSeqLen 最大序列长度。用户根据自己的推理场景选择maxSeqLen。</span><br><span class="line">maxInputTokenLen 输入token id的最大长度。要小于maxSeqLen</span><br><span class="line">maxPrefillTokens [1, 4194304]，且必须大于或等于maxSeqLen的取值。一般保持和maxSeqLen相等。</span><br><span class="line">maxIterTimes 模型全局最大输出长度。（目前主流的大模型一般最大输出为8192）</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-4-启动服务"><a href="#4-4-启动服务" class="headerlink" title="4.4 启动服务"></a>4.4 启动服务</h3><ol>
-<li>执行，直接启动服务（简单直观）</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/Ascend/mindie/latest/mindie-service</span><br><span class="line">./bin/mindieservice_daemon</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>使用后台进程方式启动服务（后续还可以使用该窗口的命令行）</li>
-</ol>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup ./bin/mindieservice_daemon &gt; output.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>然后输入tail -f output.log查看进程输出，回显Daemon start success! 说明服务开启成功</p>
-<hr>
-<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/wps1.jpg" alt="img"></p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find /dev/shm -name &#x27;*llm_backend_*&#x27; -type f -delete</span><br><span class="line">find /dev/shm -name &#x27;llm_tokenizer_shared_memory_*&#x27; -type f -delete</span><br></pre></td></tr></table></figure>
-
-<p>如果出现2025-08-12 21:47:01.194 Port 8501 is already in use，清理共享内存中的旧文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install net-tools</span><br><span class="line">netstat -tulnp | grep 8501</span><br><span class="line">Kill -9 </span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-Qwen2-5-VL-交互操作"><a href="#5-Qwen2-5-VL-交互操作" class="headerlink" title="5 Qwen2.5-VL 交互操作"></a>5 Qwen2.5-VL 交互操作</h2><h3 id="5-1-chatbox-界面"><a href="#5-1-chatbox-界面" class="headerlink" title="5.1 chatbox 界面"></a>5.1 chatbox 界面</h3><p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814101201392.png" alt="image-20250814101201392"></p>
-<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250814101228955.png" alt="image-20250814101228955"></p>
-<h3 id="5-2-命令行交互"><a href="#5-2-命令行交互" class="headerlink" title="5.2 命令行交互"></a>5.2 命令行交互</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">curl -H &quot;Accept: application/json&quot; -H &quot;Content-type: application/json&quot; -X POST -d &#x27;&#123;</span><br><span class="line">    &quot;inputs&quot;: [</span><br><span class="line">        &#123;&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;100字概述这张图片&quot;&#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;image_url&quot;,</span><br><span class="line">            &quot;image_url&quot;: &quot;/path-to-weights/test_image/image-20250808105111842.png&quot; #图片路径放在共享文件夹下</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;stream&quot;: false,</span><br><span class="line">    &quot;parameters&quot;: &#123;</span><br><span class="line">        &quot;temperature&quot;: 0.5,</span><br><span class="line">        &quot;top_k&quot;: 10,</span><br><span class="line">        &quot;top_p&quot;: 0.95,</span><br><span class="line">        &quot;max_new_tokens&quot;: 2000,</span><br><span class="line">        &quot;do_sample&quot;: true,</span><br><span class="line">        &quot;seed&quot;: null,</span><br><span class="line">        &quot;repetition_penalty&quot;: 1.03,</span><br><span class="line">        &quot;details&quot;: true,</span><br><span class="line">        &quot;typical_p&quot;: 0.5,</span><br><span class="line">        &quot;watermark&quot;: false,</span><br><span class="line">        &quot;priority&quot;: 5,</span><br><span class="line">        &quot;timeout&quot;: 10</span><br><span class="line">    &#125;</span><br><span class="line">&#125;&#x27; http://10.0.0.228:9025/generate</span><br></pre></td></tr></table></figure>
-
-<p>stream：流式和文本</p>
-<ul>
-<li><p>流式推理主要处理实时数据流，强调快速响应和逐步输出结果，适用于实时监控和决策场景；</p>
-</li>
-<li><p>文本推理则处理离散的完整文本，注重理解和生成连贯文本，常用于自然语言处理任务。</p>
-</li>
-</ul>
-<h2 id="6-其他"><a href="#6-其他" class="headerlink" title="6 其他"></a>6 其他</h2><h3 id="6-1-AI社区"><a href="#6-1-AI社区" class="headerlink" title="6.1 AI社区"></a>6.1 AI社区</h3><ol>
-<li><p><a target="_blank" rel="noopener" href="https://modelers.cn/">魔乐社区</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.hiascend.com/developer/blog/details/0205183807801766010">昇腾MindSpeed MM微调多模态Qwen2.5-VL</a></p>
-<p><strong>推理</strong> 是使用模型对新数据进行预测的过程，目的是生成有用的输出。</p>
-<p><strong>评测</strong> 是评估模型性能的过程，目的是衡量模型在特定任务上的表现，通常通过计算性能指标来完成。</p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.huaweicloud.com/guide/productsdesc-bms_e3f6bc110060f8259631c4b1be454b5fsupport0">AI开发平台MODELARTS-昇腾能力应用地图:多模态模型</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/WASEFADG/article/details/147993631">使用LoRA微调Qwen2.5-VL-7B-Instruct完成电气主接线图识别</a></p>
-</li>
-</ol>
-<p>有人干一样的事情ye，但是要自己构造数据集</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment"># 图像分辨率统一为256×256（平衡细节与显存）</span></span><br><span class="line">    <span class="comment"># 文本标注需包含设备类型（如出线柜）、参数（如630A）和位置关系（如下层母线连接）</span></span><br><span class="line">    &#123;</span><br><span class="line">  <span class="string">&quot;conversations&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;from&quot;</span>: <span class="string">&quot;user&quot;</span>,</span><br><span class="line">      <span class="string">&quot;value&quot;</span>: <span class="string">&quot;Picture 1: ./substation_01.png\n提取图中干式变压器的参数&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">&quot;from&quot;</span>: <span class="string">&quot;assistant&quot;</span>,</span><br><span class="line">      <span class="string">&quot;value&quot;</span>: <span class="string">&quot;型号：SCB10-1600/10\n额定容量：1600kVA\n电压比：10kV/0.4kV&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="6-2-安装chatchat报错"><a href="#6-2-安装chatchat报错" class="headerlink" title="6.2 安装chatchat报错"></a>6.2 安装chatchat报错</h3><p>搞完：pip install “langchain-chatchat[xinference]” -U，pip就挂了</p>
-<p><img src="/2025/08/21/20250821_Qwen2.5-VL%E9%83%A8%E7%BD%B2%E4%B8%8EMindIE%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/image-20250812161625662.png" alt="image-20250812161625662"></p>
-<p>如果确认 <code>/usr/local/lib/python3.11/site-packages/pathlib.py</code> 是错误的第三方模块，你可以尝试删除它：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -f /usr/local/lib/python3.11/site-packages/pathlib.py</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pathlib</span><br><span class="line"><span class="built_in">print</span>(pathlib.__file__)</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-3-gg"><a href="#6-3-gg" class="headerlink" title="6.3 gg"></a>6.3 gg</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo sh -c &quot;$(curl -L https://region-hk-download.ne.world/new/linux/gg/go.sh)&quot;</span><br><span class="line">gg config -w node=</span><br></pre></td></tr></table></figure>
-
-<p>下载的时候，命令前面加上gg</p>
-<h3 id="6-4-zip"><a href="#6-4-zip" class="headerlink" title="6.4 zip"></a>6.4 zip</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y unzip zip</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-5-Langchain-Chatchat和Xinference"><a href="#6-5-Langchain-Chatchat和Xinference" class="headerlink" title="6.5 Langchain-Chatchat和Xinference"></a>6.5 Langchain-Chatchat和Xinference</h3><p>Langchain-Chatchat 是一个开源的、可离线部署的基于大语言模型的 RAG（检索增强生成）和 Agent  应用项目。它支持多种主流开源大语言模型和 embedding 模型，如 GLM-4-Chat、Qwen2-Instruct、Llama3  等，还支持调用 OpenAI 等在线 API。其核心功能包括 LLM 对话、知识库问答、搜索引擎对话、文件对话、数据库对话、多模态图片对话等，适用于企业级私有知识图谱构建场景。</p>
-<p>Xinference 是一个性能强大且功能全面的分布式推理框架，专注于简化大语言模型（LLM）、多模态模型及语音模型的部署与推理流程。它支持多种模型，包括文本生成、Embedding 向量化、语音识别、图像处理等，提供一键部署、异构硬件推理、分布式架构、灵活的 API 调用等功能。</p>
-
       
     </div>
 
