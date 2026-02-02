@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"booklover79.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="RAG 测试用例生成0 背景 验证 RAG 系统需要大量测试用例。 人工收集成本高、耗时长。 使用大模型自动生成问答对（QA）可以快速批量创建数据。  1 流程概览第一步：生成问答对（QA）  从原始 JSON 文件随机采样 N 条文档。 使用大模型（Qwen3-32b）生成高质量问答对。 写入 Excel 文件（QA_ONLY_FILE），格式：问题 &#x2F; 答案。 优势： 数据和模型回答">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RAG 测试用例生成">
+<meta property="og:url" content="https://booklover79.github.io/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/index.html">
+<meta property="og:site_name" content="BookLover&#39;s 🛖">
+<meta property="og:description" content="RAG 测试用例生成0 背景 验证 RAG 系统需要大量测试用例。 人工收集成本高、耗时长。 使用大模型自动生成问答对（QA）可以快速批量创建数据。  1 流程概览第一步：生成问答对（QA）  从原始 JSON 文件随机采样 N 条文档。 使用大模型（Qwen3-32b）生成高质量问答对。 写入 Excel 文件（QA_ONLY_FILE），格式：问题 &#x2F; 答案。 优势： 数据和模型回答">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-12-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-30T02:30:51.169Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="测试用例">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://booklover79.github.io/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"https://booklover79.github.io/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/","path":"2025/12/13/20251213_RAG 测试用例生成-202512/","title":"RAG 测试用例生成"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RAG 测试用例生成 | BookLover's 🛖</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BookLover's 🛖</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#RAG-%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90"><span class="nav-number">1.</span> <span class="nav-text">RAG 测试用例生成</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.</span> <span class="nav-text">0 背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88"><span class="nav-number">1.2.</span> <span class="nav-text">1 流程概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E7%94%9F%E6%88%90%E9%97%AE%E7%AD%94%E5%AF%B9"><span class="nav-number">1.3.</span> <span class="nav-text">2 生成问答对</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 模块设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">2.1.1 总体架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">2.1.2 核心模块划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">2.1.3 模块设计原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 代码实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-RAG-%E5%9B%9E%E7%AD%94%E9%AA%8C%E8%AF%81"><span class="nav-number">1.4.</span> <span class="nav-text">3 RAG 回答验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 模块设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-%E6%80%BB%E4%BD%93%E6%9E%B6%E6%9E%84"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">3.1.1 总体架构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86"><span class="nav-number">1.4.1.2.</span> <span class="nav-text">3.1.2 核心模块划分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99"><span class="nav-number">1.4.1.3.</span> <span class="nav-text">3.1.3 模块设计原则</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 代码实现</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/12/13/20251213_RAG%20%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%94%9F%E6%88%90-202512/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RAG 测试用例生成 | BookLover's 🛖">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RAG 测试用例生成
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-12-13 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-13T00:00:00+08:00">2025-12-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-01-30 10:30:51" itemprop="dateModified" datetime="2026-01-30T10:30:51+08:00">2026-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/RAG/" itemprop="url" rel="index"><span itemprop="name">RAG</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="RAG-测试用例生成"><a href="#RAG-测试用例生成" class="headerlink" title="RAG 测试用例生成"></a>RAG 测试用例生成</h1><h2 id="0-背景"><a href="#0-背景" class="headerlink" title="0 背景"></a>0 背景</h2><ol>
+<li>验证 RAG 系统需要大量测试用例。</li>
+<li>人工收集成本高、耗时长。</li>
+<li>使用大模型自动生成问答对（QA）可以快速批量创建数据。</li>
+</ol>
+<h2 id="1-流程概览"><a href="#1-流程概览" class="headerlink" title="1 流程概览"></a>1 流程概览</h2><p><strong>第一步：生成问答对（QA）</strong></p>
+<ol>
+<li>从原始 JSON 文件随机采样 N 条文档。</li>
+<li>使用大模型（Qwen3-32b）生成高质量问答对。</li>
+<li>写入 Excel 文件（<code>QA_ONLY_FILE</code>），格式：<code>问题</code> &#x2F; <code>答案</code>。</li>
+<li>优势：<ul>
+<li>数据和模型回答分离，方便多次 RAG 测试。</li>
+<li>可生成批量 QA，用于评测。</li>
+</ul>
+</li>
+</ol>
+<p><strong>第二步：RAG 回答验证</strong></p>
+<ol>
+<li>从 QA Excel 文件读取问题。</li>
+<li>使用 GraphRAG 系统回答问题，并获取上下文（retrieved chunks &#x2F; triples）。</li>
+<li>写入 Excel 文件（<code>QA_RAGAS_FILE</code>），格式：<code>问题 / LLM答案 / RAG回答 / 上下文</code>。</li>
+<li>可以对比 LLM 生成答案与 RAG 回答，分析检索效果。</li>
+</ol>
+<h2 id="2-生成问答对"><a href="#2-生成问答对" class="headerlink" title="2 生成问答对"></a>2 生成问答对</h2><h3 id="2-1-模块设计"><a href="#2-1-模块设计" class="headerlink" title="2.1 模块设计"></a>2.1 模块设计</h3><h4 id="2-1-1-总体架构"><a href="#2-1-1-总体架构" class="headerlink" title="2.1.1 总体架构"></a>2.1.1 总体架构</h4><p><strong>目标</strong>：快速生成高质量 RAG 测试用例（QA），保存为 Excel，便于后续 RAG 系统评估。</p>
+<p><strong>流程</strong>：</p>
+<blockquote>
+<p>原始 JSON → 数据采样 → LLM 生成 QA → 保存 Excel</p>
+</blockquote>
+<h4 id="2-1-2-核心模块划分"><a href="#2-1-2-核心模块划分" class="headerlink" title="2.1.2 核心模块划分"></a>2.1.2 核心模块划分</h4><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>输入</th>
+<th>输出</th>
+<th>设计原则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>采样模块</strong></td>
+<td>随机选择 N 条文档作为生成 QA 的基础</td>
+<td>原始 JSON 文件</td>
+<td>采样 JSON 数据</td>
+<td>单一职责，可复用</td>
+</tr>
+<tr>
+<td><strong>QA 生成模块</strong></td>
+<td>使用 LLM 根据文本生成单条问答对</td>
+<td>文本内容</td>
+<td>QA dict：<code>&#123;&quot;question&quot;, &quot;ground_truth&quot;&#125;</code></td>
+<td>保证格式一致，异常处理</td>
+</tr>
+<tr>
+<td><strong>Prompt 模块</strong></td>
+<td>定义不同类型 QA 模板（v1&#x2F;v2&#x2F;v3）</td>
+<td>文本内容</td>
+<td>LLM 输入 prompt</td>
+<td>可扩展不同 QA 类型</td>
+</tr>
+<tr>
+<td><strong>存储模块</strong></td>
+<td>将 QA 数据写入 Excel 文件</td>
+<td>QA dict</td>
+<td>Excel 文件</td>
+<td>容错，逐条追加，防中断</td>
+</tr>
+</tbody></table>
+<h4 id="2-1-3-模块设计原则"><a href="#2-1-3-模块设计原则" class="headerlink" title="2.1.3 模块设计原则"></a>2.1.3 模块设计原则</h4><ol>
+<li><strong>职责单一</strong>：采样、生成 QA、存储 Excel 分开</li>
+<li><strong>可复用</strong>：模块独立，支持多次生成 QA 或扩展新流程</li>
+<li><strong>接口统一</strong>：QA 输出统一为字典格式 <code>&#123;&quot;question&quot;, &quot;ground_truth&quot;&#125;</code></li>
+<li><strong>容错稳健</strong>：生成失败可跳过，逐行写入 Excel</li>
+<li><strong>可扩展</strong>：可替换 LLM 模型或 Prompt，支持不同类型 QA</li>
+</ol>
+<h3 id="2-2-代码实现"><a href="#2-2-代码实现" class="headerlink" title="2.2 代码实现"></a>2.2 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook, load_workbook</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 配置 ==================</span></span><br><span class="line">url = <span class="string">&quot;http://10.0.0.228:9925/v1/chat/completions&quot;</span></span><br><span class="line">api_key = <span class="string">&quot;sk-xxxxxxxxx&quot;</span></span><br><span class="line">model = <span class="string">&quot;qwen3-32b&quot;</span></span><br><span class="line"></span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;api_key&#125;</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># ================== QA 生成 Prompt ==================</span></span><br><span class="line"><span class="comment"># v1: 高质量综合问题，用于 RAG 系统评测</span></span><br><span class="line">PROMPT_QA_SINGLE_v1 = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你是一个专业的问答对数据集构建专家，擅长从资料中提炼“人类真实会问的问题”。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">请根据【内容】生成【正好 1 条】高质量问答对，用于 RAG 系统评测。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【问题生成要求】</span></span><br><span class="line"><span class="string">1. 问题应模拟真实用户的提问方式，而不是书面定义或标题复述</span></span><br><span class="line"><span class="string">2. 优先生成需要“综合多句信息才能回答”的问题</span></span><br><span class="line"><span class="string">3. 问题可以是原因、影响、作用、机制、条件、对比或结论类问题</span></span><br><span class="line"><span class="string">4. 避免“是什么 / 有哪些 / 请介绍”这类浅层问题</span></span><br><span class="line"><span class="string">5. 问题本身应具有独立意义，不依赖原文措辞</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【答案生成要求】</span></span><br><span class="line"><span class="string">1. 答案必须完全基于内容</span></span><br><span class="line"><span class="string">2. 不引入内容之外的任何事实或推断</span></span><br><span class="line"><span class="string">3. 表达清晰、完整，但不过度扩写</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【输出要求】</span></span><br><span class="line"><span class="string">- 只输出结果，不要解释</span></span><br><span class="line"><span class="string">- 不要包含前言、总结或思考过程</span></span><br><span class="line"><span class="string">- 返回格式必须严格为 JSON 数组，且长度必须为 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【格式示例】</span></span><br><span class="line"><span class="string">[</span></span><br><span class="line"><span class="string">  &#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;question&quot;: &quot;问题&quot;,</span></span><br><span class="line"><span class="string">    &quot;ground_truth&quot;: &quot;答案&quot;</span></span><br><span class="line"><span class="string">  &#125;&#125;</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">内容如下：</span></span><br><span class="line"><span class="string">&#123;content&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># v2: 问题答案直接可在内容中找到</span></span><br><span class="line">PROMPT_QA_SINGLE_v2 = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你是一个用于构建 RAG 评测数据的问答对生成器。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">请根据【内容】生成 1 条问答对，用于验证检索系统是否能找到相关文本。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">要求：</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【问题】</span></span><br><span class="line"><span class="string">1. 使用真实用户的自然提问方式</span></span><br><span class="line"><span class="string">2. 问题应能直接在内容中找到答案</span></span><br><span class="line"><span class="string">3. 问题可以复述内容中的关键信息，但不要引入新概念</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【答案】</span></span><br><span class="line"><span class="string">1. 必须完全基于内容</span></span><br><span class="line"><span class="string">2. 用自然、连贯的人类回答方式表述</span></span><br><span class="line"><span class="string">3. 可以适度改写原文，但不得新增、推断或省略关键信息</span></span><br><span class="line"><span class="string">4. 不要逐句照抄原文</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【输出要求】</span></span><br><span class="line"><span class="string">- 只输出结果，不要解释</span></span><br><span class="line"><span class="string">- 不要包含任何前言或总结</span></span><br><span class="line"><span class="string">- 返回格式必须严格为 JSON 数组，长度必须为 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【格式示例】</span></span><br><span class="line"><span class="string">[</span></span><br><span class="line"><span class="string">  &#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;question&quot;: &quot;问题&quot;,</span></span><br><span class="line"><span class="string">    &quot;ground_truth&quot;: &quot;答案&quot;</span></span><br><span class="line"><span class="string">  &#125;&#125;</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">内容如下：</span></span><br><span class="line"><span class="string">&#123;content&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># v3: 枚举型问题，统计实体数量</span></span><br><span class="line">PROMPT_QA_SINGLE_v3 = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">你是一个用于构建 RAG 评测数据 的问答对生成器。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">请根据【内容】生成 1 条问答对，用于验证检索系统是否能够从某一共同属性、国家、类型、用途或范围出发，完整枚举相关实体，并正确统计数量。</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【问题要求】</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">- 使用真实用户的自然提问方式，直接提问</span></span><br><span class="line"><span class="string">- 不引用或指代文本本身（不得出现“根据以上内容”“文中提到”等表述）</span></span><br><span class="line"><span class="string">- 问题必须从某一共同属性、国家、类型、用途或类别出发</span></span><br><span class="line"><span class="string">- 问题应明确暗示需要列举多个对象，并体现需要统计数量</span></span><br><span class="line"><span class="string">- 问题的范围必须完全受限于内容中实际出现的信息</span></span><br><span class="line"><span class="string">- 不得引入内容之外的任何概念或实体</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">示例提问方式（仅作形式参考）：</span></span><br><span class="line"><span class="string">- 某个国家一共有哪些型号的装备？分别是什么</span></span><br><span class="line"><span class="string">- 某一类型的系统包含多少个实体？它们分别是哪些</span></span><br><span class="line"><span class="string">- 某一类别下出现了哪几种型号</span></span><br><span class="line"><span class="string">- 某类装备一共有多少种？具体包括哪些</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【答案要求】</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">- 答案必须完全基于内容，不得补充常识或外部信息</span></span><br><span class="line"><span class="string">- 使用自然语言的枚举形式回答，清晰列出所有符合条件的实体</span></span><br><span class="line"><span class="string">- 不得遗漏内容中出现的任何符合条件的实体</span></span><br><span class="line"><span class="string">- 不得解释、不评价、不总结规律</span></span><br><span class="line"><span class="string">- 必须明确给出实体的总数量</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【输出要求】</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">- 只输出结果，不要解释</span></span><br><span class="line"><span class="string">- 不要包含任何前言或总结</span></span><br><span class="line"><span class="string">- 返回格式必须严格为 JSON 数组</span></span><br><span class="line"><span class="string">- 数组长度必须为 1</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">【格式示例】</span></span><br><span class="line"><span class="string">[</span></span><br><span class="line"><span class="string">  &#123;&#123;</span></span><br><span class="line"><span class="string">    &quot;question&quot;: &quot;问题&quot;,</span></span><br><span class="line"><span class="string">    &quot;ground_truth&quot;: &quot;答案&quot;</span></span><br><span class="line"><span class="string">  &#125;&#125;</span></span><br><span class="line"><span class="string">]</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">内容如下：</span></span><br><span class="line"><span class="string">&#123;content&#125;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== LLM 调用 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">call_gpt</span>(<span class="params">messages</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    调用大模型接口生成文本</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        messages (list): GPT 聊天消息列表</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        str: GPT 返回的文本内容</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    data = &#123;</span><br><span class="line">        <span class="string">&quot;model&quot;</span>: model,</span><br><span class="line">        <span class="string">&quot;messages&quot;</span>: messages</span><br><span class="line">    &#125;</span><br><span class="line">    resp = requests.post(url, headers=HEADERS, json=data, verify=<span class="literal">False</span>) <span class="comment"># 发送 POST 请求</span></span><br><span class="line">    resp.raise_for_status() <span class="comment"># 如果请求失败抛出异常</span></span><br><span class="line">    <span class="keyword">return</span> resp.json()[<span class="string">&quot;choices&quot;</span>][<span class="number">0</span>][<span class="string">&quot;message&quot;</span>][<span class="string">&quot;content&quot;</span>] <span class="comment"># 返回 GPT 的回答内容</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 生成问答 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_single_qa</span>(<span class="params">text</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    根据文本生成一条问答对</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        text (str): 文本内容</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        dict or None: &#123;&quot;question&quot;: ..., &quot;ground_truth&quot;: ...&#125; 或 None（生成失败）</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        result = call_gpt([ <span class="comment"># 调用 LLM 接口生成 QA，使用 v3 prompt</span></span><br><span class="line">            &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: PROMPT_QA_SINGLE_v3.<span class="built_in">format</span>(content=text)&#125;</span><br><span class="line">        ])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 清理 think</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;&lt;think&gt;&quot;</span> <span class="keyword">in</span> result:</span><br><span class="line">            result = result.split(<span class="string">&quot;&lt;/think&gt;&quot;</span>)[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        qa_pairs = json.loads(result) <span class="comment"># 将 GPT 输出解析为 JSON</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 必须返回单条 dict</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">isinstance</span>(qa_pairs, <span class="built_in">list</span>) <span class="keyword">and</span> <span class="built_in">len</span>(qa_pairs) == <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> qa_pairs[<span class="number">0</span>]  <span class="comment"># 这里改成返回 dict</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;数量不符，跳过&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;解析失败：&quot;</span>, e)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== JSON → 文本 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">json_item_to_text</span>(<span class="params">item: <span class="built_in">dict</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    将 JSON 内容转换为可读文本，每个字段占一行</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        item (dict): JSON 对象</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        str: 转换后的文本</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    lines = []</span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> item.items():</span><br><span class="line">        lines.append(<span class="string">f&quot;<span class="subst">&#123;k&#125;</span>：<span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;\n&quot;</span>.join(lines)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 写入 Excel ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_to_excel_append</span>(<span class="params">qa_item, filename=<span class="string">&quot;./qa_only_result-v1.xlsx&quot;</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    将单条 QA 追加写入 Excel 文件</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        qa_item (dict): &#123;&quot;question&quot;: ..., &quot;ground_truth&quot;: ...&#125;</span></span><br><span class="line"><span class="string">        filename (str): Excel 文件路径</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>    </span><br><span class="line">    <span class="comment"># 如果文件存在，打开并获取工作表</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(filename):</span><br><span class="line">        wb = load_workbook(filename)</span><br><span class="line">        ws = wb.active</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        wb = Workbook()</span><br><span class="line">        ws = wb.active</span><br><span class="line">        ws.title = <span class="string">&quot;QA&quot;</span></span><br><span class="line">        ws.append([<span class="string">&quot;问题&quot;</span>, <span class="string">&quot;答案&quot;</span>])</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 写入一行数据</span></span><br><span class="line">    ws.append([</span><br><span class="line">        qa_item[<span class="string">&quot;question&quot;</span>],</span><br><span class="line">        qa_item[<span class="string">&quot;ground_truth&quot;</span>],</span><br><span class="line">    ])</span><br><span class="line">    <span class="comment"># 保存 Excel</span></span><br><span class="line">    wb.save(filename)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;追加写入：<span class="subst">&#123;qa_item[<span class="string">&#x27;question&#x27;</span>]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 配置参数 ==================</span></span><br><span class="line">SAMPLE_SIZE = <span class="number">100</span> <span class="comment"># 采样数量</span></span><br><span class="line">ORIGIN_FILE = <span class="string">&quot;/data/hsw/youtu-graphrag-gb-2-fortest/hsw_test/results/military_v3_clean.json&quot;</span></span><br><span class="line">SAMPLE_FILE = ORIGIN_FILE + <span class="string">f&quot;_sample<span class="subst">&#123;SAMPLE_SIZE&#125;</span>.json&quot;</span></span><br><span class="line">QA_ONLY_FILE = SAMPLE_FILE + <span class="string">&quot;_qa_only_属性到实例.xlsx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 主流程 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 读取原始 JSON 数据</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(ORIGIN_FILE, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = json.load(f)</span><br><span class="line">        </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;📚 原始文档数：<span class="subst">&#123;<span class="built_in">len</span>(data)&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 随机采样 SAMPLE_SIZE 条数据</span></span><br><span class="line">    samples = random.sample(data, SAMPLE_SIZE)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;🎯 采样文档数：<span class="subst">&#123;<span class="built_in">len</span>(samples)&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 保存采样结果到文件，便于复用</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(SAMPLE_FILE, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        json.dump(samples, f, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;💾 随机采样已保存到: <span class="subst">&#123;SAMPLE_FILE&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 重新读取采样文件（可选）</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(SAMPLE_FILE, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        samples = json.load(f)</span><br><span class="line">    </span><br><span class="line">    success = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 遍历采样文本，生成 QA</span></span><br><span class="line">    <span class="keyword">for</span> idx, item <span class="keyword">in</span> <span class="built_in">enumerate</span>(samples, <span class="number">1</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n[<span class="subst">&#123;idx&#125;</span>/<span class="subst">&#123;SAMPLE_SIZE&#125;</span>] 生成 QA 中...&quot;</span>)</span><br><span class="line"></span><br><span class="line">        text = json_item_to_text(item)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> text.strip(): <span class="comment"># 如果文本为空，跳过</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        qa = generate_single_qa(text)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;idx:<span class="subst">&#123;idx&#125;</span> qa:<span class="subst">&#123;qa&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">if</span> qa:</span><br><span class="line">            write_to_excel_append(qa, QA_ONLY_FILE)</span><br><span class="line">            success += <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n🎉 完成：成功生成 <span class="subst">&#123;success&#125;</span> 条 RAGAS QA&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-RAG-回答验证"><a href="#3-RAG-回答验证" class="headerlink" title="3 RAG 回答验证"></a>3 RAG 回答验证</h2><h3 id="3-1-模块设计"><a href="#3-1-模块设计" class="headerlink" title="3.1 模块设计"></a>3.1 模块设计</h3><h4 id="3-1-1-总体架构"><a href="#3-1-1-总体架构" class="headerlink" title="3.1.1 总体架构"></a>3.1.1 总体架构</h4><p><strong>目标</strong>：读取 QA 测试用例（LLM 生成的问答对），使用 GraphRAG 系统获取答案及上下文，并保存到 Excel 文件，便于后续指标评估。</p>
+<p><strong>流程</strong>：</p>
+<blockquote>
+<p>QA Excel → 遍历问题 → GraphRAG 回答 + 检索上下文 → 保存 Excel</p>
+</blockquote>
+<h4 id="3-1-2-核心模块划分"><a href="#3-1-2-核心模块划分" class="headerlink" title="3.1.2 核心模块划分"></a>3.1.2 核心模块划分</h4><table>
+<thead>
+<tr>
+<th>模块</th>
+<th>功能</th>
+<th>输入</th>
+<th>输出</th>
+<th>设计原则</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>QA 读取模块</strong></td>
+<td>从 Excel 文件读取 QA 问答对</td>
+<td>Excel 文件</td>
+<td>QA 列表 dict：<code>&#123;&quot;question&quot;, &quot;ground_truth&quot;&#125;</code></td>
+<td>单一职责，接口统一</td>
+</tr>
+<tr>
+<td><strong>GraphRAG 问答模块</strong></td>
+<td>调用 GraphRAG API 获取答案和检索上下文</td>
+<td>问题字符串</td>
+<td>dict：<code>&#123;&quot;answer&quot;, &quot;retrieved&quot;&#125;</code></td>
+<td>封装 API 调用，保证返回格式一致</td>
+</tr>
+<tr>
+<td><strong>JSON→文本模块</strong></td>
+<td>将 JSON 文档转换为可读文本</td>
+<td>JSON 对象</td>
+<td>文本字符串</td>
+<td>统一格式，便于 GraphRAG 或 LLM 使用</td>
+</tr>
+<tr>
+<td><strong>Excel 写入模块</strong></td>
+<td>将单条 QA + GraphRAG 回答追加写入 Excel</td>
+<td>dict：<code>&#123;&quot;question&quot;,&quot;ground_truth&quot;,&quot;answer&quot;,&quot;retrieved&quot;&#125;</code></td>
+<td>Excel 文件</td>
+<td>容错、逐行追加，防中断</td>
+</tr>
+</tbody></table>
+<h4 id="3-1-3-模块设计原则"><a href="#3-1-3-模块设计原则" class="headerlink" title="3.1.3 模块设计原则"></a>3.1.3 模块设计原则</h4><ol>
+<li><p>职责单一：读取、调用 GraphRAG、写入 Excel 分开</p>
+</li>
+<li><p>接口统一：GraphRAG 返回固定结构 {“answer”,”retrieved”}</p>
+</li>
+<li><p>容错稳健：逐行写入，单条失败不影响整体</p>
+</li>
+<li><p>可扩展：可替换 GraphRAG API 或扩展其他检索系统</p>
+</li>
+</ol>
+<h3 id="3-2-代码实现"><a href="#3-2-代码实现" class="headerlink" title="3.2 代码实现"></a>3.2 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span>, <span class="type">Dict</span>, <span class="type">Union</span></span><br><span class="line"><span class="keyword">from</span> openpyxl <span class="keyword">import</span> Workbook, load_workbook</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 配置 ==================</span></span><br><span class="line">url = <span class="string">&quot;http://10.0.0.228:9925/v1/chat/completions&quot;</span></span><br><span class="line">api_key = <span class="string">&quot;sk-xxxxxxxxx&quot;</span></span><br><span class="line">model = <span class="string">&quot;qwen3-32b&quot;</span></span><br><span class="line"></span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: <span class="string">f&quot;Bearer <span class="subst">&#123;api_key&#125;</span>&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== JSON → 文本 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">json_item_to_text</span>(<span class="params">item: <span class="built_in">dict</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    lines = []</span><br><span class="line">    <span class="keyword">for</span> k, v <span class="keyword">in</span> item.items():</span><br><span class="line">        lines.append(<span class="string">f&quot;<span class="subst">&#123;k&#125;</span>：<span class="subst">&#123;v&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;\n&quot;</span>.join(lines)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_qa_from_excel</span>(<span class="params">filename: <span class="built_in">str</span>, only_questions: <span class="built_in">bool</span> = <span class="literal">False</span></span>) -&gt; <span class="type">Union</span>[<span class="type">List</span>[<span class="built_in">str</span>], <span class="type">List</span>[<span class="type">Dict</span>[<span class="built_in">str</span>, <span class="built_in">str</span>]]]:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    从 Excel 文件读取问答对</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        filename: Excel 文件路径</span></span><br><span class="line"><span class="string">        only_questions: True 只返回问题列表，False 返回 [&#123;&#x27;question&#x27;: ..., &#x27;ground_truth&#x27;: ...&#125;, ...]</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        List[str] 或 List[Dict[str, str]]</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(filename):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件不存在：<span class="subst">&#123;filename&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">    wb = load_workbook(filename)</span><br><span class="line">    ws = wb.active</span><br><span class="line"></span><br><span class="line">    results = []</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> ws.iter_rows(min_row=<span class="number">2</span>, values_only=<span class="literal">True</span>):  <span class="comment"># 跳过表头</span></span><br><span class="line">        question = row[<span class="number">0</span>]</span><br><span class="line">        answer = row[<span class="number">1</span>] <span class="keyword">if</span> <span class="built_in">len</span>(row) &gt; <span class="number">1</span> <span class="keyword">else</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> question:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> only_questions:</span><br><span class="line">            results.append(question)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            results.append(&#123;<span class="string">&quot;question&quot;</span>: question, <span class="string">&quot;ground_truth&quot;</span>: answer&#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;✅ 从 Excel 读取 <span class="subst">&#123;<span class="built_in">len</span>(results)&#125;</span> 条 <span class="subst">&#123;<span class="string">&#x27;问题&#x27;</span> <span class="keyword">if</span> only_questions <span class="keyword">else</span> <span class="string">&#x27;问答对&#x27;</span>&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> results</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== GraphRAG 问答 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">ask_graphrag</span>(<span class="params">question</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    使用 GraphRAG API 获取问题回答及相关上下文</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        question: 待提问问题字符串</span></span><br><span class="line"><span class="string">    Returns:</span></span><br><span class="line"><span class="string">        answer: GraphRAG 生成的答案</span></span><br><span class="line"><span class="string">        retrieved: 检索到的上下文（chunks 和 triples）</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    url = <span class="string">&quot;http://0.0.0.0:8014/api/ask-question&quot;</span></span><br><span class="line">    payload = &#123;</span><br><span class="line">        <span class="string">&quot;dataset_name&quot;</span>: <span class="string">&quot;military_v3_clean&quot;</span>,  <span class="comment"># 使用的数据集</span></span><br><span class="line">        <span class="string">&quot;question&quot;</span>: question</span><br><span class="line">    &#125;</span><br><span class="line">    params = &#123;<span class="string">&quot;client_id&quot;</span>: <span class="string">&quot;test_client&quot;</span>&#125; <span class="comment"># 客户端标识，可自定义</span></span><br><span class="line"></span><br><span class="line">    resp = requests.post(url, json=payload, params=params)</span><br><span class="line">    resp_json = resp.json()</span><br><span class="line">    <span class="comment"># 将检索到的上下文格式化成字符串</span></span><br><span class="line">    retrieved = <span class="string">f&quot;【retrieved_chunks：<span class="subst">&#123;resp_json.get(<span class="string">&#x27;retrieved_chunks&#x27;</span>, [])&#125;</span>】 【retrieved_triples:<span class="subst">&#123;resp_json.get(<span class="string">&#x27;retrieved_triples&#x27;</span>, [])&#125;</span>】&quot;</span></span><br><span class="line">    <span class="keyword">return</span> resp_json[<span class="string">&quot;answer&quot;</span>], retrieved</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">list_to_str</span>(<span class="params">data</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;多层列表扁平化为字符串&quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">isinstance</span>(data, <span class="built_in">list</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;, &quot;</span>.join(list_to_str(i) <span class="keyword">for</span> i <span class="keyword">in</span> data)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">str</span>(data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write_to_excel_append</span>(<span class="params">qa_item, filename=<span class="string">&quot;./qa_rags_result-v1.xlsx&quot;</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    单条 QA 数据追加写入 Excel 文件</span></span><br><span class="line"><span class="string">    Args:</span></span><br><span class="line"><span class="string">        qa_item: dict 类型，包含 question, ground_truth, answer, retrieved</span></span><br><span class="line"><span class="string">        filename: Excel 文件路径</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> os.path.exists(filename):</span><br><span class="line">        wb = load_workbook(filename)</span><br><span class="line">        ws = wb.active</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        wb = Workbook()</span><br><span class="line">        ws = wb.active</span><br><span class="line">        ws.title = <span class="string">&quot;QA&quot;</span></span><br><span class="line">        ws.append([<span class="string">&quot;问题&quot;</span>, <span class="string">&quot;答案&quot;</span>, <span class="string">&quot;回答&quot;</span>, <span class="string">&quot;上下文&quot;</span>])</span><br><span class="line"></span><br><span class="line">    retrieved_str = list_to_str(qa_item[<span class="string">&quot;retrieved&quot;</span>])</span><br><span class="line">    ws.append([</span><br><span class="line">        qa_item[<span class="string">&quot;question&quot;</span>],</span><br><span class="line">        qa_item[<span class="string">&quot;ground_truth&quot;</span>],</span><br><span class="line">        qa_item[<span class="string">&quot;answer&quot;</span>],</span><br><span class="line">        retrieved_str</span><br><span class="line">    ])</span><br><span class="line">    wb.save(filename)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;追加写入：<span class="subst">&#123;qa_item[<span class="string">&#x27;question&#x27;</span>]&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 文件路径配置 ==================</span></span><br><span class="line"><span class="keyword">from</span> gen_qa_new_v3_qaOnly <span class="keyword">import</span> SAMPLE_SIZE, SAMPLE_FILE, QA_ONLY_FILE</span><br><span class="line">QA_ONLY_FILE = <span class="string">&quot;/data/hsw/youtu-graphrag-gb-2-fortest/hsw_test/military_v3_clean.json_sample100.json_qa_only_属性到实例.xlsx&quot;</span></span><br><span class="line">QA_RAGAS_FILE = <span class="string">&quot;/data/hsw/youtu-graphrag-gb-2-fortest/hsw_test/military_v3_clean.json_sample100.json_rags_属性到实例.xlsx&quot;</span>  <span class="comment"># SAMPLE_FILE + &quot;_qa_rags.xlsx&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ================== 主流程 ==================</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 读取 JSON 样本文件</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(SAMPLE_FILE, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        samples = json.load(f)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;导入文档数：<span class="subst">&#123;<span class="built_in">len</span>(samples)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 从 Excel 读取问答对</span></span><br><span class="line">    qa = read_qa_from_excel(QA_ONLY_FILE) <span class="comment"># 从xlsx读入问答对（取问题）</span></span><br><span class="line">    </span><br><span class="line">    success = <span class="number">0</span></span><br><span class="line">    <span class="comment"># 遍历样本生成 GraphRAG 回答</span></span><br><span class="line">    <span class="comment"># for idx, item in enumerate(samples[38:], 39): #(samples, 1): # 从39个开始</span></span><br><span class="line">    <span class="keyword">for</span> idx, item <span class="keyword">in</span> <span class="built_in">enumerate</span>(samples, <span class="number">1</span>): <span class="comment"># 从1开始</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;\n[<span class="subst">&#123;idx&#125;</span>/<span class="subst">&#123;SAMPLE_SIZE&#125;</span>] 生成 graphrag 回答和上下文 中...&quot;</span>)</span><br><span class="line"></span><br><span class="line">        text = json_item_to_text(item)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> text.strip(): <span class="comment"># 去掉字符串两端的空白字符，判断是否是空字符串</span></span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        question = qa[idx - <span class="number">1</span>][<span class="string">&quot;question&quot;</span>]</span><br><span class="line">        ground_truth = qa[idx - <span class="number">1</span>][<span class="string">&quot;ground_truth&quot;</span>]</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 获取 GraphRAG 回答和上下文</span></span><br><span class="line">        answer, retrieved = ask_graphrag(question)</span><br><span class="line">        qa_item = &#123;</span><br><span class="line">            <span class="string">&quot;question&quot;</span>: question,</span><br><span class="line">            <span class="string">&quot;ground_truth&quot;</span>: ground_truth,    <span class="comment"># LLM 生成答案</span></span><br><span class="line">            <span class="string">&quot;answer&quot;</span>: answer,       	 	 <span class="comment"># GraphRAG 回答</span></span><br><span class="line">            <span class="string">&quot;retrieved&quot;</span>: retrieved           <span class="comment"># GraphRAG 上下文</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment"># 写入 Excel</span></span><br><span class="line">        write_to_excel_append(qa_item, QA_RAGAS_FILE)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;\n🎉 完成：成功生成 <span class="subst">&#123;success&#125;</span> 条 RAGAS QA&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B/" rel="tag"># 测试用例</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/" rel="prev" title="鲲鹏920B-WRF安装手册">
+                  <i class="fa fa-angle-left"></i> 鲲鹏920B-WRF安装手册
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/" rel="next" title="基于 RAGAS 的 RAG 系统性能评估">
+                  基于 RAGAS 的 RAG 系统性能评估 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">BookLover</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
