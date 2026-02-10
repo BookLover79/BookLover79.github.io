@@ -1,9 +1,9 @@
-title: BookLover's 🛖
+title: BookLover's Blog
 subtitle: ''
-description: ''
+description: '像初雪一样自由洒落'
 keywords: null
 author: BookLover
-language: en
+language: zh-CN
 timezone: ''
 url: https://BookLover79.github.io
 root: /
@@ -72,3 +72,17 @@ deploy:
   type: git
   repo: git@github.com:BookLover79/BookLover79.github.io.git
   branch: main
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+  exclude_codeblock: false
+  awl: 2    
+  wpm: 275
+  suffix: "mins."
+search:
+  path: search.xml
+  field: post
+  format: html
+  limit: 100
