@@ -1,0 +1,365 @@
+## 4 算法对比
+
+ResNet
+
+ascend
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.23399999737739563, max = 0.23399999737739563, mean = 0.23399999737739563, median = 0.23399999737739563, percentile(99%) = 0.23399999737739563
+[INFO] NPU_compute_time (ms): min = 0.516998291015625, max = 0.60198974609375, mean = 0.53759765625, median = 0.522979736328125, percentile(99%) = 0.5989099121093749
+[INFO] D2H_latency (ms): min = 0.029999999329447746, max = 0.029999999329447746, mean = 0.029999999329447746, median = 0.029999999329447746, percentile(99%) = 0.029999999329447746
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.53759765625): 1860.1271571298819
+[INFO] ------------------------------------------------------
+```
+
+gpu
+
+[03/16/2026-19:52:23] [I] === Performance summary ===
+[03/16/2026-19:52:23] [I] Throughput: 698.918 qps
+[03/16/2026-19:52:23] [I] Latency: min = 1.47214 ms, max = 1.71375 ms, mean = 1.49155 ms, median = 1.49051 ms, percentile(90%) = 1.49866 ms, percentile(95%) = 1.50073 ms, percentile(99%) = 1.5083 ms
+[03/16/2026-19:52:23] [I] Enqueue Time: min = 0.340088 ms, max = 2.35046 ms, mean = 0.724704 ms, median = 0.731934 ms, percentile(90%) = 0.994873 ms, percentile(95%) = 1.01605 ms, percentile(99%) = 1.06641 ms
+[03/16/2026-19:52:23] [I] H2D Latency: min = 0.053833 ms, max = 0.0811768 ms, mean = 0.059546 ms, median = 0.0585938 ms, percentile(90%) = 0.0671387 ms, percentile(95%) = 0.067627 ms, percentile(99%) = 0.0693359 ms
+[03/16/2026-19:52:23] [I] GPU Compute Time: min = 1.41415 ms, max = 1.64966 ms, mean = 1.42797 ms, median = 1.42749 ms, percentile(90%) = 1.43256 ms, percentile(95%) = 1.43457 ms, percentile(99%) = 1.43872 ms
+[03/16/2026-19:52:23] [I] D2H Latency: min = 0.00292969 ms, max = 0.013916 ms, mean = 0.00404416 ms, median = 0.00366211 ms, percentile(90%) = 0.00500488 ms, percentile(95%) = 0.00518799 ms, percentile(99%) = 0.00585938 ms
+[03/16/2026-19:52:23] [I] Total Host Walltime: 3.00321 s
+[03/16/2026-19:52:23] [I] Total GPU Compute Time: 2.9973 s
+[03/16/2026-19:52:23] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-19:52:23] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=resnet50.onnx --warmUp=200 --iterations=5
+(ais_bench_hsw) [root@transev onnx_all]# ^C
+
+
+
+
+
+EﬃcientNet
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.15299999713897705, max = 0.15299999713897705, mean = 0.15299999713897705, median = 0.15299999713897705, percentile(99%) = 0.15299999713897705
+[INFO] NPU_compute_time (ms): min = 0.7130126953125, max = 0.876007080078125, mean = 0.74859619140625, median = 0.7139892578125, percentile(99%) = 0.870006103515625
+[INFO] D2H_latency (ms): min = 0.029999999329447746, max = 0.029999999329447746, mean = 0.029999999329447746, median = 0.029999999329447746, percentile(99%) = 0.029999999329447746
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.74859619140625): 1335.833673053404
+```
+
+[03/16/2026-19:51:16] [I] === Performance summary ===
+[03/16/2026-19:51:16] [I] Throughput: 1058.18 qps
+[03/16/2026-19:51:16] [I] Latency: min = 0.993958 ms, max = 2.07153 ms, mean = 1.00288 ms, median = 1.00073 ms, percentile(90%) = 1.00659 ms, percentile(95%) = 1.00916 ms, percentile(99%) = 1.05811 ms
+[03/16/2026-19:51:16] [I] Enqueue Time: min = 0.608459 ms, max = 2.06445 ms, mean = 0.780416 ms, median = 0.632721 ms, percentile(90%) = 1.01135 ms, percentile(95%) = 1.27197 ms, percentile(99%) = 1.41473 ms
+[03/16/2026-19:51:16] [I] H2D Latency: min = 0.0537109 ms, max = 0.0690002 ms, mean = 0.0561527 ms, median = 0.0558472 ms, percentile(90%) = 0.0592651 ms, percentile(95%) = 0.0594482 ms, percentile(99%) = 0.0596924 ms
+[03/16/2026-19:51:16] [I] GPU Compute Time: min = 0.934814 ms, max = 2.01318 ms, mean = 0.942583 ms, median = 0.940918 ms, percentile(90%) = 0.945068 ms, percentile(95%) = 0.948242 ms, percentile(99%) = 0.999451 ms
+[03/16/2026-19:51:16] [I] D2H Latency: min = 0.00292969 ms, max = 0.0142822 ms, mean = 0.00414389 ms, median = 0.00366211 ms, percentile(90%) = 0.00524902 ms, percentile(95%) = 0.00561523 ms, percentile(99%) = 0.0102539 ms
+[03/16/2026-19:51:16] [I] Total Host Walltime: 3.00232 s
+[03/16/2026-19:51:16] [I] Total GPU Compute Time: 2.99459 s
+[03/16/2026-19:51:16] [W] * GPU compute time is unstable, with coefficient of variance = 2.40932%.
+[03/16/2026-19:51:16] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/16/2026-19:51:16] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-19:51:16] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=efficientnet_b0.onnx --warmUp=200 --iterations=5
+
+
+
+
+
+ MobileNet
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.12700000405311584, max = 0.12700000405311584, mean = 0.12700000405311584, median = 0.12700000405311584, percentile(99%) = 0.12700000405311584
+[INFO] NPU_compute_time (ms): min = 0.457000732421875, max = 0.5679931640625, mean = 0.4855987548828125, median = 0.4640045166015625, percentile(99%) = 0.564512939453125
+[INFO] D2H_latency (ms): min = 0.028999999165534973, max = 0.028999999165534973, mean = 0.028999999165534973, median = 0.028999999165534973, percentile(99%) = 0.028999999165534973
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.4855987548828125): 2059.313352731569
+[INFO] ------------------------------------------------------
+```
+
+ [03/16/2026-19:53:46] [I] === Performance summary ===
+[03/16/2026-19:53:46] [I] Throughput: 2109.7 qps
+[03/16/2026-19:53:46] [I] Latency: min = 0.518723 ms, max = 0.976562 ms, mean = 0.530716 ms, median = 0.52594 ms, percentile(90%) = 0.531982 ms, percentile(95%) = 0.552979 ms, percentile(99%) = 0.674561 ms
+[03/16/2026-19:53:46] [I] Enqueue Time: min = 0.270508 ms, max = 1.16675 ms, mean = 0.313071 ms, median = 0.279053 ms, percentile(90%) = 0.45755 ms, percentile(95%) = 0.544434 ms, percentile(99%) = 0.80542 ms
+[03/16/2026-19:53:46] [I] H2D Latency: min = 0.0534668 ms, max = 0.0662842 ms, mean = 0.0554227 ms, median = 0.0553284 ms, percentile(90%) = 0.0557861 ms, percentile(95%) = 0.0571289 ms, percentile(99%) = 0.05896 ms
+[03/16/2026-19:53:46] [I] GPU Compute Time: min = 0.459778 ms, max = 0.916504 ms, mean = 0.471164 ms, median = 0.466919 ms, percentile(90%) = 0.471069 ms, percentile(95%) = 0.494629 ms, percentile(99%) = 0.61438 ms
+[03/16/2026-19:53:46] [I] D2H Latency: min = 0.00317383 ms, max = 0.0212402 ms, mean = 0.00413196 ms, median = 0.00366211 ms, percentile(90%) = 0.00488281 ms, percentile(95%) = 0.00512695 ms, percentile(99%) = 0.015564 ms
+[03/16/2026-19:53:46] [I] Total Host Walltime: 3.00138 s
+[03/16/2026-19:53:46] [I] Total GPU Compute Time: 2.98341 s
+[03/16/2026-19:53:46] [W] * GPU compute time is unstable, with coefficient of variance = 5.06194%.
+[03/16/2026-19:53:46] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/16/2026-19:53:46] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-19:53:46] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=mobilenet_v2.onnx --warmUp=200 --iterations=5
+
+
+
+----
+
+yolo5
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.42800000309944153, max = 0.42800000309944153, mean = 0.42800000309944153, median = 0.42800000309944153, percentile(99%) = 0.42800000309944153
+[INFO] NPU_compute_time (ms): min = 0.926025390625, max = 1.10205078125, mean = 0.965478515625, median = 0.928955078125, percentile(99%) = 1.095654296875
+[INFO] D2H_latency (ms): min = 0.0560000017285347, max = 0.3659999966621399, mean = 0.20024999603629112, median = 0.18949999287724495, percentile(99%) = 0.36344999641180037
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.965478515625): 1035.7558286552369
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-20:01:43] [I] === Performance summary ===
+[03/16/2026-20:01:43] [I] Throughput: 486.942 qps
+[03/16/2026-20:01:43] [I] Latency: min = 3.72559 ms, max = 4.97827 ms, mean = 3.7797 ms, median = 3.77795 ms, percentile(90%) = 3.79211 ms, percentile(95%) = 3.79688 ms, percentile(99%) = 3.81006 ms
+[03/16/2026-20:01:43] [I] Enqueue Time: min = 0.740723 ms, max = 3.13184 ms, mean = 1.23732 ms, median = 1.21997 ms, percentile(90%) = 1.65283 ms, percentile(95%) = 1.76266 ms, percentile(99%) = 1.91113 ms
+[03/16/2026-20:01:43] [I] H2D Latency: min = 0.407471 ms, max = 0.446533 ms, mean = 0.415531 ms, median = 0.413651 ms, percentile(90%) = 0.423706 ms, percentile(95%) = 0.424957 ms, percentile(99%) = 0.432617 ms
+[03/16/2026-20:01:43] [I] GPU Compute Time: min = 2.00195 ms, max = 3.23877 ms, mean = 2.04621 ms, median = 2.04492 ms, percentile(90%) = 2.05518 ms, percentile(95%) = 2.05826 ms, percentile(99%) = 2.06445 ms
+[03/16/2026-20:01:43] [I] D2H Latency: min = 1.31177 ms, max = 1.37646 ms, mean = 1.31797 ms, median = 1.31689 ms, percentile(90%) = 1.32178 ms, percentile(95%) = 1.32593 ms, percentile(99%) = 1.33435 ms
+[03/16/2026-20:01:43] [I] Total Host Walltime: 3.00652 s
+[03/16/2026-20:01:43] [I] Total GPU Compute Time: 2.99565 s
+[03/16/2026-20:01:43] [W] * GPU compute time is unstable, with coefficient of variance = 1.57135%.
+[03/16/2026-20:01:43] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/16/2026-20:01:43] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:01:43] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=yolov5s.onnx --warmUp=200 --iterations=5
+
+YOLO8
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.8690000176429749, max = 0.8690000176429749, mean = 0.8690000176429749, median = 0.8690000176429749, percentile(99%) = 0.8690000176429749
+[INFO] NPU_compute_time (ms): min = 1.2850341796875, max = 1.47802734375, mean = 1.3305908203125, median = 1.2939453125, percentile(99%) = 1.4712646484375
+[INFO] D2H_latency (ms): min = 0.1940000057220459, max = 0.1940000057220459, mean = 0.1940000057220459, median = 0.1940000057220459, percentile(99%) = 0.1940000057220459
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(1.3305908203125): 751.5458431955376
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-19:58:23] [I] === Performance summary ===
+[03/16/2026-19:58:23] [I] Throughput: 407.507 qps
+[03/16/2026-19:58:23] [I] Latency: min = 3.03906 ms, max = 3.13977 ms, mean = 3.09199 ms, median = 3.09119 ms, percentile(90%) = 3.10333 ms, percentile(95%) = 3.10767 ms, percentile(99%) = 3.11395 ms
+[03/16/2026-19:58:23] [I] Enqueue Time: min = 0.630859 ms, max = 3.26611 ms, mean = 1.16334 ms, median = 1.16425 ms, percentile(90%) = 1.5835 ms, percentile(95%) = 1.66479 ms, percentile(99%) = 1.73608 ms
+[03/16/2026-19:58:23] [I] H2D Latency: min = 0.408569 ms, max = 0.442688 ms, mean = 0.421048 ms, median = 0.422363 ms, percentile(90%) = 0.428467 ms, percentile(95%) = 0.430908 ms, percentile(99%) = 0.43457 ms
+[03/16/2026-19:58:23] [I] GPU Compute Time: min = 2.39819 ms, max = 2.47604 ms, mean = 2.44985 ms, median = 2.44843 ms, percentile(90%) = 2.45963 ms, percentile(95%) = 2.46271 ms, percentile(99%) = 2.46991 ms
+[03/16/2026-19:58:23] [I] D2H Latency: min = 0.218018 ms, max = 0.236572 ms, mean = 0.221089 ms, median = 0.220947 ms, percentile(90%) = 0.221924 ms, percentile(95%) = 0.222382 ms, percentile(99%) = 0.228638 ms
+[03/16/2026-19:58:23] [I] Total Host Walltime: 3.00609 s
+[03/16/2026-19:58:23] [I] Total GPU Compute Time: 3.00107 s
+[03/16/2026-19:58:23] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-19:58:23] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=yolov8s.onnx --warmUp=200 --iterations=5
+
+YOLO11
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 1.1540000438690186, max = 1.1540000438690186, mean = 1.1540000438690186, median = 1.1540000438690186, percentile(99%) = 1.1540000438690186
+[INFO] NPU_compute_time (ms): min = 1.3199462890625, max = 1.60302734375, mean = 1.3857666015625, median = 1.3319091796875, percentile(99%) = 1.592626953125
+[INFO] D2H_latency (ms): min = 0.19699999690055847, max = 0.19699999690055847, mean = 0.19699999690055847, median = 0.19699999690055847, percentile(99%) = 0.19699999690055847
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(1.3857666015625): 721.6222406229629
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-20:04:23] [I] === Performance summary ===
+[03/16/2026-20:04:23] [I] Throughput: 695.498 qps
+[03/16/2026-20:04:23] [I] Latency: min = 2.00317 ms, max = 2.09888 ms, mean = 2.07211 ms, median = 2.07178 ms, percentile(90%) = 2.08063 ms, percentile(95%) = 2.08386 ms, percentile(99%) = 2.08972 ms
+[03/16/2026-20:04:23] [I] Enqueue Time: min = 0.684875 ms, max = 2.46558 ms, mean = 0.995469 ms, median = 1.00128 ms, percentile(90%) = 1.34253 ms, percentile(95%) = 1.40625 ms, percentile(99%) = 1.56519 ms
+[03/16/2026-20:04:23] [I] H2D Latency: min = 0.410889 ms, max = 0.434326 ms, mean = 0.416435 ms, median = 0.416382 ms, percentile(90%) = 0.418579 ms, percentile(95%) = 0.421631 ms, percentile(99%) = 0.425781 ms
+[03/16/2026-20:04:23] [I] GPU Compute Time: min = 1.36816 ms, max = 1.45715 ms, mean = 1.43491 ms, median = 1.43463 ms, percentile(90%) = 1.44287 ms, percentile(95%) = 1.44495 ms, percentile(99%) = 1.45001 ms
+[03/16/2026-20:04:23] [I] D2H Latency: min = 0.217773 ms, max = 0.271484 ms, mean = 0.22077 ms, median = 0.220703 ms, percentile(90%) = 0.221466 ms, percentile(95%) = 0.221802 ms, percentile(99%) = 0.226135 ms
+[03/16/2026-20:04:23] [I] Total Host Walltime: 3.0036 s
+[03/16/2026-20:04:23] [I] Total GPU Compute Time: 2.99752 s
+[03/16/2026-20:04:23] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:04:23] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=yolo11n.onnx --warmUp=200 --iterations=5
+
+
+
+
+
+U-Net
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.17800000309944153, max = 0.17800000309944153, mean = 0.17800000309944153, median = 0.17800000309944153, percentile(99%) = 0.17800000309944153
+[INFO] NPU_compute_time (ms): min = 0.652984619140625, max = 0.75701904296875, mean = 0.678399658203125, median = 0.6610107421875, percentile(99%) = 0.753458251953125
+[INFO] D2H_latency (ms): min = 0.032999999821186066, max = 0.032999999821186066, mean = 0.032999999821186066, median = 0.032999999821186066, percentile(99%) = 0.032999999821186066
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.678399658203125): 1474.0573464448623
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-20:09:45] [I] === Performance summary ===
+[03/16/2026-20:09:45] [I] Throughput: 593.133 qps
+[03/16/2026-20:09:45] [I] Latency: min = 1.74664 ms, max = 1.79736 ms, mean = 1.76522 ms, median = 1.7655 ms, percentile(90%) = 1.77588 ms, percentile(95%) = 1.77832 ms, percentile(99%) = 1.78296 ms
+[03/16/2026-20:09:45] [I] Enqueue Time: min = 0.340759 ms, max = 1.76538 ms, mean = 0.807236 ms, median = 0.830414 ms, percentile(90%) = 1.0166 ms, percentile(95%) = 1.04871 ms, percentile(99%) = 1.11086 ms
+[03/16/2026-20:09:45] [I] H2D Latency: min = 0.053894 ms, max = 0.0900879 ms, mean = 0.0632068 ms, median = 0.060791 ms, percentile(90%) = 0.0687561 ms, percentile(95%) = 0.0689697 ms, percentile(99%) = 0.0761108 ms
+[03/16/2026-20:09:45] [I] GPU Compute Time: min = 1.6701 ms, max = 1.70508 ms, mean = 1.68293 ms, median = 1.68152 ms, percentile(90%) = 1.69067 ms, percentile(95%) = 1.69165 ms, percentile(99%) = 1.69458 ms
+[03/16/2026-20:09:45] [I] D2H Latency: min = 0.0183105 ms, max = 0.0273438 ms, mean = 0.0190837 ms, median = 0.0188599 ms, percentile(90%) = 0.0198975 ms, percentile(95%) = 0.0202637 ms, percentile(99%) = 0.0209961 ms
+[03/16/2026-20:09:45] [I] Total Host Walltime: 3.00438 s
+[03/16/2026-20:09:45] [I] Total GPU Compute Time: 2.99899 s
+[03/16/2026-20:09:45] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:09:45] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=unet_resnet34.onnx --warmUp=200 --iterations=5
+
+
+
+
+
+DeepLabV3+
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.21699999272823334, max = 0.21699999272823334, mean = 0.21699999272823334, median = 0.21699999272823334, percentile(99%) = 0.21699999272823334
+[INFO] NPU_compute_time (ms): min = 1.51898193359375, max = 1.70697021484375, mean = 1.56337890625, median = 1.52899169921875, percentile(99%) = 1.70009033203125
+[INFO] D2H_latency (ms): min = 0.26600000262260437, max = 0.26600000262260437, mean = 0.26600000262260437, median = 0.26600000262260437, percentile(99%) = 0.26600000262260437
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(1.56337890625): 639.6402023861577
+[INFO] ------------------------------------------------------
+```
+
+ [03/16/2026-20:12:55] [I] === Performance summary ===
+[03/16/2026-20:12:55] [I] Throughput: 211.75 qps
+[03/16/2026-20:12:55] [I] Latency: min = 5.08887 ms, max = 5.17352 ms, mean = 5.10864 ms, median = 5.09912 ms, percentile(90%) = 5.13464 ms, percentile(95%) = 5.1377 ms, percentile(99%) = 5.16956 ms
+[03/16/2026-20:12:55] [I] Enqueue Time: min = 0.94487 ms, max = 1.00562 ms, mean = 0.974551 ms, median = 0.972168 ms, percentile(90%) = 0.987549 ms, percentile(95%) = 0.990479 ms, percentile(99%) = 0.998535 ms
+[03/16/2026-20:12:55] [I] H2D Latency: min = 0.0678711 ms, max = 0.0855713 ms, mean = 0.0695936 ms, median = 0.0692139 ms, percentile(90%) = 0.0698242 ms, percentile(95%) = 0.0705566 ms, percentile(99%) = 0.0827637 ms
+[03/16/2026-20:12:55] [I] GPU Compute Time: min = 4.69299 ms, max = 4.77802 ms, mean = 4.7132 ms, median = 4.70337 ms, percentile(90%) = 4.73926 ms, percentile(95%) = 4.74219 ms, percentile(99%) = 4.77393 ms
+[03/16/2026-20:12:55] [I] D2H Latency: min = 0.325195 ms, max = 0.327881 ms, mean = 0.325848 ms, median = 0.325684 ms, percentile(90%) = 0.326782 ms, percentile(95%) = 0.327057 ms, percentile(99%) = 0.327637 ms
+[03/16/2026-20:12:55] [I] Total Host Walltime: 3.01771 s
+[03/16/2026-20:12:55] [I] Total GPU Compute Time: 3.01173 s
+[03/16/2026-20:12:55] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:12:55] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=deeplabv3_resnet50.onnx --warmUp=200 --iterations=5
+(ais_bench_hsw) [root@transev onnx_all]#
+
+
+
+
+
+FCN
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.13099999725818634, max = 0.13099999725818634, mean = 0.13099999725818634, median = 0.13099999725818634, percentile(99%) = 0.13099999725818634
+[INFO] NPU_compute_time (ms): min = 1.04400634765625, max = 1.173004150390625, mean = 1.073394775390625, median = 1.045989990234375, percentile(99%) = 1.1684033203125
+[INFO] D2H_latency (ms): min = 0.2619999945163727, max = 0.2619999945163727, mean = 0.2619999945163727, median = 0.2619999945163727, percentile(99%) = 0.2619999945163727
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(1.073394775390625): 931.6236886247974
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-20:15:23] [I] === Performance summary ===
+[03/16/2026-20:15:23] [I] Throughput: 324.952 qps
+[03/16/2026-20:15:23] [I] Latency: min = 3.45123 ms, max = 3.49829 ms, mean = 3.46816 ms, median = 3.46375 ms, percentile(90%) = 3.48364 ms, percentile(95%) = 3.48462 ms, percentile(99%) = 3.48779 ms
+[03/16/2026-20:15:23] [I] Enqueue Time: min = 0.734619 ms, max = 1.14636 ms, mean = 0.802261 ms, median = 0.803711 ms, percentile(90%) = 0.808594 ms, percentile(95%) = 0.810242 ms, percentile(99%) = 0.815796 ms
+[03/16/2026-20:15:23] [I] H2D Latency: min = 0.0639648 ms, max = 0.0878906 ms, mean = 0.0704734 ms, median = 0.0700684 ms, percentile(90%) = 0.071106 ms, percentile(95%) = 0.0715332 ms, percentile(99%) = 0.0842285 ms
+[03/16/2026-20:15:23] [I] GPU Compute Time: min = 3.0556 ms, max = 3.09351 ms, mean = 3.07195 ms, median = 3.06787 ms, percentile(90%) = 3.0874 ms, percentile(95%) = 3.08838 ms, percentile(99%) = 3.09058 ms
+[03/16/2026-20:15:23] [I] D2H Latency: min = 0.324707 ms, max = 0.328369 ms, mean = 0.325746 ms, median = 0.3255 ms, percentile(90%) = 0.326904 ms, percentile(95%) = 0.327148 ms, percentile(99%) = 0.327637 ms
+[03/16/2026-20:15:23] [I] Total Host Walltime: 3.00659 s
+[03/16/2026-20:15:23] [I] Total GPU Compute Time: 3.00129 s
+[03/16/2026-20:15:23] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:15:23] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=fcn_resnet50.onnx --warmUp=200 --iterations=5
+
+
+
+ LSTM
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.050999999046325684, max = 0.050999999046325684, mean = 0.050999999046325684, median = 0.050999999046325684, percentile(99%) = 0.050999999046325684
+[INFO] NPU_compute_time (ms): min = 0.1569976806640625, max = 0.2570037841796875, mean = 0.1790008544921875, median = 0.15900421142578125, percentile(99%) = 0.25328369140625
+[INFO] D2H_latency (ms): min = 0.012000000104308128, max = 0.026000000536441803, mean = 0.0173333336909612, median = 0.014000000432133675, percentile(99%) = 0.02576000053435564
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(0.1790008544921875): 5586.565510186685
+[INFO] ------------------------------------------------------
+```
+
+
+
+[03/16/2026-20:16:12] [I] === Performance summary ===
+[03/16/2026-20:16:12] [I] Throughput: 33073.8 qps
+[03/16/2026-20:16:12] [I] Latency: min = 0.0163574 ms, max = 1.19745 ms, mean = 0.0199409 ms, median = 0.020752 ms, percentile(90%) = 0.0219727 ms, percentile(95%) = 0.0222168 ms, percentile(99%) = 0.0257568 ms
+[03/16/2026-20:16:12] [I] Enqueue Time: min = 0.00927734 ms, max = 0.0861816 ms, mean = 0.00999491 ms, median = 0.00982666 ms, percentile(90%) = 0.0102539 ms, percentile(95%) = 0.010376 ms, percentile(99%) = 0.0126953 ms
+[03/16/2026-20:16:12] [I] H2D Latency: min = 0.00292969 ms, max = 0.0587769 ms, mean = 0.00366138 ms, median = 0.00366211 ms, percentile(90%) = 0.00390625 ms, percentile(95%) = 0.00390625 ms, percentile(99%) = 0.00415039 ms
+[03/16/2026-20:16:12] [I] GPU Compute Time: min = 0.0078125 ms, max = 1.18567 ms, mean = 0.0108378 ms, median = 0.0115967 ms, percentile(90%) = 0.0124512 ms, percentile(95%) = 0.0130005 ms, percentile(99%) = 0.0144043 ms
+[03/16/2026-20:16:12] [I] D2H Latency: min = 0.00488281 ms, max = 1.17566 ms, mean = 0.00544246 ms, median = 0.00531006 ms, percentile(90%) = 0.00585938 ms, percentile(95%) = 0.00610352 ms, percentile(99%) = 0.00720215 ms
+[03/16/2026-20:16:12] [I] Total Host Walltime: 3.00005 s
+[03/16/2026-20:16:12] [I] Total GPU Compute Time: 1.07536 s
+[03/16/2026-20:16:12] [W] * Throughput may be bound by Enqueue Time rather than GPU Compute and the GPU may be under-utilized.
+[03/16/2026-20:16:12] [W]   If not already in use, --useCudaGraph (utilize CUDA graphs where possible) may increase the throughput.
+[03/16/2026-20:16:12] [W] * GPU compute time is unstable, with coefficient of variance = 40.1222%.
+[03/16/2026-20:16:12] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/16/2026-20:16:12] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:16:12] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=lstm.onnx --warmUp=200 --iterations=5
+
+
+
+
+
+ GRU
+
+```
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.07000000029802322, max = 0.07000000029802322, mean = 0.07000000029802322, median = 0.07000000029802322, percentile(99%) = 0.07000000029802322
+[INFO] NPU_compute_time (ms): min = 0.121002197265625, max = 5.103996276855469, mean = 1.26619873046875, median = 0.2649993896484375, percentile(99%) = 4.927436218261718
+[INFO] D2H_latency (ms): min = 0.019999999552965164, max = 0.06499999761581421, mean = 0.04249999858438969, median = 0.04249999858438969, percentile(99%) = 0.06454999763518572
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(1.26619873046875): 789.7654419774985
+[INFO] ------------------------------------------------------
+```
+
+[03/16/2026-20:16:54] [I] === Performance summary ===
+[03/16/2026-20:16:54] [I] Throughput: 26904.5 qps
+[03/16/2026-20:16:54] [I] Latency: min = 0.0275879 ms, max = 0.151733 ms, mean = 0.0316375 ms, median = 0.0317383 ms, percentile(90%) = 0.0327148 ms, percentile(95%) = 0.0330811 ms, percentile(99%) = 0.0337067 ms
+[03/16/2026-20:16:54] [I] Enqueue Time: min = 0.0175781 ms, max = 0.132446 ms, mean = 0.0186969 ms, median = 0.0185547 ms, percentile(90%) = 0.0191345 ms, percentile(95%) = 0.0192871 ms, percentile(99%) = 0.0210266 ms
+[03/16/2026-20:16:54] [I] H2D Latency: min = 0.00292969 ms, max = 0.0206909 ms, mean = 0.00455884 ms, median = 0.00439453 ms, percentile(90%) = 0.00549316 ms, percentile(95%) = 0.00561523 ms, percentile(99%) = 0.00585938 ms
+[03/16/2026-20:16:54] [I] GPU Compute Time: min = 0.0192871 ms, max = 0.134155 ms, mean = 0.0211002 ms, median = 0.020752 ms, percentile(90%) = 0.0216064 ms, percentile(95%) = 0.0224609 ms, percentile(99%) = 0.0244141 ms
+[03/16/2026-20:16:54] [I] D2H Latency: min = 0.00366211 ms, max = 0.0678711 ms, mean = 0.00597593 ms, median = 0.00622559 ms, percentile(90%) = 0.00671387 ms, percentile(95%) = 0.00689697 ms, percentile(99%) = 0.00720215 ms
+[03/16/2026-20:16:54] [I] Total Host Walltime: 3.00009 s
+[03/16/2026-20:16:54] [I] Total GPU Compute Time: 1.70312 s
+[03/16/2026-20:16:54] [W] * Throughput may be bound by Enqueue Time rather than GPU Compute and the GPU may be under-utilized.
+[03/16/2026-20:16:54] [W]   If not already in use, --useCudaGraph (utilize CUDA graphs where possible) may increase the throughput.
+[03/16/2026-20:16:54] [W] * GPU compute time is unstable, with coefficient of variance = 4.51756%.
+[03/16/2026-20:16:54] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/16/2026-20:16:54] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/16/2026-20:16:54] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=gru.onnx --warmUp=200 --iterations=5
+
+
+
+convlstm
+
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.2639999985694885, max = 0.2639999985694885, mean = 0.2639999985694885, median = 0.2639999985694885, percentile(99%) = 0.2639999985694885
+[INFO] NPU_compute_time (ms): min = 5.2740478515625, max = 8.83203125, mean = 6.0694091796875, median = 5.4359130859375, percentile(99%) = 8.697470703125
+[INFO] D2H_latency (ms): min = 0.10499999672174454, max = 0.10499999672174454, mean = 0.10499999672174454, median = 0.10499999672174454, percentile(99%) = 0.10499999672174454
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(6.0694091796875): 164.7606826948991
+[INFO] ------------------------------------------------------
+
+[03/20/2026-14:20:43] [I] === Performance summary ===
+[03/20/2026-14:20:43] [I] Throughput: 66.6056 qps
+[03/20/2026-14:20:43] [I] Latency: min = 14.824 ms, max = 15.1287 ms, mean = 14.9945 ms, median = 14.9917 ms, percentile(90%) = 15.066 ms, percentile(95%) = 15.0804 ms, percentile(99%) = 15.0955 ms
+[03/20/2026-14:20:43] [I] Enqueue Time: min = 5.09888 ms, max = 7.8183 ms, mean = 6.28698 ms, median = 6.05762 ms, percentile(90%) = 7.76489 ms, percentile(95%) = 7.78687 ms, percentile(99%) = 7.80835 ms
+[03/20/2026-14:20:43] [I] H2D Latency: min = 0.0292969 ms, max = 0.0842285 ms, mean = 0.0378043 ms, median = 0.0375977 ms, percentile(90%) = 0.0400391 ms, percentile(95%) = 0.0412598 ms, percentile(99%) = 0.0549316 ms
+[03/20/2026-14:20:43] [I] GPU Compute Time: min = 14.7712 ms, max = 15.0713 ms, mean = 14.9378 ms, median = 14.936 ms, percentile(90%) = 15.0078 ms, percentile(95%) = 15.0251 ms, percentile(99%) = 15.0396 ms
+[03/20/2026-14:20:43] [I] D2H Latency: min = 0.015625 ms, max = 0.0218201 ms, mean = 0.0189083 ms, median = 0.0188599 ms, percentile(90%) = 0.0203857 ms, percentile(95%) = 0.020874 ms, percentile(99%) = 0.0217285 ms
+[03/20/2026-14:20:43] [I] Total Host Walltime: 3.04779 s
+[03/20/2026-14:20:43] [I] Total GPU Compute Time: 3.03237 s
+[03/20/2026-14:20:43] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/20/2026-14:20:43] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=convlstm.onnx --warmUp=200 --iterations=5
+
+
+convgru
+[INFO] -----------------Performance Summary------------------
+[INFO] H2D_latency (ms): min = 0.16699999570846558, max = 0.16699999570846558, mean = 0.16699999570846558, median = 0.16699999570846558, percentile(99%) = 0.16699999570846558
+[INFO] NPU_compute_time (ms): min = 8.7440185546875, max = 13.364013671875, mean = 11.4818115234375, median = 12.302001953125, percentile(99%) = 13.331171875
+[INFO] D2H_latency (ms): min = 0.03400000184774399, max = 0.03400000184774399, mean = 0.03400000184774399, median = 0.03400000184774399, percentile(99%) = 0.03400000184774399
+[INFO] throughput 1000*batchsize.mean(1)/NPU_compute_time.mean(11.4818115234375): 87.09427061737846
+[INFO] ------------------------------------------------------
+[03/20/2026-14:22:20] [I] === Performance summary ===
+[03/20/2026-14:22:20] [I] Throughput: 27079.6 qps
+[03/20/2026-14:22:20] [I] Latency: min = 0.0280762 ms, max = 1.16907 ms, mean = 0.0319287 ms, median = 0.0318604 ms, percentile(90%) = 0.0328674 ms, percentile(95%) = 0.0332031 ms, percentile(99%) = 0.0339355 ms
+[03/20/2026-14:22:20] [I] Enqueue Time: min = 0.017334 ms, max = 1.16101 ms, mean = 0.0184616 ms, median = 0.0183105 ms, percentile(90%) = 0.0187988 ms, percentile(95%) = 0.0190582 ms, percentile(99%) = 0.020752 ms
+[03/20/2026-14:22:20] [I] H2D Latency: min = 0.00292969 ms, max = 0.0788574 ms, mean = 0.00469024 ms, median = 0.00482178 ms, percentile(90%) = 0.0055542 ms, percentile(95%) = 0.00561523 ms, percentile(99%) = 0.00585938 ms
+[03/20/2026-14:22:20] [I] GPU Compute Time: min = 0.0192871 ms, max = 1.15918 ms, mean = 0.0211262 ms, median = 0.0205078 ms, percentile(90%) = 0.0215454 ms, percentile(95%) = 0.0224609 ms, percentile(99%) = 0.0245361 ms
+[03/20/2026-14:22:20] [I] D2H Latency: min = 0.00366211 ms, max = 0.0341797 ms, mean = 0.00610968 ms, median = 0.00622559 ms, percentile(90%) = 0.00671387 ms, percentile(95%) = 0.00683594 ms, percentile(99%) = 0.00720215 ms
+[03/20/2026-14:22:20] [I] Total Host Walltime: 3.00008 s
+[03/20/2026-14:22:20] [I] Total GPU Compute Time: 1.71631 s
+[03/20/2026-14:22:20] [W] * Throughput may be bound by Enqueue Time rather than GPU Compute and the GPU may be under-utilized.
+[03/20/2026-14:22:20] [W]   If not already in use, --useCudaGraph (utilize CUDA graphs where possible) may increase the throughput.
+[03/20/2026-14:22:20] [W] * GPU compute time is unstable, with coefficient of variance = 20.5847%.
+[03/20/2026-14:22:20] [W]   If not already in use, locking GPU clock frequency or adding --useSpinWait may improve the stability.
+[03/20/2026-14:22:20] [I] Explanations of the performance metrics are printed in the verbose logs.
+[03/20/2026-14:22:20] [I]
+&&&& PASSED TensorRT.trtexec [TensorRT v8601] # trtexec --onnx=gru.onnx --warmUp=200 --iterations=5
