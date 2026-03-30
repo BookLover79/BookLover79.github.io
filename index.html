@@ -173,6 +173,171 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2026/03/30/20260330_Docker%20%E9%83%A8%E7%BD%B2%20OpenClaw%EF%BC%88%E9%BE%99%E8%99%BE%EF%BC%89+%20QQ%20%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's Blog">
+      <meta itemprop="description" content="像初雪一样自由洒落">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | BookLover's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/03/30/20260330_Docker%20%E9%83%A8%E7%BD%B2%20OpenClaw%EF%BC%88%E9%BE%99%E8%99%BE%EF%BC%89+%20QQ%20%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2026-03-30 00:00:00 / 修改时间：15:45:47" itemprop="dateCreated datePublished" datetime="2026-03-30T00:00:00+08:00">2026-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/OpenClaw/" itemprop="url" rel="index"><span itemprop="name">OpenClaw</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="🦞-Docker-部署-OpenClaw（龙虾）-QQ-机器人接入指南"><a href="#🦞-Docker-部署-OpenClaw（龙虾）-QQ-机器人接入指南" class="headerlink" title="🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南"></a>🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南</h1><blockquote>
+<p>使用 Docker 在本地快速部署 OpenClaw，并打通 QQ 机器人，实现自动对话与消息联动。</p>
+</blockquote>
+<ul>
+<li><p>项目仓库：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im?tab=readme-ov-file">https://github.com/justlovemaki/openclaw-docker-cn-im?tab=readme-ov-file</a></p>
+</li>
+<li><p>官方快速开始：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/quick-start.md">https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/quick-start.md</a></p>
+</li>
+</ul>
+<h2 id="1-项目准备"><a href="#1-项目准备" class="headerlink" title="1. 项目准备"></a>1. 项目准备</h2><p>在开始之前，请确保你已经具备以下环境：</p>
+<ul>
+<li>已安装 Docker &#x2F; Docker Compose</li>
+<li>拥有可用的大模型 API（OpenAI &#x2F; 兼容接口）</li>
+</ul>
+<h3 id="1-1-下载环境变量模版"><a href="#1-1-下载环境变量模版" class="headerlink" title="1.1 下载环境变量模版"></a>1.1 下载环境变量模版</h3><p>作用：提供默认配置模板，避免手动从零创建</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/justlovemaki/OpenClaw-Docker-CN-IM/main/.env.example</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-克隆仓库"><a href="#1-2-克隆仓库" class="headerlink" title="1.2 克隆仓库"></a>1.2 克隆仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/justlovemaki/OpenClaw-Docker-CN-IM.git</span><br><span class="line"></span><br><span class="line">cd OpenClaw-Docker-CN-IM</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-初始化配置文件"><a href="#1-3-初始化配置文件" class="headerlink" title="1.3 初始化配置文件"></a>1.3 初始化配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .env.example .env</span><br></pre></td></tr></table></figure>
+
+<h4 id="关键配置项说明"><a href="#关键配置项说明" class="headerlink" title="关键配置项说明"></a>关键配置项说明</h4><p>编辑 <code>.env</code> 文件：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">MODEL_ID=你的模型名称</span></span><br><span class="line"><span class="string">BASE_URL=接口地址</span></span><br><span class="line"><span class="string">API_KEY=api-key</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认使用 OpenAI 协议</span></span><br><span class="line"><span class="string">API_PROTOCOL=openai-completions</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上下文配置</span></span><br><span class="line"><span class="string">CONTEXT_WINDOW=1000000</span></span><br><span class="line"><span class="string">MAX_TOKENS=8192</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于存储配置文件和运行数据</span></span><br><span class="line"><span class="string">OPENCLAW_DATA_DIR=xxx</span> </span><br></pre></td></tr></table></figure>
+
+<p>注意事项：</p>
+<ul>
+<li>模型需要支持较大的上下文长度（长对话）</li>
+<li>实测当 token 上限为 4096 时，可能出现如下报错：</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Context overflow: prompt too large for the model. Try /reset (or /new) to start a fresh session, or use a larger-context model.</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-容器管理"><a href="#2-容器管理" class="headerlink" title="2. 容器管理"></a>2. 容器管理</h2><h3 id="2-1-启动容器"><a href="#2-1-启动容器" class="headerlink" title="2.1 启动容器"></a>2.1 启动容器</h3><p>后台启动所有服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-查看日志（非常重要）"><a href="#2-2-查看日志（非常重要）" class="headerlink" title="2.2 查看日志（非常重要）"></a>2.2 查看日志（非常重要）</h3><p>用途：</p>
+<ul>
+<li>判断是否启动成功</li>
+<li>排查 API 连接问题</li>
+<li>查看报错信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose logs -f</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-停止服务"><a href="#2-3-停止服务" class="headerlink" title="2.3 停止服务"></a>2.3 停止服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-进入容器"><a href="#2-4-进入容器" class="headerlink" title="2.4 进入容器"></a>2.4 进入容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec openclaw-gateway /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-接入-QQ-机器人"><a href="#3-接入-QQ-机器人" class="headerlink" title="3. 接入 QQ 机器人"></a>3. 接入 QQ 机器人</h2><p>参考文档：<a target="_blank" rel="noopener" href="https://github.com/tencent-connect/openclaw-qqbot/blob/main/README.zh.md">https://github.com/tencent-connect/openclaw-qqbot/blob/main/README.zh.md</a></p>
+<h3 id="3-1-获取-QQ-Bot-凭证"><a href="#3-1-获取-QQ-Bot-凭证" class="headerlink" title="3.1  获取 QQ Bot 凭证"></a>3.1  获取 QQ Bot 凭证</h3><p>前往平台申请： <a target="_blank" rel="noopener" href="https://q.qq.com/#/">https://q.qq.com/#/</a></p>
+<p>获取以下信息：</p>
+<ul>
+<li>AppID</li>
+<li>AppSecret</li>
+</ul>
+<h3 id="3-2-配置凭证"><a href="#3-2-配置凭证" class="headerlink" title="3.2 配置凭证"></a>3.2 配置凭证</h3><p>在 <code>.env</code> 文件中填写：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">135</span> <span class="string">QQBOT_APP_ID=xxx</span></span><br><span class="line"><span class="number">136</span> <span class="string">QQBOT_CLIENT_SECRET=xxx</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：修改后需要重启容器</p>
+<h2 id="4-常见问题与配置生效"><a href="#4-常见问题与配置生效" class="headerlink" title="4. 常见问题与配置生效"></a>4. 常见问题与配置生效</h2><p>参考 FAQ：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/faq.md">https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/faq.md</a></p>
+<h3 id="4-1-检查容器内配置"><a href="#4-1-检查容器内配置" class="headerlink" title="4.1 检查容器内配置"></a>4.1 检查容器内配置</h3><p>如果你在宿主机修改了 <code>.env</code>，需要确认容器内配置是否同步：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/node/.openclaw/openclaw.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-修改-env-后未生效"><a href="#4-2-修改-env-后未生效" class="headerlink" title="4.2 修改 .env 后未生效"></a>4.2 修改 .env 后未生效</h3><p>原因：</p>
+<ul>
+<li>OpenClaw 会缓存配置文件</li>
+<li>修改 <code>.env</code> 不会自动覆盖旧配置</li>
+</ul>
+<p>可以删除旧配置并重启容器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm ~/.openclaw/openclaw.json</span><br><span class="line">docker compose restart</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-强制重建容器（推荐）"><a href="#4-3-强制重建容器（推荐）" class="headerlink" title="4.3 强制重建容器（推荐）"></a>4.3 强制重建容器（推荐）</h3><p>如果问题仍未解决，建议直接重建：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d --force-recreate</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2026/03/26/20260326_Ascend%20AI%20Box%EF%BC%9A%E8%AE%AD%E6%8E%A8%E4%B8%80%E4%BD%93%E5%8C%96%E5%B9%B3%E5%8F%B0%E8%83%BD%E5%8A%9B%E5%BA%95%E5%BA%A7%E8%AE%BE%E8%AE%A1%E6%96%87%E6%A1%A3%20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -576,177 +741,6 @@
             </div>
           <!--/noindex-->
         
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2026/03/26/20260330_Docker%20%E9%83%A8%E7%BD%B2%20OpenClaw%EF%BC%88%E9%BE%99%E8%99%BE%EF%BC%89+%20QQ%20%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BookLover">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="BookLover's Blog">
-      <meta itemprop="description" content="像初雪一样自由洒落">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | BookLover's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/03/26/20260330_Docker%20%E9%83%A8%E7%BD%B2%20OpenClaw%EF%BC%88%E9%BE%99%E8%99%BE%EF%BC%89+%20QQ%20%E6%9C%BA%E5%99%A8%E4%BA%BA%E6%8E%A5%E5%85%A5%E6%8C%87%E5%8D%97/" class="post-title-link" itemprop="url">🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-03-26 00:00:00" itemprop="dateCreated datePublished" datetime="2026-03-26T00:00:00+08:00">2026-03-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2026-03-30 14:56:29" itemprop="dateModified" datetime="2026-03-30T14:56:29+08:00">2026-03-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/OpenClaw/" itemprop="url" rel="index"><span itemprop="name">OpenClaw</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.7k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="🦞-Docker-部署-OpenClaw（龙虾）-QQ-机器人接入指南"><a href="#🦞-Docker-部署-OpenClaw（龙虾）-QQ-机器人接入指南" class="headerlink" title="🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南"></a>🦞 Docker 部署 OpenClaw（龙虾）+ QQ 机器人接入指南</h1><blockquote>
-<p>使用 Docker 在本地快速部署 OpenClaw，并打通 QQ 机器人，实现自动对话与消息联动。</p>
-</blockquote>
-<ul>
-<li><p>项目仓库：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im?tab=readme-ov-file">https://github.com/justlovemaki/openclaw-docker-cn-im?tab=readme-ov-file</a></p>
-</li>
-<li><p>官方快速开始：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/quick-start.md">https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/quick-start.md</a></p>
-</li>
-</ul>
-<h2 id="1-项目准备"><a href="#1-项目准备" class="headerlink" title="1. 项目准备"></a>1. 项目准备</h2><p>在开始之前，请确保你已经具备以下环境：</p>
-<ul>
-<li>已安装 Docker &#x2F; Docker Compose</li>
-<li>拥有可用的大模型 API（OpenAI &#x2F; 兼容接口）</li>
-</ul>
-<h3 id="1-1-下载环境变量模版"><a href="#1-1-下载环境变量模版" class="headerlink" title="1.1 下载环境变量模版"></a>1.1 下载环境变量模版</h3><p>作用：提供默认配置模板，避免手动从零创建</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://raw.githubusercontent.com/justlovemaki/OpenClaw-Docker-CN-IM/main/.env.example</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-2-克隆仓库"><a href="#1-2-克隆仓库" class="headerlink" title="1.2 克隆仓库"></a>1.2 克隆仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/justlovemaki/OpenClaw-Docker-CN-IM.git</span><br><span class="line"></span><br><span class="line">cd OpenClaw-Docker-CN-IM</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-3-初始化配置文件"><a href="#1-3-初始化配置文件" class="headerlink" title="1.3 初始化配置文件"></a>1.3 初始化配置文件</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp .env.example .env</span><br></pre></td></tr></table></figure>
-
-<h4 id="关键配置项说明"><a href="#关键配置项说明" class="headerlink" title="关键配置项说明"></a>关键配置项说明</h4><p>编辑 <code>.env</code> 文件：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">MODEL_ID=你的模型名称</span></span><br><span class="line"><span class="string">BASE_URL=接口地址</span></span><br><span class="line"><span class="string">API_KEY=api-key</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 默认使用 OpenAI 协议</span></span><br><span class="line"><span class="string">API_PROTOCOL=openai-completions</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 上下文配置</span></span><br><span class="line"><span class="string">CONTEXT_WINDOW=1000000</span></span><br><span class="line"><span class="string">MAX_TOKENS=8192</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于存储配置文件和运行数据</span></span><br><span class="line"><span class="string">OPENCLAW_DATA_DIR=xxx</span> </span><br></pre></td></tr></table></figure>
-
-<p>注意事项：</p>
-<ul>
-<li>模型需要支持较大的上下文长度（长对话）</li>
-<li>实测当 token 上限为 4096 时，可能出现如下报错：</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Context overflow: prompt too large for the model. Try /reset (or /new) to start a fresh session, or use a larger-context model.</span><br></pre></td></tr></table></figure>
-
-<h2 id="2-容器管理"><a href="#2-容器管理" class="headerlink" title="2. 容器管理"></a>2. 容器管理</h2><h3 id="2-1-启动容器"><a href="#2-1-启动容器" class="headerlink" title="2.1 启动容器"></a>2.1 启动容器</h3><p>后台启动所有服务</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-2-查看日志（非常重要）"><a href="#2-2-查看日志（非常重要）" class="headerlink" title="2.2 查看日志（非常重要）"></a>2.2 查看日志（非常重要）</h3><p>用途：</p>
-<ul>
-<li>判断是否启动成功</li>
-<li>排查 API 连接问题</li>
-<li>查看报错信息</li>
-</ul>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose logs -f</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-3-停止服务"><a href="#2-3-停止服务" class="headerlink" title="2.3 停止服务"></a>2.3 停止服务</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-4-进入容器"><a href="#2-4-进入容器" class="headerlink" title="2.4 进入容器"></a>2.4 进入容器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose exec openclaw-gateway /bin/bash</span><br></pre></td></tr></table></figure>
-
-<h2 id="3-接入-QQ-机器人"><a href="#3-接入-QQ-机器人" class="headerlink" title="3. 接入 QQ 机器人"></a>3. 接入 QQ 机器人</h2><p>参考文档：<a target="_blank" rel="noopener" href="https://github.com/tencent-connect/openclaw-qqbot/blob/main/README.zh.md">https://github.com/tencent-connect/openclaw-qqbot/blob/main/README.zh.md</a></p>
-<h3 id="3-1-获取-QQ-Bot-凭证"><a href="#3-1-获取-QQ-Bot-凭证" class="headerlink" title="3.1  获取 QQ Bot 凭证"></a>3.1  获取 QQ Bot 凭证</h3><p>前往平台申请： <a target="_blank" rel="noopener" href="https://q.qq.com/#/">https://q.qq.com/#/</a></p>
-<p>获取以下信息：</p>
-<ul>
-<li>AppID</li>
-<li>AppSecret</li>
-</ul>
-<h3 id="3-2-配置凭证"><a href="#3-2-配置凭证" class="headerlink" title="3.2 配置凭证"></a>3.2 配置凭证</h3><p>在 <code>.env</code> 文件中填写：</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">135</span> <span class="string">QQBOT_APP_ID=xxx</span></span><br><span class="line"><span class="number">136</span> <span class="string">QQBOT_CLIENT_SECRET=xxx</span></span><br></pre></td></tr></table></figure>
-
-<p>注意：修改后需要重启容器</p>
-<h2 id="4-常见问题与配置生效"><a href="#4-常见问题与配置生效" class="headerlink" title="4. 常见问题与配置生效"></a>4. 常见问题与配置生效</h2><p>参考 FAQ：<a target="_blank" rel="noopener" href="https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/faq.md">https://github.com/justlovemaki/openclaw-docker-cn-im/blob/main/docs/faq.md</a></p>
-<h3 id="4-1-检查容器内配置"><a href="#4-1-检查容器内配置" class="headerlink" title="4.1 检查容器内配置"></a>4.1 检查容器内配置</h3><p>如果你在宿主机修改了 <code>.env</code>，需要确认容器内配置是否同步：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/home/node/.openclaw/openclaw.json</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-2-修改-env-后未生效"><a href="#4-2-修改-env-后未生效" class="headerlink" title="4.2 修改 .env 后未生效"></a>4.2 修改 .env 后未生效</h3><p>原因：</p>
-<ul>
-<li>OpenClaw 会缓存配置文件</li>
-<li>修改 <code>.env</code> 不会自动覆盖旧配置</li>
-</ul>
-<p>可以删除旧配置并重启容器：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm ~/.openclaw/openclaw.json</span><br><span class="line">docker compose restart</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-3-强制重建容器（推荐）"><a href="#4-3-强制重建容器（推荐）" class="headerlink" title="4.3 强制重建容器（推荐）"></a>4.3 强制重建容器（推荐）</h3><p>如果问题仍未解决，建议直接重建：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d --force-recreate</span><br></pre></td></tr></table></figure>
-
-
       
     </div>
 
