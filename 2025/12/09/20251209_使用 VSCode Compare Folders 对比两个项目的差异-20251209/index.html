@@ -1,130 +1,256 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="cache-control" content="no-cache">
-  <meta http-equiv="expires" content="0">
-  
-  <title>使用 VSCode Compare Folders 对比两个项目的差异 | BookLover&#39;s Blog</title>
-  <meta name="author" content="BookLover">
-  
-  <meta name="description" content="像初雪一样自由洒落">
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
 
-  <meta property="og:title" content="使用 VSCode Compare Folders 对比两个项目的差异"/>
-  <meta property="og:site_name" content="BookLover&#39;s Blog"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  
-    <meta property="og:image" content=""/>
-  
-
-  
-  
-    <link href="/favicon.png" rel="icon">
-  
-  
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
-  <script src="/js/jquery-2.0.3.min.js"></script>
-
-  <!-- analytics -->
-  
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-70812759-1', 'auto');
-  ga('send', 'pageview');
-</script>
+<link rel="stylesheet" href="/css/main.css">
 
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-	  <a class="navbar-brand" href="/">BookLover&#39;s Blog</a>
-      <div class="collapse navbar-collapse nav-menu">
-		<ul class="nav navbar-nav">
-		  
-		  <li>
-			<a href="/archives" title="All the articles.">
-			  <i class=""></i>Archives
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/categories" title="All the categories.">
-			  <i class=""></i>Categories
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/tags" title="All the tags.">
-			  <i class=""></i>Tags
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/about" title="About me.">
-			  <i class=""></i>About
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/atom.xml" title="Subscribe me.">
-			  <i class=""></i>RSS
-			</a>
-		  </li>
-		  
-		</ul>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"booklover79.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="使用 VSCode Compare Folders 对比两个项目的差异当你手上有两份修改过的项目，需要查看它们之间到底改动了哪些内容时，可以使用 VSCode 的 Compare Folders 插件。这种方式比 Beyond Compare 更轻量、更直观，不需要逐个文件打开，效率更高。 1. 安装并打开 Compare Folders 插件 2. 将两个项目文件夹加入工作区在 VSCode 顶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用 VSCode Compare Folders 对比两个项目的差异">
+<meta property="og:url" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/index.html">
+<meta property="og:site_name" content="BookLover&#39;s Blog">
+<meta property="og:description" content="使用 VSCode Compare Folders 对比两个项目的差异当你手上有两份修改过的项目，需要查看它们之间到底改动了哪些内容时，可以使用 VSCode 的 Compare Folders 插件。这种方式比 Beyond Compare 更轻量、更直观，不需要逐个文件打开，效率更高。 1. 安装并打开 Compare Folders 插件 2. 将两个项目文件夹加入工作区在 VSCode 顶">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164355260.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164642514.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164656886.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164847774.png">
+<meta property="og:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209165002259.png">
+<meta property="article:published_time" content="2025-12-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-02-02T07:49:09.764Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="VSCode">
+<meta property="article:tag" content="Compare Folders">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164355260.png">
+
+
+<link rel="canonical" href="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/","path":"2025/12/09/20251209_使用 VSCode Compare Folders 对比两个项目的差异-20251209/","title":"使用 VSCode Compare Folders 对比两个项目的差异"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>使用 VSCode Compare Folders 对比两个项目的差异 | BookLover's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BookLover's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-VSCode-Compare-Folders-%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">1.</span> <span class="nav-text">使用 VSCode Compare Folders 对比两个项目的差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85%E5%B9%B6%E6%89%93%E5%BC%80-Compare-Folders-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">1. 安装并打开 Compare Folders 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B0%86%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E5%A4%B9%E5%8A%A0%E5%85%A5%E5%B7%A5%E4%BD%9C%E5%8C%BA"><span class="nav-number">3.</span> <span class="nav-text">2. 将两个项目文件夹加入工作区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%9C%A8%E5%B7%A5%E4%BD%9C%E5%8C%BA%E4%B8%AD%E9%80%89%E6%8B%A9%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E8%BF%9B%E8%A1%8C%E5%AF%B9%E6%AF%94"><span class="nav-number">4.</span> <span class="nav-text">3. 在工作区中选择两个项目进行对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%9F%A5%E7%9C%8B%E9%A1%B9%E7%9B%AE%E5%B7%AE%E5%BC%82"><span class="nav-number">5.</span> <span class="nav-text">4. 查看项目差异</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8D%95%E5%87%BB%E6%96%87%E4%BB%B6%E5%8D%B3%E5%8F%AF%E6%9F%A5%E7%9C%8B%E4%BF%AE%E6%94%B9%E5%86%85%E5%AE%B9"><span class="nav-number">6.</span> <span class="nav-text">5. 单击文件即可查看修改内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94-Beyond-Compare-%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">7.</span> <span class="nav-text">对比 Beyond Compare 的优势</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description">像初雪一样自由洒落</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
       </div>
-    </div> <!-- container -->
-</nav>
-<div class="clearfix"></div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
 
-  <div class="container">
-  	<div class="content">
-    	 
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
 
 
-	
-		<div class="page-header">
-			<h1> 使用 VSCode Compare Folders 对比两个项目的差异</h1>
-		</div>
-	
+    </div>
+
+    <div class="main-inner post posts-expand">
 
 
+  
 
-<div class="row post">
-	<!-- cols -->
-	
-	<div id="top_meta"></div>
-	<div class="col-md-9">
-	
 
-	<!-- content -->
-	<div class="mypage">		
-	  		
+<div class="post-block">
+  
+  
 
-	  <h2 id="使用-VSCode-Compare-Folders-对比两个项目的差异"><a href="#使用-VSCode-Compare-Folders-对比两个项目的差异" class="headerlink" title="使用 VSCode Compare Folders 对比两个项目的差异"></a>使用 VSCode Compare Folders 对比两个项目的差异</h2><p>当你手上有两份修改过的项目，需要查看它们之间到底改动了哪些内容时，可以使用 VSCode 的 <strong>Compare Folders</strong> 插件。这种方式比 Beyond Compare 更轻量、更直观，不需要逐个文件打开，效率更高。</p>
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's Blog">
+      <meta itemprop="description" content="像初雪一样自由洒落">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="使用 VSCode Compare Folders 对比两个项目的差异 | BookLover's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          使用 VSCode Compare Folders 对比两个项目的差异
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-09 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-09T00:00:00+08:00">2025-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-02-02 15:49:09" itemprop="dateModified" datetime="2026-02-02T15:49:09+08:00">2026-02-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/VSCode/" itemprop="url" rel="index"><span itemprop="name">VSCode</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>491</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="使用-VSCode-Compare-Folders-对比两个项目的差异"><a href="#使用-VSCode-Compare-Folders-对比两个项目的差异" class="headerlink" title="使用 VSCode Compare Folders 对比两个项目的差异"></a>使用 VSCode Compare Folders 对比两个项目的差异</h2><p>当你手上有两份修改过的项目，需要查看它们之间到底改动了哪些内容时，可以使用 VSCode 的 <strong>Compare Folders</strong> 插件。这种方式比 Beyond Compare 更轻量、更直观，不需要逐个文件打开，效率更高。</p>
 <h2 id="1-安装并打开-Compare-Folders-插件"><a href="#1-安装并打开-Compare-Folders-插件" class="headerlink" title="1. 安装并打开 Compare Folders 插件"></a>1. 安装并打开 Compare Folders 插件</h2><p><img src="/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164355260.png" alt="image-20251209164355260"></p>
 <h2 id="2-将两个项目文件夹加入工作区"><a href="#2-将两个项目文件夹加入工作区" class="headerlink" title="2. 将两个项目文件夹加入工作区"></a>2. 将两个项目文件夹加入工作区</h2><p>在 VSCode 顶部栏选择：文件 → 将文件夹添加到工作区，分别选择你要对比的两个项目目录。</p>
 <p><img src="/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209164642514.png" alt="image-20251209164642514"></p>
@@ -140,139 +266,91 @@
 <h2 id="5-单击文件即可查看修改内容"><a href="#5-单击文件即可查看修改内容" class="headerlink" title="5. 单击文件即可查看修改内容"></a>5. 单击文件即可查看修改内容</h2><p>点击任意文件，即可直接看到两边具体有哪些差异。</p>
 <p><img src="/2025/12/09/20251209_%E4%BD%BF%E7%94%A8%20VSCode%20Compare%20Folders%20%E5%AF%B9%E6%AF%94%E4%B8%A4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B7%AE%E5%BC%82-20251209/image-20251209165002259.png" alt="image-20251209165002259"></p>
 <h2 id="对比-Beyond-Compare-的优势"><a href="#对比-Beyond-Compare-的优势" class="headerlink" title="对比 Beyond Compare 的优势"></a>对比 Beyond Compare 的优势</h2><p>相比 Beyond Compare 需要逐个手动打开文件，VSCode Compare Folders 最大的优点就是：所有差异集中展示，一眼就能看到项目级的修改范围。</p>
-	  
-	</div>
 
-	<div>
-  	<center>
-	<div class="pagination">
+    </div>
 
     
     
-    <a href="/2025/12/12/20251212_鲲鹏920B-WRF安装手册_20251212/" type="button" class="btn btn-default"><i
-                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
 
-    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
-    
-    <a href="/2025/12/05/20251205_将代码从英伟达（NVIDIA）迁移到昇腾（Ascend）-20251205/" type="button" class="btn btn-default ">下一页<i
-                class="fa fa-arrow-circle-o-right"></i></a>
-    
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/VSCode/" rel="tag"># VSCode</a>
+              <a href="/tags/Compare-Folders/" rel="tag"># Compare Folders</a>
+          </div>
 
-    
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/05/20251205_%E5%B0%86%E4%BB%A3%E7%A0%81%E4%BB%8E%E8%8B%B1%E4%BC%9F%E8%BE%BE%EF%BC%88NVIDIA%EF%BC%89%E8%BF%81%E7%A7%BB%E5%88%B0%E6%98%87%E8%85%BE%EF%BC%88Ascend%EF%BC%89-20251205/" rel="prev" title="将代码从英伟达（NVIDIA）迁移到昇腾（Ascend）">
+                  <i class="fa fa-angle-left"></i> 将代码从英伟达（NVIDIA）迁移到昇腾（Ascend）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/12/20251212_%E9%B2%B2%E9%B9%8F920B-WRF%E5%AE%89%E8%A3%85%E6%89%8B%E5%86%8C_20251212/" rel="next" title="鲲鹏920B-WRF安装手册">
+                  鲲鹏920B-WRF安装手册 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-    </center>
-	</div>
-	
-	<!-- comment -->
-	
-<section id="comment">
-    <h2 class="title">留言</h2>
-
-    
-</section>
-
-
-	</div> <!-- col-md-9/col-md-12 -->
-		
-	
-	<div id="side_meta">
-		<div class="col-md-3" id="post_meta"> 
-
-	<!-- date -->
-	
-	<div class="meta-widget">
-	<i class="fa fa-clock-o"></i>
-	2025-12-09 
-	</div>
-	
-
-	<!-- categories -->
-    
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
-    <ul id="categorys" class="tag_box list-unstyled collapse in">
-          
-  <li>
-    <li><a href="/categories/VSCode/">VSCode<span>1</span></a></li>
-  </li>
-
-    </ul>
-	</div>
-	
-
-	<!-- tags -->
-	
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
-    <ul id="tags" class="tag_box list-unstyled collapse in">	  
-	    
-  <li><a href="/tags/VSCode/">VSCode<span>1</span></a></li> <li><a href="/tags/Compare-Folders/">Compare Folders<span>1</span></a></li>
-    </ul>
-	</div>
-		
-
-	<!-- toc -->
-	<div class="meta-widget">
-	
-	</div>
-	
-    <hr>
-	
-</div><!-- col-md-3 -->
-
-	</div>
-		
-
-</div><!-- row -->
 
 
 
-	</div>
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">BookLover</span>
   </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2026 BookLover
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">267k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:06</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
   
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
-     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
-</p>
- </footer>
-</div> <!-- container-narrow -->
-  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
 
-
-  
-<a id="gotop" href="#">   
-  <span>⬆︎TOP</span>
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/search.js"></script> 
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
-
-
-
-   <script type="text/javascript">      
-     var search_path = "search.xml";
-	 if (search_path.length == 0) {
-	 	search_path = "search.xml";
-	 }
-	 var path = "/" + search_path;
-     searchFunc(path, 'local-search-input', 'local-search-result');
-   </script>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
 </body>
-   </html>
+</html>

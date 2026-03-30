@@ -1,130 +1,250 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="pragma" content="no-cache">
-  <meta http-equiv="cache-control" content="no-cache">
-  <meta http-equiv="expires" content="0">
-  
-  <title>图数据处理方式：NetworkX 与 Neo4j | BookLover&#39;s Blog</title>
-  <meta name="author" content="BookLover">
-  
-  <meta name="description" content="像初雪一样自由洒落">
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.3.0">
 
-  <meta property="og:title" content="图数据处理方式：NetworkX 与 Neo4j"/>
-  <meta property="og:site_name" content="BookLover&#39;s Blog"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-  
-    <meta property="og:image" content=""/>
-  
-
-  
-  
-    <link href="/favicon.png" rel="icon">
-  
-  
-  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
-  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-
-  <script src="/js/jquery-2.0.3.min.js"></script>
-
-  <!-- analytics -->
-  
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-70812759-1', 'auto');
-  ga('send', 'pageview');
-</script>
+<link rel="stylesheet" href="/css/main.css">
 
 
 
-<meta name="generator" content="Hexo 7.3.0"></head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
- <body>  
-  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-		<span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-	  <a class="navbar-brand" href="/">BookLover&#39;s Blog</a>
-      <div class="collapse navbar-collapse nav-menu">
-		<ul class="nav navbar-nav">
-		  
-		  <li>
-			<a href="/archives" title="All the articles.">
-			  <i class=""></i>Archives
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/categories" title="All the categories.">
-			  <i class=""></i>Categories
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/tags" title="All the tags.">
-			  <i class=""></i>Tags
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/about" title="About me.">
-			  <i class=""></i>About
-			</a>
-		  </li>
-		  
-		  <li>
-			<a href="/atom.xml" title="Subscribe me.">
-			  <i class=""></i>RSS
-			</a>
-		  </li>
-		  
-		</ul>
+<script class="next-config" data-name="main" type="application/json">{"hostname":"booklover79.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="图数据处理方式：NetworkX 与 Neo4j[toc] 1 NetworkX 是什么？NetworkX 是 Python 的图论与复杂网络分析库。 在 NetworkX 中，图是一个 Python 内存对象，用于表示节点、边及其属性。 123456# 示例：创建节点和边import networkx as nxG &#x3D; nx.Graph()G.add_node(1, name&#x3D;&quot;Ali">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图数据处理方式：NetworkX 与 Neo4j">
+<meta property="og:url" content="https://booklover79.github.io/2025/12/20/20251220_%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX%20%E4%B8%8E%20Neo4j/index.html">
+<meta property="og:site_name" content="BookLover&#39;s Blog">
+<meta property="og:description" content="图数据处理方式：NetworkX 与 Neo4j[toc] 1 NetworkX 是什么？NetworkX 是 Python 的图论与复杂网络分析库。 在 NetworkX 中，图是一个 Python 内存对象，用于表示节点、边及其属性。 123456# 示例：创建节点和边import networkx as nxG &#x3D; nx.Graph()G.add_node(1, name&#x3D;&quot;Ali">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-12-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-30T02:34:12.342Z">
+<meta property="article:author" content="BookLover">
+<meta property="article:tag" content="Neo4j">
+<meta property="article:tag" content="NetworkX ">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://booklover79.github.io/2025/12/20/20251220_%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX%20%E4%B8%8E%20Neo4j/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://booklover79.github.io/2025/12/20/20251220_%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX%20%E4%B8%8E%20Neo4j/","path":"2025/12/20/20251220_图数据处理方式：NetworkX 与 Neo4j/","title":"图数据处理方式：NetworkX 与 Neo4j"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图数据处理方式：NetworkX 与 Neo4j | BookLover's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">BookLover's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX-%E4%B8%8E-Neo4j"><span class="nav-number">1.</span> <span class="nav-text">图数据处理方式：NetworkX 与 Neo4j</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-NetworkX-%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">1.1.</span> <span class="nav-text">1 NetworkX 是什么？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%89%B9%E7%82%B9"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 适用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Neo4j%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.2.</span> <span class="nav-text">2 Neo4j是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 适用场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-NetworkX-%E4%B8%8E-Neo4j-%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E8%81%94%E7%B3%BB"><span class="nav-number">1.3.</span> <span class="nav-text">3 NetworkX 与 Neo4j 的区别与联系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E4%B8%A4%E8%80%85%E5%AF%B9%E6%AF%94"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 两者对比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%B8%A4%E8%80%85%E8%81%94%E7%B3%BB"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 两者联系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%88%86%E6%9E%90"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">3.2.1 使用场景分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">3.2.2 工作流程示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3.2.3 优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%EF%BC%9A%E4%BB%8E-NetworkX-%E5%AF%BC%E5%85%A5-Neo4j"><span class="nav-number">1.4.</span> <span class="nav-text">4 代码实现：从 NetworkX 导入 Neo4j</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%811%EF%BC%9A%E5%85%A8%E9%87%8F-NetworkX-%E5%AF%BC%E5%85%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">代码1：全量 NetworkX 导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%812%EF%BC%9A%E6%B5%81%E5%BC%8F%E8%AF%BB%E5%8F%96%E8%BE%B9"><span class="nav-number">1.4.2.</span> <span class="nav-text">代码2：流式读取边</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%813%EF%BC%9A%E6%89%B9%E9%87%8F%E5%86%99%E5%85%A5%E4%BC%98%E5%8C%96"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码3：批量写入优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%814%EF%BC%9A%E6%89%B9%E9%87%8F%E6%8C%89-label-type-%E5%88%86%E7%BB%84-%E7%BA%A6%E6%9D%9F"><span class="nav-number">1.4.4.</span> <span class="nav-text">代码4：批量按 label&#x2F;type 分组 + 约束</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%815%EF%BC%9A%E7%BB%9F%E4%B8%80%E5%85%B3%E7%B3%BB-RELATION-type-%E5%B1%9E%E6%80%A7"><span class="nav-number">1.4.5.</span> <span class="nav-text">代码5：统一关系 RELATION + type 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.6.</span> <span class="nav-text">代码总结</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BookLover</p>
+  <div class="site-description" itemprop="description">像初雪一样自由洒落</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
       </div>
-    </div> <!-- container -->
-</nav>
-<div class="clearfix"></div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
 
-  <div class="container">
-  	<div class="content">
-    	 
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
 
 
-	
-		<div class="page-header">
-			<h1> 图数据处理方式：NetworkX 与 Neo4j</h1>
-		</div>
-	
+    </div>
+
+    <div class="main-inner post posts-expand">
 
 
+  
 
-<div class="row post">
-	<!-- cols -->
-	
-	<div id="top_meta"></div>
-	<div class="col-md-9">
-	
 
-	<!-- content -->
-	<div class="mypage">		
-	  		
+<div class="post-block">
+  
+  
 
-	  <h1 id="图数据处理方式：NetworkX-与-Neo4j"><a href="#图数据处理方式：NetworkX-与-Neo4j" class="headerlink" title="图数据处理方式：NetworkX 与 Neo4j"></a>图数据处理方式：NetworkX 与 Neo4j</h1><p>[toc]</p>
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://booklover79.github.io/2025/12/20/20251220_%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%EF%BC%9ANetworkX%20%E4%B8%8E%20Neo4j/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BookLover">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="BookLover's Blog">
+      <meta itemprop="description" content="像初雪一样自由洒落">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图数据处理方式：NetworkX 与 Neo4j | BookLover's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图数据处理方式：NetworkX 与 Neo4j
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-12-20 00:00:00" itemprop="dateCreated datePublished" datetime="2025-12-20T00:00:00+08:00">2025-12-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2026-01-30 10:34:12" itemprop="dateModified" datetime="2026-01-30T10:34:12+08:00">2026-01-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%9B%BE%E6%95%B0%E6%8D%AE%E5%BA%93/" itemprop="url" rel="index"><span itemprop="name">图数据库</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>27k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>49 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="图数据处理方式：NetworkX-与-Neo4j"><a href="#图数据处理方式：NetworkX-与-Neo4j" class="headerlink" title="图数据处理方式：NetworkX 与 Neo4j"></a>图数据处理方式：NetworkX 与 Neo4j</h1><p>[toc]</p>
 <h2 id="1-NetworkX-是什么？"><a href="#1-NetworkX-是什么？" class="headerlink" title="1 NetworkX 是什么？"></a>1 NetworkX 是什么？</h2><p><strong>NetworkX</strong> 是 Python 的图论与复杂网络分析库。</p>
 <p>在 NetworkX 中，图是一个 Python 内存对象，用于表示节点、边及其属性。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 示例：创建节点和边</span></span><br><span class="line"><span class="keyword">import</span> networkx <span class="keyword">as</span> nx</span><br><span class="line"></span><br><span class="line">G = nx.Graph()</span><br><span class="line">G.add_node(<span class="number">1</span>, name=<span class="string">&quot;Alice&quot;</span>) <span class="comment"># 添加节点</span></span><br><span class="line">G.add_edge(<span class="number">1</span>, <span class="number">2</span>, weight=<span class="number">3</span>)  <span class="comment"># 添加边，带权重</span></span><br></pre></td></tr></table></figure>
@@ -446,139 +566,91 @@
 <li><strong>批量大小调节</strong>：根据机器性能调整 <code>BATCH_SIZE</code>。</li>
 <li><strong>日志与进度</strong>：打印速度、累计节点边数量，便于监控。</li>
 </ol>
-	  
-	</div>
 
-	<div>
-  	<center>
-	<div class="pagination">
+    </div>
 
     
     
-    <a href="/2025/12/25/20251225_Neo4j + GraphRAG 实践笔记/" type="button" class="btn btn-default"><i
-                class="fa fa-arrow-circle-o-left"></i> 上一页</a>
     
 
-    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
-    
-    <a href="/2025/12/15/20251215_基于 RAGAS 的 RAG 系统性能评估-202512/" type="button" class="btn btn-default ">下一页<i
-                class="fa fa-arrow-circle-o-right"></i></a>
-    
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Neo4j/" rel="tag"># Neo4j</a>
+              <a href="/tags/NetworkX/" rel="tag"># NetworkX </a>
+          </div>
 
-    
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/12/15/20251215_%E5%9F%BA%E4%BA%8E%20RAGAS%20%E7%9A%84%20RAG%20%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0-202512/" rel="prev" title="基于 RAGAS 的 RAG 系统性能评估">
+                  <i class="fa fa-angle-left"></i> 基于 RAGAS 的 RAG 系统性能评估
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/12/25/20251225_Neo4j%20+%20GraphRAG%20%E5%AE%9E%E8%B7%B5%E7%AC%94%E8%AE%B0/" rel="next" title="Neo4j + GraphRAG 实践笔记">
+                  Neo4j + GraphRAG 实践笔记 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
 </div>
 
-    </center>
-	</div>
-	
-	<!-- comment -->
-	
-<section id="comment">
-    <h2 class="title">留言</h2>
-
-    
-</section>
-
-
-	</div> <!-- col-md-9/col-md-12 -->
-		
-	
-	<div id="side_meta">
-		<div class="col-md-3" id="post_meta"> 
-
-	<!-- date -->
-	
-	<div class="meta-widget">
-	<i class="fa fa-clock-o"></i>
-	2025-12-20 
-	</div>
-	
-
-	<!-- categories -->
-    
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
-    <ul id="categorys" class="tag_box list-unstyled collapse in">
-          
-  <li>
-    <li><a href="/categories/图数据库/">图数据库<span>1</span></a></li>
-  </li>
-
-    </ul>
-	</div>
-	
-
-	<!-- tags -->
-	
-	<div class="meta-widget">
-	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
-    <ul id="tags" class="tag_box list-unstyled collapse in">	  
-	    
-  <li><a href="/tags/Neo4j/">Neo4j<span>2</span></a></li> <li><a href="/tags/NetworkX/">NetworkX <span>1</span></a></li>
-    </ul>
-	</div>
-		
-
-	<!-- toc -->
-	<div class="meta-widget">
-	
-	</div>
-	
-    <hr>
-	
-</div><!-- col-md-3 -->
-
-	</div>
-		
-
-</div><!-- row -->
 
 
 
-	</div>
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">BookLover</span>
   </div>
-  <div class="container-narrow">
-  <footer> <p>
-  &copy; 2026 BookLover
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">267k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">8:06</span>
+  </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
   
-      with help from <a href="http://hexo.io/" target="_blank">Hexo</a>,<a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>,<a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a> and <a href="http://getbootstrap.com/" target="_blank">BOOTSTRA.386</a>. 
-     <br> Theme by <a target="_blank" rel="noopener" href="http://github.com/wzpan/hexo-theme-freemind/">Freemind.386</a>.    
-</p>
- </footer>
-</div> <!-- container-narrow -->
-  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
 
-
-  
-<a id="gotop" href="#">   
-  <span>⬆︎TOP</span>
-</a>
-
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<script src="/js/main.js"></script>
-<script src="/js/search.js"></script> 
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
-
-
-
-   <script type="text/javascript">      
-     var search_path = "search.xml";
-	 if (search_path.length == 0) {
-	 	search_path = "search.xml";
-	 }
-	 var path = "/" + search_path;
-     searchFunc(path, 'local-search-input', 'local-search-result');
-   </script>
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
 </body>
-   </html>
+</html>
